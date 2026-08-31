@@ -51,6 +51,16 @@ class User extends Authenticatable
         return $this->hasMany(DailyAction::class);
     }
 
+    public function financeCategories(): HasMany
+    {
+        return $this->hasMany(FinanceCategory::class);
+    }
+
+    public function financeTransactions(): HasMany
+    {
+        return $this->hasMany(FinanceTransaction::class);
+    }
+
     /**
      * Dipanggil setelah registrasi (mis. dari RegisteredUserController)
      * untuk otomatis membuatkan workplace "Pribadi" + project default,

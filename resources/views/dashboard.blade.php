@@ -7,6 +7,7 @@
         $menu = [
             ['route' => 'daily-actions.create', 'label' => 'Catat Aksi', 'color' => '#3E5C4E', 'icon' => 'pencil'],
             ['route' => 'daily-actions.index', 'label' => 'Aksi Harian', 'color' => '#B9832F', 'icon' => 'list'],
+            ['route' => 'finance.transactions.index', 'label' => 'Keuangan', 'color' => '#2F7A4F', 'icon' => 'wallet'],
             ['route' => 'workplaces.index', 'label' => 'Tempat Kerja', 'color' => '#3F5C7A', 'icon' => 'briefcase'],
             ['route' => 'profile.create', 'label' => 'Data Diri', 'color' => '#7A5C3F', 'icon' => 'user'],
             ['route' => 'profile.edit', 'label' => 'Akun', 'color' => '#6E675A', 'icon' => 'settings'],
@@ -42,6 +43,9 @@
                                 @break
                             @case('list')
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+                                @break
+                            @case('wallet')
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3"/><path d="M17 12h4v3h-4a1.5 1.5 0 0 1 0-3Z"/></svg>
                                 @break
                             @case('briefcase')
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
