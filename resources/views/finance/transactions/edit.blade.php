@@ -9,7 +9,7 @@
 
             <div class="flex items-center gap-4 pt-2">
                 <x-primary-button>Simpan Perubahan</x-primary-button>
-                <a href="{{ route('finance.transactions.index') }}" class="text-sm text-[#6E675A]">Batal</a>
+                <a href="{{ route('finance.transactions.index') }}" class="text-sm text-[#7B7F99]">Batal</a>
             </div>
         </form>
     </div>

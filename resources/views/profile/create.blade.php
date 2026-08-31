@@ -2,7 +2,7 @@
     <x-slot name="header">Data Diri</x-slot>
 
     <div class="px-4 py-5">
-        <p class="text-sm text-[#6E675A] mb-5">
+        <p class="text-sm text-[#7B7F99] mb-5">
             Lengkapi data diri kamu sebelum mulai mencatat aksi harian.
         </p>
 
@@ -26,7 +26,7 @@
             <div>
                 <x-input-label for="alamat" value="Alamat" />
                 <textarea id="alamat" name="alamat" rows="3"
-                    class="mt-1 block w-full rounded-lg border-[#DAD4C4] focus:border-[#3E5C4E] focus:ring-[#3E5C4E] text-sm">{{ old('alamat', $profile->alamat ?? '') }}</textarea>
+                    class="mt-1 block w-full rounded-lg border-[#E5E7F5] focus:border-[#4F46E5] focus:ring-[#4F46E5] text-sm">{{ old('alamat', $profile->alamat ?? '') }}</textarea>
                 <x-input-error :messages="$errors->get('alamat')" class="mt-2" />
             </div>
 
@@ -42,7 +42,7 @@
                 @if (!empty($profile?->foto_profil))
                     <img src="{{ Storage::url($profile->foto_profil) }}" alt="Foto profil" class="w-16 h-16 rounded-full object-cover mt-1 mb-2">
                 @endif
-                <input id="foto_profil" name="foto_profil" type="file" accept="image/*" class="mt-1 block w-full text-sm text-[#6E675A]" />
+                <input id="foto_profil" name="foto_profil" type="file" accept="image/*" class="mt-1 block w-full text-sm text-[#7B7F99]" />
                 <x-input-error :messages="$errors->get('foto_profil')" class="mt-2" />
             </div>
 

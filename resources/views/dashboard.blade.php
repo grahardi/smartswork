@@ -5,37 +5,37 @@
         $user = auth()->user();
         $todayCount = $user->dailyActions()->whereDate('tanggal', now()->toDateString())->count();
         $menu = [
-            ['route' => 'daily-actions.create', 'label' => 'Catat Aksi', 'color' => '#3E5C4E', 'icon' => 'pencil'],
-            ['route' => 'daily-actions.index', 'label' => 'Aksi Harian', 'color' => '#B9832F', 'icon' => 'list'],
-            ['route' => 'finance.transactions.index', 'label' => 'Keuangan', 'color' => '#2F7A4F', 'icon' => 'wallet'],
-            ['route' => 'workplaces.index', 'label' => 'Tempat Kerja', 'color' => '#3F5C7A', 'icon' => 'briefcase'],
-            ['route' => 'profile.create', 'label' => 'Data Diri', 'color' => '#7A5C3F', 'icon' => 'user'],
-            ['route' => 'profile.edit', 'label' => 'Akun', 'color' => '#6E675A', 'icon' => 'settings'],
+            ['route' => 'daily-actions.create', 'label' => 'Catat Aksi', 'color' => '#4F46E5', 'icon' => 'pencil'],
+            ['route' => 'daily-actions.index', 'label' => 'Aksi Harian', 'color' => '#F59E0B', 'icon' => 'list'],
+            ['route' => 'finance.transactions.index', 'label' => 'Keuangan', 'color' => '#10B981', 'icon' => 'wallet'],
+            ['route' => 'workplaces.index', 'label' => 'Tempat Kerja', 'color' => '#2563EB', 'icon' => 'briefcase'],
+            ['route' => 'profile.create', 'label' => 'Data Diri', 'color' => '#EA580C', 'icon' => 'user'],
+            ['route' => 'profile.edit', 'label' => 'Akun', 'color' => '#7B7F99', 'icon' => 'settings'],
         ];
     @endphp
 
     <div class="px-4 py-5">
 
-        <div class="bg-[#16231F] text-[#EDE7D9] rounded-xl p-4 mb-5 flex items-center justify-between">
+        <div class="bg-gradient-to-br from-[#4F46E5] to-[#6366F1] text-white rounded-2xl p-4 mb-5 flex items-center justify-between shadow-md shadow-indigo-200">
             <div>
-                <p class="text-xs text-[#9CAA9F]">Halo,</p>
+                <p class="text-xs text-indigo-100">Halo,</p>
                 <p class="text-sm font-medium">{{ $user->name }}</p>
             </div>
             <div class="text-right">
-                <p class="text-xs text-[#9CAA9F]">Aksi hari ini</p>
+                <p class="text-xs text-indigo-100">Aksi hari ini</p>
                 <p class="text-lg font-semibold">{{ $todayCount }}</p>
             </div>
         </div>
 
         @if (session('status'))
-            <div class="mb-4 text-sm text-[#3E5C4E] bg-[#EDF3EF] border border-[#CFE0D6] rounded-lg px-4 py-3">
+            <div class="mb-4 text-sm text-[#4F46E5] bg-[#EEF2FF] border border-[#C7D2FE] rounded-lg px-4 py-3">
                 {{ session('status') }}
             </div>
         @endif
 
         <div class="grid grid-cols-3 gap-3">
             @foreach ($menu as $item)
-                <a href="{{ route($item['route']) }}" class="flex flex-col items-center gap-2 py-4 bg-white border border-[#EAE4D6] rounded-xl">
+                <a href="{{ route($item['route']) }}" class="flex flex-col items-center gap-2 py-4 bg-white border border-[#E7E9F5] rounded-xl">
                     <span class="w-11 h-11 rounded-full flex items-center justify-center" style="background: {{ $item['color'] }}1A; color: {{ $item['color'] }};">
                         @switch($item['icon'])
                             @case('pencil')
@@ -58,15 +58,15 @@
                                 @break
                         @endswitch
                     </span>
-                    <span class="text-[11px] text-[#2A2621] text-center leading-tight">{{ $item['label'] }}</span>
+                    <span class="text-[11px] text-[#1F2333] text-center leading-tight">{{ $item['label'] }}</span>
                 </a>
             @endforeach
         </div>
 
-        <div class="bg-white border border-[#EAE4D6] rounded-xl p-4 mt-5">
+        <div class="bg-white border border-[#E7E9F5] rounded-xl p-4 mt-5">
             <div class="flex items-center justify-between mb-3">
                 <h3 class="font-semibold text-sm">Aksi terakhir</h3>
-                <a href="{{ route('daily-actions.index') }}" class="text-xs text-[#3E5C4E]">Lihat semua</a>
+                <a href="{{ route('daily-actions.index') }}" class="text-xs text-[#4F46E5]">Lihat semua</a>
             </div>
 
             @php
@@ -74,15 +74,15 @@
             @endphp
 
             @forelse ($recentActions as $action)
-                <div class="flex items-center justify-between py-2 border-b last:border-b-0 border-[#F0EBDF]">
+                <div class="flex items-center justify-between py-2 border-b last:border-b-0 border-[#EEF0FA]">
                     <div class="min-w-0 pr-2">
-                        <p class="text-sm text-[#2A2621] truncate">{{ $action->keterangan }}</p>
-                        <p class="text-xs text-[#8A8377]">{{ $action->project->workplace->nama }} · {{ $action->project->nama }}</p>
+                        <p class="text-sm text-[#1F2333] truncate">{{ $action->keterangan }}</p>
+                        <p class="text-xs text-[#9CA3AF]">{{ $action->project->workplace->nama }} · {{ $action->project->nama }}</p>
                     </div>
-                    <span class="text-xs text-[#8A8377] flex-shrink-0">{{ $action->tanggal->translatedFormat('d M') }}</span>
+                    <span class="text-xs text-[#9CA3AF] flex-shrink-0">{{ $action->tanggal->translatedFormat('d M') }}</span>
                 </div>
             @empty
-                <p class="text-sm text-[#6E675A]">Belum ada aksi harian.</p>
+                <p class="text-sm text-[#7B7F99]">Belum ada aksi harian.</p>
             @endforelse
         </div>
     </div>

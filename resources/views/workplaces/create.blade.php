@@ -20,20 +20,20 @@
             <div>
                 <x-input-label for="alamat" value="Alamat" />
                 <textarea id="alamat" name="alamat" rows="2"
-                    class="mt-1 block w-full rounded-lg border-[#DAD4C4] focus:border-[#3E5C4E] focus:ring-[#3E5C4E] text-sm">{{ old('alamat') }}</textarea>
+                    class="mt-1 block w-full rounded-lg border-[#E5E7F5] focus:border-[#4F46E5] focus:ring-[#4F46E5] text-sm">{{ old('alamat') }}</textarea>
                 <x-input-error :messages="$errors->get('alamat')" class="mt-2" />
             </div>
 
             <div>
                 <x-input-label for="keterangan" value="Keterangan (opsional)" />
                 <textarea id="keterangan" name="keterangan" rows="2"
-                    class="mt-1 block w-full rounded-lg border-[#DAD4C4] focus:border-[#3E5C4E] focus:ring-[#3E5C4E] text-sm">{{ old('keterangan') }}</textarea>
+                    class="mt-1 block w-full rounded-lg border-[#E5E7F5] focus:border-[#4F46E5] focus:ring-[#4F46E5] text-sm">{{ old('keterangan') }}</textarea>
                 <x-input-error :messages="$errors->get('keterangan')" class="mt-2" />
             </div>
 
             <div class="flex items-center gap-4 pt-2">
                 <x-primary-button>Simpan</x-primary-button>
-                <a href="{{ route('workplaces.index') }}" class="text-sm text-[#6E675A]">Batal</a>
+                <a href="{{ route('workplaces.index') }}" class="text-sm text-[#7B7F99]">Batal</a>
             </div>
         </form>
     </div>

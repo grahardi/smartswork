@@ -9,16 +9,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --ink: #16231F;
-            --ink-soft: #223830;
-            --paper: #F6F1E7;
-            --paper-line: #DAD4C4;
-            --moss: #3E5C4E;
-            --ochre: #B9832F;
-            --text-on-ink: #EDE7D9;
-            --text-on-ink-muted: #9CAA9F;
-            --text-on-paper: #2A2621;
-            --text-on-paper-muted: #6E675A;
+            --ink: #4F46E5;
+            --ink-soft: #4338CA;
+            --paper: #F5F6FD;
+            --paper-line: #E5E7F5;
+            --moss: #4F46E5;
+            --ochre: #F59E0B;
+            --text-on-ink: #FFFFFF;
+            --text-on-ink-muted: #C7D2FE;
+            --text-on-paper: #1F2333;
+            --text-on-paper-muted: #7B7F99;
         }
         * { box-sizing: border-box; }
         body {
@@ -248,7 +248,7 @@
                         <label for="email">Email</label>
                         <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username" placeholder="nama@email.com">
                         @error('email')
-                            <div style="color:#A32D2D; font-size:12.5px; margin-top:4px;">{{ $message }}</div>
+                            <div style="color:#DC2626; font-size:12.5px; margin-top:4px;">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -256,7 +256,7 @@
                         <label for="password">Kata sandi</label>
                         <input id="password" type="password" name="password" required autocomplete="current-password" placeholder="••••••••">
                         @error('password')
-                            <div style="color:#A32D2D; font-size:12.5px; margin-top:4px;">{{ $message }}</div>
+                            <div style="color:#DC2626; font-size:12.5px; margin-top:4px;">{{ $message }}</div>
                         @enderror
                     </div>
 

@@ -2,7 +2,7 @@
     <x-slot name="header">Tambah Project</x-slot>
 
     <div class="px-4 py-5">
-        <p class="text-xs text-[#6E675A] mb-4">di {{ $workplace->nama }}</p>
+        <p class="text-xs text-[#7B7F99] mb-4">di {{ $workplace->nama }}</p>
 
         <form method="POST" action="{{ route('workplaces.projects.store', $workplace) }}" class="space-y-5">
             @csrf
@@ -16,14 +16,14 @@
             <div>
                 <x-input-label for="planning" value="Planning" />
                 <textarea id="planning" name="planning" rows="3"
-                    class="mt-1 block w-full rounded-lg border-[#DAD4C4] focus:border-[#3E5C4E] focus:ring-[#3E5C4E] text-sm">{{ old('planning') }}</textarea>
+                    class="mt-1 block w-full rounded-lg border-[#E5E7F5] focus:border-[#4F46E5] focus:ring-[#4F46E5] text-sm">{{ old('planning') }}</textarea>
                 <x-input-error :messages="$errors->get('planning')" class="mt-2" />
             </div>
 
             <div>
                 <x-input-label for="target" value="Target" />
                 <textarea id="target" name="target" rows="3"
-                    class="mt-1 block w-full rounded-lg border-[#DAD4C4] focus:border-[#3E5C4E] focus:ring-[#3E5C4E] text-sm">{{ old('target') }}</textarea>
+                    class="mt-1 block w-full rounded-lg border-[#E5E7F5] focus:border-[#4F46E5] focus:ring-[#4F46E5] text-sm">{{ old('target') }}</textarea>
                 <x-input-error :messages="$errors->get('target')" class="mt-2" />
             </div>
 
@@ -42,7 +42,7 @@
 
             <div>
                 <x-input-label for="status" value="Status" />
-                <select id="status" name="status" class="mt-1 block w-full rounded-lg border-[#DAD4C4] focus:border-[#3E5C4E] focus:ring-[#3E5C4E] text-sm">
+                <select id="status" name="status" class="mt-1 block w-full rounded-lg border-[#E5E7F5] focus:border-[#4F46E5] focus:ring-[#4F46E5] text-sm">
                     <option value="planning" @selected(old('status') === 'planning')>Planning</option>
                     <option value="berjalan" @selected(old('status', 'berjalan') === 'berjalan')>Berjalan</option>
                     <option value="selesai" @selected(old('status') === 'selesai')>Selesai</option>
@@ -52,7 +52,7 @@
 
             <div class="flex items-center gap-4 pt-2">
                 <x-primary-button>Simpan</x-primary-button>
-                <a href="{{ route('workplaces.projects.index', $workplace) }}" class="text-sm text-[#6E675A]">Batal</a>
+                <a href="{{ route('workplaces.projects.index', $workplace) }}" class="text-sm text-[#7B7F99]">Batal</a>
             </div>
         </form>
     </div>

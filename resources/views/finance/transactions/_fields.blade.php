@@ -3,7 +3,7 @@
 <div>
     <x-input-label for="finance_category_id" value="Kategori" />
     <select id="finance_category_id" name="finance_category_id" required
-        class="mt-1 block w-full rounded-lg border-[#DAD4C4] focus:border-[#3E5C4E] focus:ring-[#3E5C4E] text-sm">
+        class="mt-1 block w-full rounded-lg border-[#E5E7F5] focus:border-[#4F46E5] focus:ring-[#4F46E5] text-sm">
         <option value="">Pilih kategori</option>
         <optgroup label="Pemasukan">
             @foreach ($categories->where('type', 'pemasukan') as $cat)
@@ -17,7 +17,7 @@
         </optgroup>
     </select>
     @if ($categories->isEmpty())
-        <p class="text-xs text-[#A32D2D] mt-1">Belum ada kategori. <a href="{{ route('finance.categories.create') }}" class="underline">Tambah dulu</a>.</p>
+        <p class="text-xs text-[#DC2626] mt-1">Belum ada kategori. <a href="{{ route('finance.categories.create') }}" class="underline">Tambah dulu</a>.</p>
     @endif
     <x-input-error :messages="$errors->get('finance_category_id')" class="mt-2" />
 </div>
@@ -39,7 +39,7 @@
 
 <div>
     <x-input-label for="workplace_id" value="Tempat Kerja (opsional)" />
-    <select id="workplace_id" name="workplace_id" class="mt-1 block w-full rounded-lg border-[#DAD4C4] focus:border-[#3E5C4E] focus:ring-[#3E5C4E] text-sm">
+    <select id="workplace_id" name="workplace_id" class="mt-1 block w-full rounded-lg border-[#E5E7F5] focus:border-[#4F46E5] focus:ring-[#4F46E5] text-sm">
         <option value="">—</option>
         @foreach ($workplaces as $w)
             <option value="{{ $w->id }}" @selected(old('workplace_id', $transaction->workplace_id ?? '') == $w->id)>{{ $w->nama }}</option>
@@ -51,6 +51,6 @@
 <div>
     <x-input-label for="keterangan" value="Keterangan (opsional)" />
     <textarea id="keterangan" name="keterangan" rows="2"
-        class="mt-1 block w-full rounded-lg border-[#DAD4C4] focus:border-[#3E5C4E] focus:ring-[#3E5C4E] text-sm">{{ old('keterangan', $transaction->keterangan ?? '') }}</textarea>
+        class="mt-1 block w-full rounded-lg border-[#E5E7F5] focus:border-[#4F46E5] focus:ring-[#4F46E5] text-sm">{{ old('keterangan', $transaction->keterangan ?? '') }}</textarea>
     <x-input-error :messages="$errors->get('keterangan')" class="mt-2" />
 </div>

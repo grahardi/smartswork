@@ -14,6 +14,8 @@ class DemoLoginController extends Controller
      */
     public function __invoke(): RedirectResponse
     {
+        abort_unless(config('demo.enabled'), 404, 'Fitur demo sedang dinonaktifkan sementara.');
+
         $demoUser = User::where('is_demo', true)->first();
 
         abort_unless($demoUser, 404, 'Akun demo belum tersedia. Jalankan DemoUserSeeder terlebih dahulu.');
