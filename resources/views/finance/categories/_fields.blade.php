@@ -24,7 +24,7 @@
 
 <div>
     <x-input-label for="warna" value="Warna" />
-    <input id="warna" name="warna" type="color" value="{{ old('warna', $category->warna ?? '#4F46E5') }}"
+    <input id="warna" name="warna" type="color" value="{{ old('warna', $category->warna ?? '#2563EB') }}"
         class="mt-1 block w-16 h-10 rounded-lg border border-[#E5E7F5]">
     <x-input-error :messages="$errors->get('warna')" class="mt-2" />
 </div>

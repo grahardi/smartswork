@@ -16,14 +16,14 @@
             <div>
                 <x-input-label for="planning" value="Planning" />
                 <textarea id="planning" name="planning" rows="3"
-                    class="mt-1 block w-full rounded-lg border-[#E5E7F5] focus:border-[#4F46E5] focus:ring-[#4F46E5] text-sm">{{ old('planning') }}</textarea>
+                    class="mt-1 block w-full rounded-lg border-[#E5E7F5] focus:border-[#2563EB] focus:ring-[#2563EB] text-sm">{{ old('planning') }}</textarea>
                 <x-input-error :messages="$errors->get('planning')" class="mt-2" />
             </div>
 
             <div>
                 <x-input-label for="target" value="Target" />
                 <textarea id="target" name="target" rows="3"
-                    class="mt-1 block w-full rounded-lg border-[#E5E7F5] focus:border-[#4F46E5] focus:ring-[#4F46E5] text-sm">{{ old('target') }}</textarea>
+                    class="mt-1 block w-full rounded-lg border-[#E5E7F5] focus:border-[#2563EB] focus:ring-[#2563EB] text-sm">{{ old('target') }}</textarea>
                 <x-input-error :messages="$errors->get('target')" class="mt-2" />
             </div>
 
@@ -42,7 +42,7 @@
 
             <div>
                 <x-input-label for="status" value="Status" />
-                <select id="status" name="status" class="mt-1 block w-full rounded-lg border-[#E5E7F5] focus:border-[#4F46E5] focus:ring-[#4F46E5] text-sm">
+                <select id="status" name="status" class="mt-1 block w-full rounded-lg border-[#E5E7F5] focus:border-[#2563EB] focus:ring-[#2563EB] text-sm">
                     <option value="planning" @selected(old('status') === 'planning')>Planning</option>
                     <option value="berjalan" @selected(old('status', 'berjalan') === 'berjalan')>Berjalan</option>
                     <option value="selesai" @selected(old('status') === 'selesai')>Selesai</option>

@@ -3,10 +3,10 @@
 
     <div class="px-4 py-5">
         <div class="flex justify-end mb-3">
-            <a href="{{ route('daily-actions.create') }}" class="text-sm font-medium text-white bg-[#4F46E5] px-4 py-2 rounded-lg">+ Catat Aksi</a>
+            <a href="{{ route('daily-actions.create') }}" class="text-sm font-medium text-white bg-[#2563EB] px-4 py-2 rounded-lg">+ Catat Aksi</a>
         </div>
         @if (session('status'))
-            <div class="mb-4 text-sm text-[#4F46E5] bg-[#EEF2FF] border border-[#C7D2FE] rounded-lg px-4 py-3">
+            <div class="mb-4 text-sm text-[#2563EB] bg-[#EFF6FF] border border-[#BFDBFE] rounded-lg px-4 py-3">
                 {{ session('status') }}
             </div>
         @endif
@@ -26,7 +26,7 @@
                             <span class="text-[10px] text-[#9CA3AF] flex-shrink-0">{{ $action->project->workplace->nama }}</span>
                         </div>
                         <p class="text-sm text-[#1F2333] mt-1">{{ $action->keterangan }}</p>
-                        <span class="text-[11px] text-[#4F46E5] mt-1 inline-block">{{ $action->project->nama }}</span>
+                        <span class="text-[11px] text-[#2563EB] mt-1 inline-block">{{ $action->project->nama }}</span>
                     </div>
                 </div>
             @empty

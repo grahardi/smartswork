@@ -3,14 +3,14 @@
 
     <div class="px-4 py-5">
         <div class="flex justify-end mb-1">
-            <a href="{{ route('workplaces.projects.create', $workplace) }}" class="text-sm font-medium text-white bg-[#4F46E5] px-4 py-2 rounded-lg">+ Tambah</a>
+            <a href="{{ route('workplaces.projects.create', $workplace) }}" class="text-sm font-medium text-white bg-[#2563EB] px-4 py-2 rounded-lg">+ Tambah</a>
         </div>
         <p class="text-xs text-[#7B7F99] mb-3">
             <a href="{{ route('workplaces.index') }}" class="hover:underline">Tempat Kerja</a> / {{ $workplace->nama }}
         </p>
 
         @if (session('status'))
-            <div class="mb-4 text-sm text-[#4F46E5] bg-[#EEF2FF] border border-[#C7D2FE] rounded-lg px-4 py-3">
+            <div class="mb-4 text-sm text-[#2563EB] bg-[#EFF6FF] border border-[#BFDBFE] rounded-lg px-4 py-3">
                 {{ session('status') }}
             </div>
         @endif
@@ -23,7 +23,7 @@
                         <span @class([
                             'text-[10px] px-2 py-0.5 rounded-full',
                             'bg-[#EFEBE1] text-[#7B7F99]' => $project->status === 'planning',
-                            'bg-[#E3EBE6] text-[#4F46E5]' => $project->status === 'berjalan',
+                            'bg-[#E3EBE6] text-[#2563EB]' => $project->status === 'berjalan',
                             'bg-[#E4EFE0] text-[#4B7A3A]' => $project->status === 'selesai',
                         ])>{{ ucfirst($project->status) }}</span>
                     </div>

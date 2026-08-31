@@ -5,22 +5,22 @@
         <div class="flex items-center justify-between mb-3">
             <form method="GET" action="{{ route('finance.transactions.index') }}">
                 <input type="month" name="bulan" value="{{ $bulan }}" onchange="this.form.submit()"
-                    class="text-sm rounded-lg border-[#E5E7F5] focus:border-[#4F46E5] focus:ring-[#4F46E5]">
+                    class="text-sm rounded-lg border-[#E5E7F5] focus:border-[#2563EB] focus:ring-[#2563EB]">
             </form>
             <div class="flex items-center gap-3">
                 <a href="{{ route('finance.categories.index') }}" class="text-xs text-[#2563EB]">Kategori</a>
-                <a href="{{ route('finance.transactions.create') }}" class="text-sm font-medium text-white bg-[#4F46E5] px-4 py-2 rounded-lg">+ Catat</a>
+                <a href="{{ route('finance.transactions.create') }}" class="text-sm font-medium text-white bg-[#2563EB] px-4 py-2 rounded-lg">+ Catat</a>
             </div>
         </div>
 
         @if (session('status'))
-            <div class="mb-4 text-sm text-[#4F46E5] bg-[#EEF2FF] border border-[#C7D2FE] rounded-lg px-4 py-3">{{ session('status') }}</div>
+            <div class="mb-4 text-sm text-[#2563EB] bg-[#EFF6FF] border border-[#BFDBFE] rounded-lg px-4 py-3">{{ session('status') }}</div>
         @endif
 
         <div class="grid grid-cols-3 gap-2 mb-4">
             <div class="bg-white border border-[#E7E9F5] rounded-xl p-3">
                 <p class="text-[10px] text-[#9CA3AF]">Masuk</p>
-                <p class="text-sm font-semibold text-[#4F46E5] mt-1">Rp{{ number_format($totalMasuk, 0, ',', '.') }}</p>
+                <p class="text-sm font-semibold text-[#2563EB] mt-1">Rp{{ number_format($totalMasuk, 0, ',', '.') }}</p>
             </div>
             <div class="bg-white border border-[#E7E9F5] rounded-xl p-3">
                 <p class="text-[10px] text-[#9CA3AF]">Keluar</p>
@@ -47,7 +47,7 @@
                             <p class="text-[11px] text-[#9CA3AF] mt-1">{{ $trx->tanggal->translatedFormat('d M Y') }}@if($trx->workplace) · {{ $trx->workplace->nama }} @endif</p>
                         </div>
                         <div class="text-right flex-shrink-0">
-                            <p class="text-sm font-semibold {{ $trx->category->type === 'pemasukan' ? 'text-[#4F46E5]' : 'text-[#DC2626]' }}">
+                            <p class="text-sm font-semibold {{ $trx->category->type === 'pemasukan' ? 'text-[#2563EB]' : 'text-[#DC2626]' }}">
                                 {{ $trx->category->type === 'pemasukan' ? '+' : '-' }}Rp{{ number_format($trx->jumlah, 0, ',', '.') }}
                             </p>
                             <div class="flex items-center gap-2 justify-end mt-1">

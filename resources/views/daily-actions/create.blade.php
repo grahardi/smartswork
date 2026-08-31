@@ -5,7 +5,7 @@
         @if ($projects->isEmpty())
             <p class="text-sm text-[#7B7F99]">
                 Belum ada project. Tambahkan dulu di halaman
-                <a href="{{ route('workplaces.index') }}" class="text-[#4F46E5] underline">Tempat Kerja</a>.
+                <a href="{{ route('workplaces.index') }}" class="text-[#2563EB] underline">Tempat Kerja</a>.
             </p>
         @else
             <form method="POST" action="{{ route('daily-actions.store') }}" enctype="multipart/form-data" class="space-y-5">
@@ -14,7 +14,7 @@
                 <div>
                     <x-input-label for="project_id" value="Project" />
                     <select id="project_id" name="project_id" required
-                        class="mt-1 block w-full rounded-lg border-[#E5E7F5] focus:border-[#4F46E5] focus:ring-[#4F46E5] text-sm">
+                        class="mt-1 block w-full rounded-lg border-[#E5E7F5] focus:border-[#2563EB] focus:ring-[#2563EB] text-sm">
                         <option value="">Pilih project</option>
                         @foreach ($projects as $project)
                             <option value="{{ $project->id }}" @selected(old('project_id') == $project->id)>
@@ -50,7 +50,7 @@
                 <div>
                     <x-input-label for="keterangan" value="Keterangan" />
                     <textarea id="keterangan" name="keterangan" rows="3" required
-                        class="mt-1 block w-full rounded-lg border-[#E5E7F5] focus:border-[#4F46E5] focus:ring-[#4F46E5] text-sm"
+                        class="mt-1 block w-full rounded-lg border-[#E5E7F5] focus:border-[#2563EB] focus:ring-[#2563EB] text-sm"
                         placeholder="Contoh: Antar anak ke sekolah">{{ old('keterangan') }}</textarea>
                     <x-input-error :messages="$errors->get('keterangan')" class="mt-2" />
                 </div>

@@ -26,7 +26,7 @@
             <div>
                 <x-input-label for="alamat" value="Alamat" />
                 <textarea id="alamat" name="alamat" rows="3"
-                    class="mt-1 block w-full rounded-lg border-[#E5E7F5] focus:border-[#4F46E5] focus:ring-[#4F46E5] text-sm">{{ old('alamat', $profile->alamat ?? '') }}</textarea>
+                    class="mt-1 block w-full rounded-lg border-[#E5E7F5] focus:border-[#2563EB] focus:ring-[#2563EB] text-sm">{{ old('alamat', $profile->alamat ?? '') }}</textarea>
                 <x-input-error :messages="$errors->get('alamat')" class="mt-2" />
             </div>
 

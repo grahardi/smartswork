@@ -5,7 +5,7 @@
         $user = auth()->user();
         $todayCount = $user->dailyActions()->whereDate('tanggal', now()->toDateString())->count();
         $menu = [
-            ['route' => 'daily-actions.create', 'label' => 'Catat Aksi', 'color' => '#4F46E5', 'icon' => 'pencil'],
+            ['route' => 'daily-actions.create', 'label' => 'Catat Aksi', 'color' => '#2563EB', 'icon' => 'pencil'],
             ['route' => 'daily-actions.index', 'label' => 'Aksi Harian', 'color' => '#F59E0B', 'icon' => 'list'],
             ['route' => 'finance.transactions.index', 'label' => 'Keuangan', 'color' => '#10B981', 'icon' => 'wallet'],
             ['route' => 'workplaces.index', 'label' => 'Tempat Kerja', 'color' => '#2563EB', 'icon' => 'briefcase'],
@@ -16,19 +16,27 @@
 
     <div class="px-4 py-5">
 
-        <div class="bg-gradient-to-br from-[#4F46E5] to-[#6366F1] text-white rounded-2xl p-4 mb-5 flex items-center justify-between shadow-md shadow-indigo-200">
-            <div>
-                <p class="text-xs text-indigo-100">Halo,</p>
-                <p class="text-sm font-medium">{{ $user->name }}</p>
+        <div class="bg-[#262135] text-white rounded-2xl p-5 mb-5 relative overflow-hidden">
+            <div class="absolute -left-10 -top-10 w-32 h-32 rounded-full bg-white/5"></div>
+            <div class="relative flex items-center justify-between mb-4">
+                <p class="text-lg font-semibold swk-heading leading-tight">Hi!,<br>{{ explode(' ', $user->name)[0] }}</p>
+                <div class="w-11 h-11 rounded-full bg-[#FFC9E9] flex items-center justify-center text-[#262135] font-semibold">
+                    {{ strtoupper(substr($user->name, 0, 1)) }}
+                </div>
             </div>
-            <div class="text-right">
-                <p class="text-xs text-indigo-100">Aksi hari ini</p>
-                <p class="text-lg font-semibold">{{ $todayCount }}</p>
+            <div class="relative flex items-center justify-between">
+                <div>
+                    <p class="text-[11px] text-white/50">Aksi hari ini</p>
+                    <p class="text-sm font-medium">{{ $todayCount }} tercatat</p>
+                </div>
+                <a href="{{ route('daily-actions.create') }}" class="bg-[#2563EB] text-white text-xs font-semibold px-4 py-2 rounded-full">
+                    + Catat
+                </a>
             </div>
         </div>
 
         @if (session('status'))
-            <div class="mb-4 text-sm text-[#4F46E5] bg-[#EEF2FF] border border-[#C7D2FE] rounded-lg px-4 py-3">
+            <div class="mb-4 text-sm text-[#2563EB] bg-[#EFF6FF] border border-[#BFDBFE] rounded-lg px-4 py-3">
                 {{ session('status') }}
             </div>
         @endif
@@ -66,7 +74,7 @@
         <div class="bg-white border border-[#E7E9F5] rounded-xl p-4 mt-5">
             <div class="flex items-center justify-between mb-3">
                 <h3 class="font-semibold text-sm">Aksi terakhir</h3>
-                <a href="{{ route('daily-actions.index') }}" class="text-xs text-[#4F46E5]">Lihat semua</a>
+                <a href="{{ route('daily-actions.index') }}" class="text-xs text-[#2563EB]">Lihat semua</a>
             </div>
 
             @php

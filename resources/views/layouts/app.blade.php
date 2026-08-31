@@ -4,11 +4,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="theme-color" content="#4F46E5">
+    <meta name="theme-color" content="#2563EB">
 
     <title>{{ config('app.name', 'SMARTS Work') }}</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@500;600;700&display=swap" rel="stylesheet">
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <style>
+        .swk-heading { font-family: 'Montserrat Alternates', system-ui, sans-serif; }
+    </style>
 </head>
 <body class="antialiased bg-[#F5F6FD] text-[#1F2333]" style="font-family: 'IBM Plex Sans', system-ui, sans-serif;">
 
@@ -31,11 +39,11 @@
         <div class="max-w-lg mx-auto px-4 py-4 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 @unless (request()->routeIs('dashboard'))
-                    <a href="{{ route('dashboard') }}" class="text-[#4F46E5]" aria-label="Kembali ke beranda">
+                    <a href="{{ route('dashboard') }}" class="text-[#2563EB]" aria-label="Kembali ke beranda">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
                     </a>
                 @endunless
-                <span class="text-[15px] font-semibold text-[#1F2333]">
+                <span class="text-[15px] font-semibold text-[#1F2333] swk-heading">
                     {{ $header ?? 'SMARTS Work' }}
                 </span>
             </div>

@@ -3,11 +3,11 @@
 
     <div class="px-4 py-5">
         <div class="flex justify-end mb-3">
-            <a href="{{ route('finance.categories.create') }}" class="text-sm font-medium text-white bg-[#4F46E5] px-4 py-2 rounded-lg">+ Tambah Kategori</a>
+            <a href="{{ route('finance.categories.create') }}" class="text-sm font-medium text-white bg-[#2563EB] px-4 py-2 rounded-lg">+ Tambah Kategori</a>
         </div>
 
         @if (session('status'))
-            <div class="mb-4 text-sm text-[#4F46E5] bg-[#EEF2FF] border border-[#C7D2FE] rounded-lg px-4 py-3">{{ session('status') }}</div>
+            <div class="mb-4 text-sm text-[#2563EB] bg-[#EFF6FF] border border-[#BFDBFE] rounded-lg px-4 py-3">{{ session('status') }}</div>
         @endif
         @if (session('error'))
             <div class="mb-4 text-sm text-[#DC2626] bg-[#FEE2E2] border border-[#F3CFCF] rounded-lg px-4 py-3">{{ session('error') }}</div>

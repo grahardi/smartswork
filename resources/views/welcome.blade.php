@@ -9,14 +9,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --ink: #4F46E5;
+            --ink: #2563EB;
             --ink-soft: #4338CA;
             --paper: #F5F6FD;
             --paper-line: #E5E7F5;
-            --moss: #4F46E5;
+            --moss: #2563EB;
             --ochre: #F59E0B;
             --text-on-ink: #FFFFFF;
-            --text-on-ink-muted: #C7D2FE;
+            --text-on-ink-muted: #BFDBFE;
             --text-on-paper: #1F2333;
             --text-on-paper-muted: #7B7F99;
         }
