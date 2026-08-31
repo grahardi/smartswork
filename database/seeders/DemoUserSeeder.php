@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\DailyAction;
 use App\Models\User;
+use App\Models\Workplace;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -30,22 +31,36 @@ class DemoUserSeeder extends Seeder
             ]
         );
 
-        // Hapus workplace demo yang lama sepenuhnya (bukan cuma detach),
-        // supaya project & daily_actions ikut terhapus lewat cascadeOnDelete
-        // dan seeder ini aman dijalankan berulang kali.
-        $demo->workplaces()->get()->each(fn ($w) => $w->delete());
+        // Bersih total: cari langsung dari tabel workplaces (bukan lewat
+        // relasi $demo yang bisa saja sudah tidak sinkron dengan pivot
+        // kalau sebelumnya sempat dibersihkan manual), lalu hapus semua
+        // workplace yang masih terhubung ke user demo. cascadeOnDelete di
+        // migration akan otomatis membereskan project & daily_actions-nya.
+        Workplace::whereHas('users', fn ($q) => $q->where('users.id', $demo->id))
+            ->get()
+            ->each(fn ($w) => $w->delete());
 
-        $pribadi = $demo->provisionDefaultWorkplace();
+        $pribadi = Workplace::create([
+            'nama' => 'Pribadi',
+            'type' => 'personal',
+            'is_default' => true,
+        ]);
+        $demo->workplaces()->syncWithoutDetaching([
+            $pribadi->id => ['jabatan' => 'Pemilik', 'tanggal_gabung' => now()],
+        ]);
+        $projectPribadi = $pribadi->projects()->create([
+            'nama' => 'Kegiatan Harian',
+            'status' => 'berjalan',
+        ]);
 
-        $kantor = $demo->workplaces()->create([
+        $kantor = Workplace::create([
             'nama' => 'Bellanet (Contoh)',
             'alamat' => 'Turen, Kabupaten Malang',
             'type' => 'formal',
             'is_default' => false,
         ]);
-        $demo->workplaces()->attach($kantor->id, [
-            'jabatan' => 'Teknisi Jaringan',
-            'tanggal_gabung' => now()->subMonths(6),
+        $demo->workplaces()->syncWithoutDetaching([
+            $kantor->id => ['jabatan' => 'Teknisi Jaringan', 'tanggal_gabung' => now()->subMonths(6)],
         ]);
 
         $project = $kantor->projects()->create([
@@ -54,8 +69,6 @@ class DemoUserSeeder extends Seeder
             'target' => 'Selesai dan online sebelum akhir bulan.',
             'status' => 'berjalan',
         ]);
-
-        $projectPribadi = $pribadi->projects()->first();
 
         DailyAction::insert([
             [

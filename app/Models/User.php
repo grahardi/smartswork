@@ -64,9 +64,8 @@ class User extends Authenticatable
             'is_default' => true,
         ]);
 
-        $this->workplaces()->attach($workplace->id, [
-            'jabatan' => 'Pemilik',
-            'tanggal_gabung' => now(),
+        $this->workplaces()->syncWithoutDetaching([
+            $workplace->id => ['jabatan' => 'Pemilik', 'tanggal_gabung' => now()],
         ]);
 
         $workplace->projects()->create([

@@ -1,0 +1,12 @@
+// Jalankan: php artisan tinker
+// Lalu tempel baris-baris di bawah ini satu per satu (atau sekaligus)
+
+$demo = App\Models\User::where('email', 'demo@smarts.id')->first();
+
+if ($demo) {
+    App\Models\DailyAction::where('user_id', $demo->id)->delete();
+    DB::table('user_workplace')->where('user_id', $demo->id)->delete();
+    echo "Cleanup selesai untuk user_id: {$demo->id}\n";
+} else {
+    echo "User demo@smarts.id belum ada.\n";
+}
