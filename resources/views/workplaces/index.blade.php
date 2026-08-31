@@ -1,50 +1,37 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Tempat Kerja
-            </h2>
-            <a href="{{ route('workplaces.create') }}"
-                class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700">
-                + Tambah Tempat Kerja
-            </a>
-        </div>
-    </x-slot>
+    <x-slot name="header">Tempat Kerja</x-slot>
 
-    <div class="py-8">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            @if (session('status'))
-                <div class="mb-4 text-sm text-green-700 bg-green-50 border border-green-200 rounded-md px-4 py-3">
-                    {{ session('status') }}
-                </div>
-            @endif
-
-            <div class="grid gap-4">
-                @forelse ($workplaces as $workplace)
-                    <div class="bg-white shadow sm:rounded-lg p-5 flex items-center justify-between">
-                        <div>
-                            <div class="flex items-center gap-2">
-                                <h3 class="font-semibold text-gray-800">{{ $workplace->nama }}</h3>
-                                @if ($workplace->is_default)
-                                    <span class="text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">Default</span>
-                                @endif
-                                <span class="text-xs text-gray-400">{{ ucfirst($workplace->type) }}</span>
-                            </div>
-                            <p class="text-sm text-gray-500 mt-1">
-                                {{ $workplace->pivot->jabatan ?? '—' }}
-                                @if ($workplace->alamat) · {{ $workplace->alamat }} @endif
-                            </p>
-                            <p class="text-xs text-gray-400 mt-1">{{ $workplace->projects_count }} project</p>
-                        </div>
-                        <a href="{{ route('workplaces.projects.index', $workplace) }}"
-                            class="text-sm text-indigo-600 hover:text-indigo-800 font-medium">
-                            Lihat Project →
-                        </a>
-                    </div>
-                @empty
-                    <p class="text-sm text-gray-500">Belum ada tempat kerja.</p>
-                @endforelse
+    <div class="px-4 py-5 relative">
+        @if (session('status'))
+            <div class="mb-4 text-sm text-[#3E5C4E] bg-[#EDF3EF] border border-[#CFE0D6] rounded-lg px-4 py-3">
+                {{ session('status') }}
             </div>
+        @endif
+
+        <div class="space-y-3">
+            @forelse ($workplaces as $workplace)
+                <a href="{{ route('workplaces.projects.index', $workplace) }}"
+                   class="block bg-white border border-[#EAE4D6] rounded-xl p-4">
+                    <div class="flex items-center gap-2">
+                        <h3 class="font-semibold text-[#2A2621] text-sm">{{ $workplace->nama }}</h3>
+                        @if ($workplace->is_default)
+                            <span class="text-[10px] bg-[#F3E4CB] text-[#8A5F1F] px-2 py-0.5 rounded-full">Default</span>
+                        @endif
+                    </div>
+                    <p class="text-xs text-[#6E675A] mt-1">
+                        {{ $workplace->pivot->jabatan ?? '—' }}
+                        @if ($workplace->alamat) · {{ $workplace->alamat }} @endif
+                    </p>
+                    <p class="text-xs text-[#3E5C4E] mt-2">{{ $workplace->projects_count }} project →</p>
+                </a>
+            @empty
+                <p class="text-sm text-[#6E675A] text-center py-8">Belum ada tempat kerja.</p>
+            @endforelse
         </div>
+
+        <a href="{{ route('workplaces.create') }}"
+           class="fixed bottom-24 right-5 w-14 h-14 rounded-full bg-[#3E5C4E] text-white flex items-center justify-center shadow-lg text-2xl leading-none">
+            +
+        </a>
     </div>
 </x-app-layout>
