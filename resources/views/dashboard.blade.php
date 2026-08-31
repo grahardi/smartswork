@@ -6,11 +6,11 @@
         $todayCount = $user->dailyActions()->whereDate('tanggal', now()->toDateString())->count();
         $menu = [
             ['route' => 'daily-actions.create', 'label' => 'Catat Aksi', 'color' => '#2563EB', 'icon' => 'pencil'],
-            ['route' => 'daily-actions.index', 'label' => 'Aksi Harian', 'color' => '#F59E0B', 'icon' => 'list'],
-            ['route' => 'finance.transactions.index', 'label' => 'Keuangan', 'color' => '#10B981', 'icon' => 'wallet'],
-            ['route' => 'workplaces.index', 'label' => 'Tempat Kerja', 'color' => '#2563EB', 'icon' => 'briefcase'],
-            ['route' => 'profile.create', 'label' => 'Data Diri', 'color' => '#EA580C', 'icon' => 'user'],
-            ['route' => 'profile.edit', 'label' => 'Akun', 'color' => '#7B7F99', 'icon' => 'settings'],
+            ['route' => 'daily-actions.index', 'label' => 'Aksi Harian', 'color' => '#DBA83B', 'icon' => 'list'],
+            ['route' => 'finance.transactions.index', 'label' => 'Keuangan', 'color' => '#3E9B93', 'icon' => 'wallet'],
+            ['route' => 'workplaces.index', 'label' => 'Tempat Kerja', 'color' => '#262135', 'icon' => 'briefcase'],
+            ['route' => 'profile.create', 'label' => 'Data Diri', 'color' => '#D6549E', 'icon' => 'user'],
+            ['route' => 'profile.edit', 'label' => 'Akun', 'color' => '#5A556B', 'icon' => 'settings'],
         ];
     @endphp
 
