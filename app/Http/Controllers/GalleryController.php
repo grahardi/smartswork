@@ -16,6 +16,11 @@ class GalleryController extends Controller
         return view('gallery.index', compact('photos'));
     }
 
+    public function create(): View
+    {
+        return view('gallery.create');
+    }
+
     /**
      * Upload satu atau beberapa foto sekaligus.
      */

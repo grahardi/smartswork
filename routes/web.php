@@ -106,6 +106,7 @@ Route::middleware(['auth', 'restrict.demo'])->group(function () {
 
     // Galeri
     Route::get('/galeri', [GalleryController::class, 'index'])->name('gallery.index');
+    Route::get('/galeri/tambah', [GalleryController::class, 'create'])->name('gallery.create');
     Route::post('/galeri', [GalleryController::class, 'store'])->name('gallery.store');
     Route::delete('/galeri/{photo}', [GalleryController::class, 'destroy'])->name('gallery.destroy');
 });
