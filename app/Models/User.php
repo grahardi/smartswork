@@ -66,6 +66,16 @@ class User extends Authenticatable
         return $this->hasMany(Residence::class);
     }
 
+    public function notes(): HasMany
+    {
+        return $this->hasMany(Note::class);
+    }
+
+    public function photos(): HasMany
+    {
+        return $this->hasMany(Photo::class);
+    }
+
     public function sentFriendRequests(): HasMany
     {
         return $this->hasMany(Friendship::class, 'requester_id');

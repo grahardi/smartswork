@@ -26,7 +26,7 @@ class ProfileSetupController extends Controller
             'no_hp' => ['nullable', 'string', 'max:20'],
             'alamat' => ['nullable', 'string'],
             'tanggal_lahir' => ['nullable', 'date'],
-            'foto_profil' => ['nullable', 'image', 'max:2048'],
+            'foto_profil' => ['nullable', 'image', 'max:10240'],
         ]);
 
         $path = null;

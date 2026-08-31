@@ -11,6 +11,8 @@ use App\Http\Controllers\ResidenceController;
 use App\Http\Controllers\FriendController;
 use App\Http\Controllers\FriendDataController;
 use App\Http\Controllers\ProjectCollaboratorController;
+use App\Http\Controllers\NoteController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\DemoLoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -93,6 +95,19 @@ Route::middleware(['auth', 'restrict.demo'])->group(function () {
     Route::get('/project/{project}/kolaborator', [ProjectCollaboratorController::class, 'index'])->name('projects.collaborators.index');
     Route::post('/project/{project}/kolaborator', [ProjectCollaboratorController::class, 'store'])->name('projects.collaborators.store');
     Route::delete('/project/{project}/kolaborator/{user}', [ProjectCollaboratorController::class, 'destroy'])->name('projects.collaborators.destroy');
+
+    // Coretan
+    Route::get('/coretan', [NoteController::class, 'index'])->name('notes.index');
+    Route::post('/coretan', [NoteController::class, 'store'])->name('notes.store');
+    Route::get('/coretan/{note}/edit', [NoteController::class, 'edit'])->name('notes.edit');
+    Route::put('/coretan/{note}', [NoteController::class, 'update'])->name('notes.update');
+    Route::patch('/coretan/{note}/pin', [NoteController::class, 'togglePin'])->name('notes.pin');
+    Route::delete('/coretan/{note}', [NoteController::class, 'destroy'])->name('notes.destroy');
+
+    // Galeri
+    Route::get('/galeri', [GalleryController::class, 'index'])->name('gallery.index');
+    Route::post('/galeri', [GalleryController::class, 'store'])->name('gallery.store');
+    Route::delete('/galeri/{photo}', [GalleryController::class, 'destroy'])->name('gallery.destroy');
 });
 
 require __DIR__.'/auth.php';

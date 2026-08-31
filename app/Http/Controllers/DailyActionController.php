@@ -35,7 +35,9 @@ class DailyActionController extends Controller
             ->orderBy('nama')
             ->get();
 
-        return view('daily-actions.create', compact('projects'));
+        $galleryPhotos = $request->user()->photos()->orderByDesc('created_at')->limit(20)->get();
+
+        return view('daily-actions.create', compact('projects', 'galleryPhotos'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -44,7 +46,8 @@ class DailyActionController extends Controller
             'project_id' => ['required', 'exists:projects,id'],
             'tanggal' => ['required', 'date'],
             'waktu' => ['nullable', 'date_format:H:i'],
-            'foto' => ['nullable', 'image', 'max:4096'],
+            'foto' => ['nullable', 'image', 'max:10240'],
+            'gallery_photo_id' => ['nullable', 'exists:photos,id'],
             'keterangan' => ['required', 'string'],
         ]);
 
@@ -56,8 +59,13 @@ class DailyActionController extends Controller
             ->findOrFail($validated['project_id']);
 
         $path = null;
+
         if ($request->hasFile('foto')) {
             $path = $request->file('foto')->store('aksi-harian', 'public');
+        } elseif (! empty($validated['gallery_photo_id'])) {
+            // Ambil path dari foto galeri milik user (bukan file baru, referensi saja).
+            $galleryPhoto = $request->user()->photos()->findOrFail($validated['gallery_photo_id']);
+            $path = $galleryPhoto->path;
         }
 
         DailyAction::create([

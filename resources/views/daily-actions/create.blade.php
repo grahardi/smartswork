@@ -41,10 +41,43 @@
                 </div>
 
                 <div>
-                    <x-input-label for="foto" value="Foto (opsional)" />
-                    <input id="foto" name="foto" type="file" accept="image/*" capture="environment"
-                        class="mt-1 block w-full text-sm text-[#7B7F99]" />
+                    <x-input-label value="Foto (opsional)" />
+                    <div class="flex gap-4 mt-2 text-xs">
+                        <label class="flex items-center gap-1.5">
+                            <input type="radio" name="foto_source" value="baru" checked onchange="swkToggleFotoSource()">
+                            Ambil/upload baru
+                        </label>
+                        <label class="flex items-center gap-1.5">
+                            <input type="radio" name="foto_source" value="galeri" onchange="swkToggleFotoSource()">
+                            Pilih dari Galeri
+                        </label>
+                    </div>
+
+                    <div id="foto-baru-wrap" class="mt-2">
+                        <input id="foto" name="foto" type="file" accept="image/*" capture="environment"
+                            class="block w-full text-sm text-[#7B7F99]" />
+                    </div>
+
+                    <div id="foto-galeri-wrap" class="mt-2 hidden">
+                        @if ($galleryPhotos->isEmpty())
+                            <p class="text-xs text-[#7B7F99]">
+                                Galeri masih kosong. <a href="{{ route('gallery.index') }}" class="text-[#2563EB] underline">Upload foto dulu</a>.
+                            </p>
+                        @else
+                            <div class="grid grid-cols-4 gap-2">
+                                @foreach ($galleryPhotos as $photo)
+                                    <label class="relative block">
+                                        <input type="radio" name="gallery_photo_id" value="{{ $photo->id }}" class="peer hidden">
+                                        <img src="{{ Storage::url($photo->path) }}" alt=""
+                                            class="w-full aspect-square object-cover rounded-lg border-2 border-transparent peer-checked:border-[#2563EB]">
+                                    </label>
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
+
                     <x-input-error :messages="$errors->get('foto')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('gallery_photo_id')" class="mt-2" />
                 </div>
 
                 <div>
@@ -62,4 +95,17 @@
             </form>
         @endif
     </div>
+
+    <script>
+        function swkToggleFotoSource() {
+            const source = document.querySelector('input[name="foto_source"]:checked').value;
+            document.getElementById('foto-baru-wrap').classList.toggle('hidden', source !== 'baru');
+            document.getElementById('foto-galeri-wrap').classList.toggle('hidden', source !== 'galeri');
+            if (source === 'galeri') {
+                document.getElementById('foto').value = '';
+            } else {
+                document.querySelectorAll('input[name="gallery_photo_id"]').forEach(r => r.checked = false);
+            }
+        }
+    </script>
 </x-app-layout>

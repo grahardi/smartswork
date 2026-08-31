@@ -11,6 +11,8 @@
             ['route' => 'workplaces.index', 'label' => 'Tempat Kerja', 'color' => '#262135', 'icon' => 'briefcase'],
             ['route' => 'residences.index', 'label' => 'Tempat Tinggal', 'color' => '#D6549E', 'icon' => 'home'],
             ['route' => 'friends.index', 'label' => 'Teman', 'color' => '#3B82F6', 'icon' => 'friends'],
+            ['route' => 'notes.index', 'label' => 'Coretan', 'color' => '#DBA83B', 'icon' => 'note'],
+            ['route' => 'gallery.index', 'label' => 'Galeri', 'color' => '#D6549E', 'icon' => 'gallery'],
             ['route' => 'profile.create', 'label' => 'Data Diri', 'color' => '#7B7F99', 'icon' => 'user'],
             ['route' => 'profile.edit', 'label' => 'Akun', 'color' => '#5A556B', 'icon' => 'settings'],
         ];
@@ -53,6 +55,12 @@
                                 @break
                             @case('list')
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+                                @break
+                            @case('note')
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                                @break
+                            @case('gallery')
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
                                 @break
                             @case('friends')
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.5 3-5.5 7-5.5s7 2 7 5.5"/><circle cx="17" cy="9" r="2.5"/><path d="M16.5 14.5c2.5 0 5 1.5 5.5 4"/></svg>
