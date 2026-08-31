@@ -13,14 +13,17 @@ class FinanceTransactionController extends Controller
     {
         $bulan = $request->input('bulan', now()->format('Y-m'));
 
+        $periode = \Illuminate\Support\Carbon::createFromFormat('Y-m', $bulan)->startOfMonth();
+
         $query = $request->user()->financeTransactions()
             ->with('category', 'workplace')
-            ->whereRaw("DATE_FORMAT(tanggal, '%Y-%m') = ?", [$bulan]);
+            ->whereYear('tanggal', $periode->year)
+            ->whereMonth('tanggal', $periode->month);
 
-        $transactions = (clone $query)->orderByDesc('tanggal')->paginate(20)->withQueryString();
+        $transactions = (clone $query)->orderByDesc('tanggal')->orderByDesc('id')->paginate(20)->withQueryString();
 
-        $totalMasuk = (clone $query)->whereHas('category', fn ($q) => $q->where('type', 'pemasukan'))->sum('jumlah');
-        $totalKeluar = (clone $query)->whereHas('category', fn ($q) => $q->where('type', 'pengeluaran'))->sum('jumlah');
+        $totalMasuk = (float) (clone $query)->whereHas('category', fn ($q) => $q->where('type', 'pemasukan'))->sum('jumlah');
+        $totalKeluar = (float) (clone $query)->whereHas('category', fn ($q) => $q->where('type', 'pengeluaran'))->sum('jumlah');
 
         return view('finance.transactions.index', [
             'transactions' => $transactions,

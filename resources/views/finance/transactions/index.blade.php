@@ -34,6 +34,11 @@
             <div class="absolute -right-6 -bottom-6 w-28 h-28 rounded-full bg-white/10"></div>
         </div>
 
+        <div class="flex items-center justify-between mb-3">
+            <h3 class="text-sm font-semibold text-[#262135] swk-heading">Riwayat Pemasukan &amp; Pengeluaran</h3>
+            <span class="text-xs text-[#9CA3AF]">{{ $transactions->total() }} transaksi</span>
+        </div>
+
         <div class="space-y-2">
             @forelse ($transactions as $trx)
                 <div class="bg-white border border-[#E7E9F5] rounded-xl p-4">
