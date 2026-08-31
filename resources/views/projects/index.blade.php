@@ -1,7 +1,10 @@
 <x-app-layout>
     <x-slot name="header">{{ $workplace->nama }}</x-slot>
 
-    <div class="px-4 py-5 relative">
+    <div class="px-4 py-5">
+        <div class="flex justify-end mb-1">
+            <a href="{{ route('workplaces.projects.create', $workplace) }}" class="text-sm font-medium text-white bg-[#3E5C4E] px-4 py-2 rounded-lg">+ Tambah</a>
+        </div>
         <p class="text-xs text-[#6E675A] mb-3">
             <a href="{{ route('workplaces.index') }}" class="hover:underline">Tempat Kerja</a> / {{ $workplace->nama }}
         </p>
@@ -35,10 +38,5 @@
                 <p class="text-sm text-[#6E675A] text-center py-8">Belum ada project di tempat kerja ini.</p>
             @endforelse
         </div>
-
-        <a href="{{ route('workplaces.projects.create', $workplace) }}"
-           class="fixed bottom-24 right-5 w-14 h-14 rounded-full bg-[#3E5C4E] text-white flex items-center justify-center shadow-lg text-2xl leading-none">
-            +
-        </a>
     </div>
 </x-app-layout>

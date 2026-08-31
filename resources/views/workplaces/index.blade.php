@@ -1,7 +1,10 @@
 <x-app-layout>
     <x-slot name="header">Tempat Kerja</x-slot>
 
-    <div class="px-4 py-5 relative">
+    <div class="px-4 py-5">
+        <div class="flex justify-end mb-3">
+            <a href="{{ route('workplaces.create') }}" class="text-sm font-medium text-white bg-[#3E5C4E] px-4 py-2 rounded-lg">+ Tambah</a>
+        </div>
         @if (session('status'))
             <div class="mb-4 text-sm text-[#3E5C4E] bg-[#EDF3EF] border border-[#CFE0D6] rounded-lg px-4 py-3">
                 {{ session('status') }}
@@ -28,10 +31,5 @@
                 <p class="text-sm text-[#6E675A] text-center py-8">Belum ada tempat kerja.</p>
             @endforelse
         </div>
-
-        <a href="{{ route('workplaces.create') }}"
-           class="fixed bottom-24 right-5 w-14 h-14 rounded-full bg-[#3E5C4E] text-white flex items-center justify-center shadow-lg text-2xl leading-none">
-            +
-        </a>
     </div>
 </x-app-layout>
