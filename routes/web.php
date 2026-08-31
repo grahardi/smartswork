@@ -8,6 +8,9 @@ use App\Http\Controllers\DailyActionController;
 use App\Http\Controllers\FinanceCategoryController;
 use App\Http\Controllers\FinanceTransactionController;
 use App\Http\Controllers\ResidenceController;
+use App\Http\Controllers\FriendController;
+use App\Http\Controllers\FriendDataController;
+use App\Http\Controllers\ProjectCollaboratorController;
 use App\Http\Controllers\DemoLoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -72,6 +75,24 @@ Route::middleware(['auth', 'restrict.demo'])->group(function () {
     Route::get('/keuangan/{transaction}/edit', [FinanceTransactionController::class, 'edit'])->name('finance.transactions.edit');
     Route::put('/keuangan/{transaction}', [FinanceTransactionController::class, 'update'])->name('finance.transactions.update');
     Route::delete('/keuangan/{transaction}', [FinanceTransactionController::class, 'destroy'])->name('finance.transactions.destroy');
+
+    // Teman
+    Route::get('/teman', [FriendController::class, 'index'])->name('friends.index');
+    Route::get('/teman/cari', [FriendController::class, 'search'])->name('friends.search');
+    Route::post('/teman', [FriendController::class, 'store'])->name('friends.store');
+    Route::post('/teman/{friendship}/terima', [FriendController::class, 'accept'])->name('friends.accept');
+    Route::post('/teman/{friendship}/tolak', [FriendController::class, 'decline'])->name('friends.decline');
+    Route::delete('/teman/{friend}', [FriendController::class, 'destroy'])->name('friends.destroy');
+
+    // Lihat data teman (read-only, harus berteman dulu)
+    Route::get('/teman/{friend}/aksi-harian', [FriendDataController::class, 'dailyActions'])->name('friends.aksi-harian');
+    Route::get('/teman/{friend}/keuangan', [FriendDataController::class, 'finance'])->name('friends.keuangan');
+    Route::get('/teman/{friend}/tempat-kerja', [FriendDataController::class, 'workplaces'])->name('friends.tempat-kerja');
+
+    // Kolaborator Project (cowork)
+    Route::get('/project/{project}/kolaborator', [ProjectCollaboratorController::class, 'index'])->name('projects.collaborators.index');
+    Route::post('/project/{project}/kolaborator', [ProjectCollaboratorController::class, 'store'])->name('projects.collaborators.store');
+    Route::delete('/project/{project}/kolaborator/{user}', [ProjectCollaboratorController::class, 'destroy'])->name('projects.collaborators.destroy');
 });
 
 require __DIR__.'/auth.php';

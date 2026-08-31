@@ -26,8 +26,11 @@ class DailyActionController extends Controller
 
     public function create(Request $request): View
     {
-        // Hanya project dari workplace yang diikuti user.
-        $projects = Project::whereHas('workplace.users', fn ($q) => $q->where('users.id', $request->user()->id))
+        // Project dari workplace yang diikuti user, ATAU project tempat dia jadi kolaborator (cowork).
+        $projects = Project::where(function ($q) use ($request) {
+                $q->whereHas('workplace.users', fn ($q2) => $q2->where('users.id', $request->user()->id))
+                    ->orWhereHas('collaborators', fn ($q2) => $q2->where('users.id', $request->user()->id));
+            })
             ->with('workplace')
             ->orderBy('nama')
             ->get();
@@ -45,8 +48,11 @@ class DailyActionController extends Controller
             'keterangan' => ['required', 'string'],
         ]);
 
-        // Pastikan project yang dipilih memang milik salah satu workplace user.
-        $project = Project::whereHas('workplace.users', fn ($q) => $q->where('users.id', $request->user()->id))
+        // Pastikan project yang dipilih memang bisa diakses user (anggota workplace atau kolaborator).
+        $project = Project::where(function ($q) use ($request) {
+                $q->whereHas('workplace.users', fn ($q2) => $q2->where('users.id', $request->user()->id))
+                    ->orWhereHas('collaborators', fn ($q2) => $q2->where('users.id', $request->user()->id));
+            })
             ->findOrFail($validated['project_id']);
 
         $path = null;

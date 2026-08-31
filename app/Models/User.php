@@ -66,6 +66,46 @@ class User extends Authenticatable
         return $this->hasMany(Residence::class);
     }
 
+    public function sentFriendRequests(): HasMany
+    {
+        return $this->hasMany(Friendship::class, 'requester_id');
+    }
+
+    public function receivedFriendRequests(): HasMany
+    {
+        return $this->hasMany(Friendship::class, 'addressee_id');
+    }
+
+    /**
+     * Daftar teman yang sudah saling terima (status accepted), dari kedua arah.
+     */
+    public function friends()
+    {
+        $sentIds = $this->sentFriendRequests()->where('status', 'accepted')->pluck('addressee_id');
+        $receivedIds = $this->receivedFriendRequests()->where('status', 'accepted')->pluck('requester_id');
+
+        return User::whereIn('id', $sentIds->merge($receivedIds))->get();
+    }
+
+    public function isFriendsWith(User $other): bool
+    {
+        return Friendship::where('status', 'accepted')
+            ->where(function ($q) use ($other) {
+                $q->where('requester_id', $this->id)->where('addressee_id', $other->id);
+            })
+            ->orWhere(function ($q) use ($other) {
+                $q->where('requester_id', $other->id)->where('addressee_id', $this->id);
+            })
+            ->exists();
+    }
+
+    public function collaboratingProjects(): BelongsToMany
+    {
+        return $this->belongsToMany(Project::class, 'project_user')
+            ->withPivot('role')
+            ->withTimestamps();
+    }
+
     /**
      * Dipanggil setelah registrasi (mis. dari RegisteredUserController)
      * untuk otomatis membuatkan workplace "Pribadi" + project default,

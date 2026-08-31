@@ -10,6 +10,7 @@
             ['route' => 'finance.transactions.index', 'label' => 'Keuangan', 'color' => '#3E9B93', 'icon' => 'wallet'],
             ['route' => 'workplaces.index', 'label' => 'Tempat Kerja', 'color' => '#262135', 'icon' => 'briefcase'],
             ['route' => 'residences.index', 'label' => 'Tempat Tinggal', 'color' => '#D6549E', 'icon' => 'home'],
+            ['route' => 'friends.index', 'label' => 'Teman', 'color' => '#3B82F6', 'icon' => 'friends'],
             ['route' => 'profile.create', 'label' => 'Data Diri', 'color' => '#7B7F99', 'icon' => 'user'],
             ['route' => 'profile.edit', 'label' => 'Akun', 'color' => '#5A556B', 'icon' => 'settings'],
         ];
@@ -52,6 +53,9 @@
                                 @break
                             @case('list')
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+                                @break
+                            @case('friends')
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.5 3-5.5 7-5.5s7 2 7 5.5"/><circle cx="17" cy="9" r="2.5"/><path d="M16.5 14.5c2.5 0 5 1.5 5.5 4"/></svg>
                                 @break
                             @case('home')
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>

@@ -33,6 +33,7 @@
                     @if ($project->target)
                         <p class="text-xs text-[#7B7F99] mt-1"><span class="font-medium">Target:</span> {{ $project->target }}</p>
                     @endif
+                    <a href="{{ route('projects.collaborators.index', $project) }}" class="text-xs text-[#2563EB] mt-2 inline-block">👥 Kolaborator</a>
                 </div>
             @empty
                 <p class="text-sm text-[#7B7F99] text-center py-8">Belum ada project di tempat kerja ini.</p>
