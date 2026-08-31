@@ -64,5 +64,25 @@
         {{ $slot }}
     </main>
 
+    {{-- Lightbox foto (dipakai lewat onclick="swkZoom(this.src)") --}}
+    <div id="swk-lightbox" class="fixed inset-0 bg-black/85 z-50 hidden items-center justify-center p-4" onclick="swkCloseZoom()">
+        <button type="button" class="absolute top-4 right-4 text-white text-2xl leading-none" onclick="swkCloseZoom()">&times;</button>
+        <img id="swk-lightbox-img" src="" alt="" class="max-w-full max-h-full rounded-lg object-contain">
+    </div>
+
+    <script>
+        function swkZoom(src) {
+            document.getElementById('swk-lightbox-img').src = src;
+            document.getElementById('swk-lightbox').classList.remove('hidden');
+            document.getElementById('swk-lightbox').classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+        function swkCloseZoom() {
+            document.getElementById('swk-lightbox').classList.add('hidden');
+            document.getElementById('swk-lightbox').classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+    </script>
+
 </body>
 </html>

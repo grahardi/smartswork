@@ -40,7 +40,7 @@
             <div>
                 <x-input-label for="foto_profil" value="Foto Profil" />
                 @if (!empty($profile?->foto_profil))
-                    <img src="{{ Storage::url($profile->foto_profil) }}" alt="Foto profil" class="w-16 h-16 rounded-full object-cover mt-1 mb-2">
+                    <img src="{{ Storage::url($profile->foto_profil) }}" alt="Foto profil" onclick="swkZoom(this.src)" class="w-16 h-16 rounded-full object-cover mt-1 mb-2 cursor-zoom-in">
                 @endif
                 <input id="foto_profil" name="foto_profil" type="file" accept="image/*" class="mt-1 block w-full text-sm text-[#7B7F99]" />
                 <x-input-error :messages="$errors->get('foto_profil')" class="mt-2" />

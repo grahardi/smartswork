@@ -21,7 +21,8 @@
         <div class="grid grid-cols-3 gap-2">
             @forelse ($photos as $photo)
                 <div class="relative group">
-                    <img src="{{ Storage::url($photo->path) }}" alt="" class="w-full aspect-square object-cover rounded-lg">
+                    <img src="{{ Storage::url($photo->path) }}" alt="" onclick="swkZoom(this.src)"
+                        class="w-full aspect-square object-cover rounded-lg cursor-zoom-in">
                     <form method="POST" action="{{ route('gallery.destroy', $photo) }}" onsubmit="return confirm('Hapus foto ini?')"
                         class="absolute top-1 right-1">
                         @csrf @method('DELETE')

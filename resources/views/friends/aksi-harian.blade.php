@@ -12,7 +12,8 @@
             @forelse ($actions as $i => $action)
                 <div class="rounded-2xl p-4 flex gap-3" style="background: {{ $palette[$i % 3] }};">
                     @if ($action->foto)
-                        <img src="{{ Storage::url($action->foto) }}" alt="" class="w-14 h-14 rounded-xl object-cover flex-shrink-0 border-2 border-white">
+                        <img src="{{ Storage::url($action->foto) }}" alt="" onclick="swkZoom(this.src)"
+                            class="w-14 h-14 rounded-xl object-cover flex-shrink-0 border-2 border-white cursor-zoom-in">
                     @else
                         <div class="w-14 h-14 rounded-xl bg-white/50 flex-shrink-0"></div>
                     @endif
