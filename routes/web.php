@@ -7,6 +7,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\DailyActionController;
 use App\Http\Controllers\FinanceCategoryController;
 use App\Http\Controllers\FinanceTransactionController;
+use App\Http\Controllers\ResidenceController;
 use App\Http\Controllers\DemoLoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,17 @@ Route::middleware(['auth', 'restrict.demo'])->group(function () {
     Route::get('/tempat-kerja', [WorkplaceController::class, 'index'])->name('workplaces.index');
     Route::get('/tempat-kerja/tambah', [WorkplaceController::class, 'create'])->name('workplaces.create');
     Route::post('/tempat-kerja', [WorkplaceController::class, 'store'])->name('workplaces.store');
+    Route::get('/tempat-kerja/{workplace}/edit', [WorkplaceController::class, 'edit'])->name('workplaces.edit');
+    Route::put('/tempat-kerja/{workplace}', [WorkplaceController::class, 'update'])->name('workplaces.update');
+
+    // Tempat Tinggal
+    Route::get('/tempat-tinggal', [ResidenceController::class, 'index'])->name('residences.index');
+    Route::get('/tempat-tinggal/tambah', [ResidenceController::class, 'create'])->name('residences.create');
+    Route::post('/tempat-tinggal', [ResidenceController::class, 'store'])->name('residences.store');
+    Route::get('/tempat-tinggal/{residence}/edit', [ResidenceController::class, 'edit'])->name('residences.edit');
+    Route::put('/tempat-tinggal/{residence}', [ResidenceController::class, 'update'])->name('residences.update');
+    Route::delete('/tempat-tinggal/{residence}', [ResidenceController::class, 'destroy'])->name('residences.destroy');
+    Route::patch('/tempat-tinggal/{residence}/jadikan-utama', [ResidenceController::class, 'makeDefault'])->name('residences.make-default');
 
     // Project (bersarang di bawah Tempat Kerja)
     Route::get('/tempat-kerja/{workplace}/project', [ProjectController::class, 'index'])->name('workplaces.projects.index');

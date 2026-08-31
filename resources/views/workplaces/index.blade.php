@@ -13,20 +13,25 @@
 
         <div class="space-y-3">
             @forelse ($workplaces as $workplace)
-                <a href="{{ route('workplaces.projects.index', $workplace) }}"
-                   class="block bg-white border border-[#E7E9F5] rounded-xl p-4">
-                    <div class="flex items-center gap-2">
-                        <h3 class="font-semibold text-[#1F2333] text-sm">{{ $workplace->nama }}</h3>
-                        @if ($workplace->is_default)
-                            <span class="text-[10px] bg-[#FEF3C7] text-[#92400E] px-2 py-0.5 rounded-full">Default</span>
-                        @endif
+                <div class="bg-white border border-[#E7E9F5] rounded-xl overflow-hidden">
+                    <a href="{{ route('workplaces.projects.index', $workplace) }}" class="block p-4">
+                        <div class="flex items-center gap-2">
+                            <h3 class="font-semibold text-[#1F2333] text-sm">{{ $workplace->nama }}</h3>
+                            @if ($workplace->is_default)
+                                <span class="text-[10px] bg-[#FEF3C7] text-[#92400E] px-2 py-0.5 rounded-full">Default</span>
+                            @endif
+                        </div>
+                        <p class="text-xs text-[#7B7F99] mt-1">
+                            {{ $workplace->pivot->jabatan ?? '—' }}
+                            @if ($workplace->alamat) · {{ $workplace->alamat }} @endif
+                            @if ($workplace->hasCoordinates()) · <span class="text-[#2563EB]">📍</span> @endif
+                        </p>
+                        <p class="text-xs text-[#2563EB] mt-2">{{ $workplace->projects_count }} project →</p>
+                    </a>
+                    <div class="px-4 py-2 border-t border-[#F0EBDF]">
+                        <a href="{{ route('workplaces.edit', $workplace) }}" class="text-xs text-[#2563EB] font-medium">Edit</a>
                     </div>
-                    <p class="text-xs text-[#7B7F99] mt-1">
-                        {{ $workplace->pivot->jabatan ?? '—' }}
-                        @if ($workplace->alamat) · {{ $workplace->alamat }} @endif
-                    </p>
-                    <p class="text-xs text-[#2563EB] mt-2">{{ $workplace->projects_count }} project →</p>
-                </a>
+                </div>
             @empty
                 <p class="text-sm text-[#7B7F99] text-center py-8">Belum ada tempat kerja.</p>
             @endforelse
