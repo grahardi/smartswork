@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfileSetupController;
 use App\Http\Controllers\WorkplaceController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\DailyActionController;
 use App\Http\Controllers\DemoLoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,11 @@ Route::middleware(['auth', 'restrict.demo'])->group(function () {
     Route::get('/tempat-kerja/{workplace}/project', [ProjectController::class, 'index'])->name('workplaces.projects.index');
     Route::get('/tempat-kerja/{workplace}/project/tambah', [ProjectController::class, 'create'])->name('workplaces.projects.create');
     Route::post('/tempat-kerja/{workplace}/project', [ProjectController::class, 'store'])->name('workplaces.projects.store');
+
+    // Aksi Harian
+    Route::get('/aksi-harian', [DailyActionController::class, 'index'])->name('daily-actions.index');
+    Route::get('/aksi-harian/catat', [DailyActionController::class, 'create'])->name('daily-actions.create');
+    Route::post('/aksi-harian', [DailyActionController::class, 'store'])->name('daily-actions.store');
 });
 
 require __DIR__.'/auth.php';
