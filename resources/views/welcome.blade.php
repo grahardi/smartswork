@@ -188,6 +188,7 @@
             @auth
                 <a href="{{ url('/dashboard') }}" class="swk-cta">Dashboard</a>
             @else
+                <a href="{{ route('demo.login') }}" class="swk-plain">Coba demo</a>
                 <a href="{{ route('login') }}" class="swk-plain">Masuk</a>
                 @if (Route::has('register'))
                     <a href="{{ route('register') }}" class="swk-cta">Daftar</a>
@@ -205,7 +206,7 @@
                     @if (Route::has('register'))
                         <a href="{{ route('register') }}" class="swk-btn-primary">Mulai catat hari ini</a>
                     @endif
-                    <a href="{{ route('login') }}" class="swk-btn-ghost">Masuk</a>
+                    <a href="{{ route('demo.login') }}" class="swk-btn-ghost">Coba demo</a>
                 </div>
             </div>
             <div class="swk-log">
