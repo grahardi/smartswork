@@ -30,9 +30,10 @@ class DemoUserSeeder extends Seeder
             ]
         );
 
-        // Reset relasi lama biar seeder aman dijalankan berulang kali.
-        $demo->workplaces()->detach();
-        $demo->workplaces()->each(fn ($w) => $w->projects()->delete());
+        // Hapus workplace demo yang lama sepenuhnya (bukan cuma detach),
+        // supaya project & daily_actions ikut terhapus lewat cascadeOnDelete
+        // dan seeder ini aman dijalankan berulang kali.
+        $demo->workplaces()->get()->each(fn ($w) => $w->delete());
 
         $pribadi = $demo->provisionDefaultWorkplace();
 
