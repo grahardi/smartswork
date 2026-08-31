@@ -9,7 +9,7 @@
         <form method="POST" action="{{ route('gallery.store') }}" enctype="multipart/form-data" class="bg-white border border-[#E7E9F5] rounded-xl p-4 mb-5">
             @csrf
             <x-input-label value="Upload Foto (bisa lebih dari satu, maks 10MB/foto)" />
-            <input type="file" name="foto[]" accept="image/*" multiple capture="environment"
+            <input type="file" name="foto[]" accept="image/*" multiple
                 class="mt-2 block w-full text-sm text-[#6E675A]">
             <x-input-error :messages="$errors->get('foto')" class="mt-2" />
             <x-input-error :messages="$errors->get('foto.*')" class="mt-2" />
