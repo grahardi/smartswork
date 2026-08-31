@@ -2,12 +2,10 @@
     <x-slot name="header">Calendar</x-slot>
 
     @php
-        use Illuminate\Support\Carbon;
-
         $awalBulan = $periode->copy()->startOfMonth();
         $akhirBulan = $periode->copy()->endOfMonth();
-        $mulaiGrid = $awalBulan->copy()->startOfWeek(Carbon::SUNDAY);
-        $akhirGrid = $akhirBulan->copy()->endOfWeek(Carbon::SATURDAY);
+        $mulaiGrid = $awalBulan->copy()->startOfWeek(\Illuminate\Support\Carbon::SUNDAY);
+        $akhirGrid = $akhirBulan->copy()->endOfWeek(\Illuminate\Support\Carbon::SATURDAY);
 
         $bulanSebelum = $periode->copy()->subMonth()->format('Y-m');
         $bulanSesudah = $periode->copy()->addMonth()->format('Y-m');
@@ -72,7 +70,7 @@
         <div class="mt-5">
             <div class="flex items-center justify-between mb-3">
                 <h3 class="text-sm font-semibold text-[#262135] swk-heading">
-                    {{ Carbon::parse($tanggalDipilih)->translatedFormat('d F Y') }}
+                    {{ \Illuminate\Support\Carbon::parse($tanggalDipilih)->translatedFormat('d F Y') }}
                 </h3>
                 <button type="button" onclick="document.getElementById('swk-add-event').classList.toggle('hidden')" class="text-xs text-[#2563EB] font-medium">+ Tambah Event</button>
             </div>
