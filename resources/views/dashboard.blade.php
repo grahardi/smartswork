@@ -27,6 +27,9 @@
 
         <div class="bg-[#262135] text-white rounded-2xl p-5 mb-5 relative overflow-hidden">
             <div class="absolute -left-10 -top-10 w-32 h-32 rounded-full bg-white/5"></div>
+            <p class="relative text-[11px] text-white/50 mb-3" id="swk-clock">
+                {{ now()->translatedFormat('l, d F Y') }} · {{ now()->format('H:i') }} WIB
+            </p>
             <div class="relative flex items-center justify-between mb-4">
                 <p class="text-lg font-semibold swk-heading leading-tight">Hi!,<br>{{ explode(' ', $user->name)[0] }}</p>
                 <div class="w-11 h-11 rounded-full bg-[#FFC9E9] flex items-center justify-center text-[#262135] font-semibold">
@@ -43,6 +46,22 @@
                 </a>
             </div>
         </div>
+
+        <script>
+            (function () {
+                const hari = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+                const bulan = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+                function tick() {
+                    const now = new Date();
+                    const teks = hari[now.getDay()] + ', ' + now.getDate() + ' ' + bulan[now.getMonth()] + ' ' + now.getFullYear()
+                        + ' · ' + String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0') + ':' + String(now.getSeconds()).padStart(2,'0') + ' WIB';
+                    const el = document.getElementById('swk-clock');
+                    if (el) el.textContent = teks;
+                }
+                tick();
+                setInterval(tick, 1000);
+            })();
+        </script>
 
         @if (session('status'))
             <div class="mb-4 text-sm text-[#2563EB] bg-[#EFF6FF] border border-[#BFDBFE] rounded-lg px-4 py-3">
