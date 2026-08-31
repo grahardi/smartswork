@@ -4,266 +4,269 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SMARTS Work — Catatan kerja yang mengalir</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=DM+Sans:wght@500&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --ink: #2563EB;
-            --ink-soft: #4338CA;
-            --paper: #F5F6FD;
-            --paper-line: #E5E7F5;
-            --moss: #2563EB;
-            --ochre: #F59E0B;
-            --text-on-ink: #FFFFFF;
-            --text-on-ink-muted: #BFDBFE;
-            --text-on-paper: #1F2333;
-            --text-on-paper-muted: #7B7F99;
+            --navy: #043873;
+            --navy-soft: #0A4A8F;
+            --blue: #4F9CF9;
+            --blue-light: #C4DEFD;
+            --yellow: #FFE492;
+            --ink: #0F1B2D;
+            --muted: #5C6B82;
+            --bg: #FFFFFF;
+            --bg-alt: #F5F8FD;
+            --border: #E4EBF5;
         }
         * { box-sizing: border-box; }
-        body {
-            margin: 0;
-            font-family: 'IBM Plex Sans', sans-serif;
-            color: var(--text-on-paper);
-            background: var(--paper);
-        }
-        a { color: inherit; }
+        body { margin: 0; font-family: 'Inter', sans-serif; color: var(--ink); background: var(--bg); }
+        p { margin: 0; }
+        a { text-decoration: none; color: inherit; }
+        .wrap { max-width: 1360px; margin: 0 auto; padding: 0 24px; }
 
-        .swk-nav {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1.75rem 4rem;
-            max-width: 1200px;
-            margin: 0 auto;
+        /* Header */
+        header.swk-header {
+            background: var(--navy);
+            padding: 18px 0;
         }
-        .swk-nav-brand {
-            font-family: 'Newsreader', serif;
-            font-size: 20px;
-            font-weight: 500;
-        }
-        .swk-nav-links {
-            display: flex;
-            align-items: center;
-            gap: 28px;
-            font-size: 14px;
-        }
-        .swk-nav-links a.swk-cta {
-            background: var(--moss);
-            color: var(--paper);
-            padding: 9px 18px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .swk-nav-links a.swk-plain { text-decoration: none; color: var(--text-on-paper-muted); }
-        .swk-nav-links a.swk-plain:hover { color: var(--text-on-paper); }
+        .swk-header-inner { display: flex; align-items: center; justify-content: space-between; }
+        .swk-logo { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 22px; color: #fff; display: flex; align-items: center; gap: 10px; }
+        .swk-logo-mark { width: 30px; height: 30px; border-radius: 8px; background: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 14px; }
+        nav.swk-nav { display: flex; align-items: center; gap: 40px; }
+        .swk-nav-links { display: flex; gap: 28px; font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 15px; color: #fff; }
+        .swk-nav-btns { display: flex; gap: 14px; }
+        .swk-btn-yellow { background: var(--yellow); color: var(--navy); font-weight: 500; padding: 12px 22px; border-radius: 8px; font-size: 14.5px; }
+        .swk-btn-blue { background: var(--blue); color: #fff; font-weight: 500; padding: 12px 22px; border-radius: 8px; font-size: 14.5px; display: inline-flex; align-items: center; gap: 8px; }
 
+        /* Hero */
         .swk-hero {
-            background: var(--ink);
-            color: var(--text-on-ink);
-            padding: 4.5rem 4rem 5rem;
+            background: var(--navy);
+            padding: 90px 0 110px;
+            position: relative;
+            overflow: hidden;
         }
-        .swk-hero-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 0.9fr;
-            gap: 3rem;
-            align-items: center;
+        .swk-hero-inner { display: grid; grid-template-columns: 1fr 0.85fr; gap: 60px; align-items: center; position: relative; z-index: 1; }
+        .swk-hero h1 { color: #fff; font-weight: 800; font-size: 46px; line-height: 1.15; letter-spacing: -0.5px; margin-bottom: 20px; }
+        .swk-hero p.lede { color: rgba(255,255,255,0.75); font-size: 17px; line-height: 1.6; max-width: 460px; margin-bottom: 28px; }
+        .swk-hero-log {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 16px;
+            padding: 22px 26px;
         }
-        .swk-hero h1 {
-            font-family: 'Newsreader', serif;
-            font-weight: 400;
-            font-size: 44px;
-            line-height: 1.3;
-            margin: 0 0 1.5rem;
-            max-width: 520px;
-        }
-        .swk-hero h1 em { font-style: italic; }
-        .swk-hero p.swk-lede {
-            font-size: 16px;
-            line-height: 1.7;
-            color: var(--text-on-ink-muted);
-            max-width: 440px;
-            margin: 0 0 2rem;
-        }
-        .swk-hero-actions { display: flex; gap: 14px; }
-        .swk-btn-primary {
-            background: var(--ochre);
-            color: var(--ink);
-            padding: 12px 22px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 14.5px;
-        }
-        .swk-btn-ghost {
-            border: 1px solid rgba(237,231,217,0.3);
-            color: var(--text-on-ink);
-            padding: 12px 22px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 14.5px;
-        }
+        .swk-hero-log-entry { display: grid; grid-template-columns: 70px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .swk-hero-log-entry:last-child { border-bottom: none; padding-bottom: 0; }
+        .swk-hero-log-entry:first-child { padding-top: 0; }
+        .swk-hero-log-date { color: rgba(255,255,255,0.5); font-size: 13px; font-weight: 500; }
+        .swk-hero-log-body p.title { color: #fff; font-size: 13.5px; margin-bottom: 3px; }
+        .swk-hero-log-body span.tag { color: var(--yellow); font-size: 11.5px; }
 
-        .swk-log {
-            background: rgba(237,231,217,0.04);
-            border: 1px solid rgba(237,231,217,0.12);
-            border-radius: 10px;
-            padding: 1.5rem 1.75rem;
-        }
-        .swk-log-entry {
-            display: grid;
-            grid-template-columns: 70px 1fr;
-            gap: 16px;
-            padding: 14px 0;
-            border-bottom: 1px solid rgba(237,231,217,0.12);
-        }
-        .swk-log-entry:last-child { border-bottom: none; padding-bottom: 0; }
-        .swk-log-entry:first-child { padding-top: 0; }
-        .swk-log-date { font-family: 'Newsreader', serif; font-size: 14px; color: var(--text-on-ink-muted); padding-top: 2px; }
-        .swk-log-body p { margin: 0 0 4px; font-size: 13.5px; line-height: 1.55; }
-        .swk-log-tag { font-size: 11.5px; color: var(--ochre); }
-        .swk-log-tag::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--ochre); margin-right: 6px; }
+        /* Sections */
+        section.swk-section { padding: 90px 0; }
+        section.swk-section.alt { background: var(--bg-alt); }
+        .swk-section-head { max-width: 620px; margin: 0 auto 50px; text-align: center; }
+        .swk-section-head h2 { font-size: 32px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 14px; }
+        .swk-section-head p { color: var(--muted); font-size: 16px; line-height: 1.6; }
 
-        .swk-features {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 5rem 4rem;
-        }
-        .swk-features h2 {
-            font-family: 'Newsreader', serif;
-            font-weight: 400;
-            font-size: 28px;
-            max-width: 480px;
-            line-height: 1.4;
-            margin: 0 0 3rem;
-        }
-        .swk-feature-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 0;
-        }
-        .swk-feature {
-            border-left: 2px solid var(--moss);
-            padding: 0 1.5rem;
-        }
-        .swk-feature h3 {
-            font-size: 15px;
-            font-weight: 600;
-            margin: 0 0 10px;
-            color: var(--text-on-paper);
-        }
-        .swk-feature p {
-            font-size: 13.5px;
-            line-height: 1.65;
-            color: var(--text-on-paper-muted);
-            margin: 0;
-        }
+        .swk-feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .swk-feature-card { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 28px; }
+        .swk-feature-icon { width: 46px; height: 46px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+        .swk-feature-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+        .swk-feature-card p { color: var(--muted); font-size: 14.5px; line-height: 1.6; }
 
-        .swk-footer {
-            border-top: 1px solid var(--paper-line);
-            padding: 2rem 4rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            font-size: 13px;
-            color: var(--text-on-paper-muted);
-            display: flex;
-            justify-content: space-between;
+        .swk-split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .swk-split img.placeholder, .swk-split .placeholder {
+            background: var(--blue-light); border-radius: 20px; width: 100%; aspect-ratio: 4/3;
         }
+        .swk-split h2 { font-size: 30px; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.4px; }
+        .swk-split p.desc { color: var(--muted); font-size: 16px; line-height: 1.7; margin-bottom: 24px; }
+        .swk-btn-navy { background: var(--navy); color: #fff; font-weight: 500; padding: 14px 26px; border-radius: 8px; font-size: 15px; display: inline-flex; align-items: center; gap: 8px; }
+
+        /* CTA */
+        .swk-cta { background: var(--navy); border-radius: 24px; padding: 70px 40px; text-align: center; }
+        .swk-cta h2 { color: #fff; font-size: 32px; font-weight: 800; margin-bottom: 14px; }
+        .swk-cta p { color: rgba(255,255,255,0.7); font-size: 16px; margin-bottom: 30px; }
+
+        /* Footer */
+        footer.swk-footer { background: var(--navy); padding: 60px 0 30px; color: rgba(255,255,255,0.6); }
+        .swk-footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+        .swk-footer-grid h4 { color: #fff; font-size: 14px; font-weight: 700; margin-bottom: 16px; }
+        .swk-footer-grid a { display: block; font-size: 14px; margin-bottom: 10px; color: rgba(255,255,255,0.6); }
+        .swk-footer-bottom { border-top: 1px solid rgba(255,255,255,0.12); padding-top: 24px; font-size: 13px; display: flex; justify-content: space-between; }
 
         @media (max-width: 900px) {
-            .swk-nav, .swk-hero, .swk-features, .swk-footer { padding-left: 1.5rem; padding-right: 1.5rem; }
-            .swk-hero-inner { grid-template-columns: 1fr; }
-            .swk-feature-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem 1.5rem; }
+            nav.swk-nav .swk-nav-links { display: none; }
+            .swk-hero-inner, .swk-split { grid-template-columns: 1fr; }
+            .swk-feature-grid { grid-template-columns: 1fr; }
+            .swk-footer-grid { grid-template-columns: 1fr 1fr; }
+            .swk-hero h1 { font-size: 34px; }
         }
     </style>
 </head>
 <body>
-    <nav class="swk-nav">
-        <div class="swk-nav-brand">SMARTS Work</div>
-        <div class="swk-nav-links">
-            @auth
-                <a href="{{ url('/dashboard') }}" class="swk-cta">Dashboard</a>
-            @else
-                @if (config('demo.enabled'))
-                    <a href="{{ route('demo.login') }}" class="swk-plain">Coba demo</a>
-                @endif
-                <a href="{{ route('login') }}" class="swk-plain">Masuk</a>
-                @if (Route::has('register'))
-                    <a href="{{ route('register') }}" class="swk-cta">Daftar</a>
-                @endif
-            @endauth
+
+    <header class="swk-header">
+        <div class="wrap swk-header-inner">
+            <a href="{{ url('/') }}" class="swk-logo">
+                <span class="swk-logo-mark">SW</span>
+                SMARTS Work
+            </a>
+            <nav class="swk-nav">
+                <div class="swk-nav-links">
+                    <a href="#fitur">Fitur</a>
+                    <a href="#kolaborasi">Kolaborasi</a>
+                    <a href="#tentang">Tentang</a>
+                </div>
+                <div class="swk-nav-btns">
+                    @auth
+                        <a href="{{ url('/dashboard') }}" class="swk-btn-blue">Dashboard</a>
+                    @else
+                        <a href="{{ route('login') }}" class="swk-btn-yellow">Masuk</a>
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="swk-btn-blue">Daftar Gratis →</a>
+                        @endif
+                    @endauth
+                </div>
+            </nav>
         </div>
-    </nav>
+    </header>
 
     <section class="swk-hero">
-        <div class="swk-hero-inner">
+        <div class="wrap swk-hero-inner">
             <div>
-                <h1>Setiap hari kerjamu, <em>tercatat rapi</em> — apapun pekerjaannya.</h1>
-                <p class="swk-lede">Jurnal harian, jadwal, calendar, dan kolaborasi dalam satu tempat. Dari proyek kantor sampai urusan rumah — semua tercatat, tanpa ribet pindah-pindah aplikasi.</p>
-                <div class="swk-hero-actions">
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="swk-btn-primary">Mulai catat hari ini</a>
-                    @endif
-                    @if (config('demo.enabled'))
-                        <a href="{{ route('demo.login') }}" class="swk-btn-ghost">Coba demo</a>
-                    @endif
-                </div>
+                <h1>Setiap hari kerjamu, tercatat rapi.</h1>
+                <p class="lede">Jurnal harian, keuangan, tempat kerja, dan kolaborasi dengan teman — semua dalam satu tempat. Dari proyek kantor sampai urusan rumah, tanpa ribet pindah-pindah aplikasi.</p>
+                @if (Route::has('register'))
+                    <a href="{{ route('register') }}" class="swk-btn-blue">Mulai catat hari ini →</a>
+                @endif
             </div>
-            <div class="swk-log">
-                <div class="swk-log-entry">
-                    <div class="swk-log-date">23 Agt</div>
-                    <div class="swk-log-body">
-                        <p>Antar anak ke sekolah, lalu cek jaringan pelanggan area Turen.</p>
-                        <span class="swk-log-tag">Pribadi &amp; Bellanet</span>
+            <div class="swk-hero-log">
+                <div class="swk-hero-log-entry">
+                    <div class="swk-hero-log-date">23 Agt</div>
+                    <div class="swk-hero-log-body">
+                        <p class="title">Antar anak ke sekolah, lalu cek jaringan pelanggan.</p>
+                        <span class="tag">Pribadi &amp; Bellanet</span>
                     </div>
                 </div>
-                <div class="swk-log-entry">
-                    <div class="swk-log-date">22 Agt</div>
-                    <div class="swk-log-body">
-                        <p>Rilis modul jurnal harian, migrasi database ke MySQL.</p>
-                        <span class="swk-log-tag">SMARTS Work</span>
+                <div class="swk-hero-log-entry">
+                    <div class="swk-hero-log-date">22 Agt</div>
+                    <div class="swk-hero-log-body">
+                        <p class="title">Catat pemasukan proyek, saldo bulan ini otomatis update.</p>
+                        <span class="tag">Keuangan</span>
                     </div>
                 </div>
-                <div class="swk-log-entry">
-                    <div class="swk-log-date">21 Agt</div>
-                    <div class="swk-log-body">
-                        <p>Rapat evaluasi triwulan dengan tim IT sekolah.</p>
-                        <span class="swk-log-tag">SMP Negeri 1 Turen</span>
+                <div class="swk-hero-log-entry">
+                    <div class="swk-hero-log-date">21 Agt</div>
+                    <div class="swk-hero-log-body">
+                        <p class="title">Undang teman jadi kolaborator project — kerja bareng.</p>
+                        <span class="tag">Kolaborasi</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="swk-features">
-        <h2>Empat hal yang biasanya tercecer di aplikasi berbeda — sekarang satu tempat.</h2>
-        <div class="swk-feature-grid">
-            <div class="swk-feature">
-                <h3>Jurnal harian</h3>
-                <p>Catat aksi harian per proyek lengkap dengan foto dan keterangan, kapan saja sepanjang hari.</p>
+    <section class="swk-section" id="fitur">
+        <div class="wrap">
+            <div class="swk-section-head">
+                <h2>Semua yang biasanya tercecer, sekarang satu tempat</h2>
+                <p>Enam hal yang paling sering dicari orang tiap hari kerja — sudah kami rapikan jadi satu aplikasi.</p>
             </div>
-            <div class="swk-feature">
-                <h3>Jadwal kerja</h3>
-                <p>Atur shift dan jadwal, personal maupun tim, tanpa bentrok dengan agenda lain.</p>
+            <div class="swk-feature-grid">
+                <div class="swk-feature-card">
+                    <div class="swk-feature-icon" style="background:#EFF6FF;">✍️</div>
+                    <h3>Jurnal Harian</h3>
+                    <p>Catat aksi harian per proyek lengkap dengan foto dan keterangan, kapan saja sepanjang hari.</p>
+                </div>
+                <div class="swk-feature-card">
+                    <div class="swk-feature-icon" style="background:#FFF7E0;">🏢</div>
+                    <h3>Tempat Kerja</h3>
+                    <p>Kelola lebih dari satu tempat kerja sekaligus, lengkap dengan project dan titik lokasinya.</p>
+                </div>
+                <div class="swk-feature-card">
+                    <div class="swk-feature-icon" style="background:#E9F9F3;">💰</div>
+                    <h3>Keuangan</h3>
+                    <p>Pemasukan dan pengeluaran dengan kategori yang bisa kamu atur sendiri, plus riwayat lengkap.</p>
+                </div>
+                <div class="swk-feature-card">
+                    <div class="swk-feature-icon" style="background:#FDEFF7;">🏠</div>
+                    <h3>Tempat Tinggal</h3>
+                    <p>Simpan beberapa alamat dengan titik koordinat — satu ditandai sebagai tempat tinggal utama.</p>
+                </div>
+                <div class="swk-feature-card">
+                    <div class="swk-feature-icon" style="background:#EFF6FF;">🤝</div>
+                    <h3>Teman</h3>
+                    <p>Tambah teman, lalu saling lihat aktivitas kerja secara read-only — cukup dengan email.</p>
+                </div>
+                <div class="swk-feature-card">
+                    <div class="swk-feature-icon" style="background:#FFF7E0;">📋</div>
+                    <h3>Kolaborasi Project</h3>
+                    <p>Undang teman jadi kolaborator di project tertentu supaya bisa kerja bareng (cowork).</p>
+                </div>
             </div>
-            <div class="swk-feature">
-                <h3>Calendar</h3>
-                <p>Lihat semua janji, deadline, dan cuti dalam satu tampilan bersama jadwal kerja.</p>
+        </div>
+    </section>
+
+    <section class="swk-section alt" id="kolaborasi">
+        <div class="wrap swk-split">
+            <div class="placeholder"></div>
+            <div>
+                <h2>Kerja bareng teman, bukan cuma catat sendiri</h2>
+                <p class="desc">Undang teman yang sudah terhubung untuk jadi kolaborator di project tertentu. Mereka bisa ikut mencatat aksi harian di project itu — cocok untuk kerja lintas tim atau proyek bersama di luar tempat kerja formal.</p>
+                @if (Route::has('register'))
+                    <a href="{{ route('register') }}" class="swk-btn-navy">Coba sekarang →</a>
+                @endif
             </div>
-            <div class="swk-feature">
-                <h3>Kolaborasi</h3>
-                <p>Simpan dan bagikan dokumen per tim dengan izin akses yang jelas, seperti ruang kerja bersama.</p>
+        </div>
+    </section>
+
+    <section class="swk-section" id="tentang">
+        <div class="wrap">
+            <div class="swk-cta">
+                <h2>Mulai catat hari kerjamu sekarang</h2>
+                <p>Gratis, tanpa perlu kartu kredit. Data diri lengkap dalam hitungan menit.</p>
+                @if (Route::has('register'))
+                    <a href="{{ route('register') }}" class="swk-btn-blue">Daftar Gratis →</a>
+                @endif
             </div>
         </div>
     </section>
 
     <footer class="swk-footer">
-        <span>SMARTS Work</span>
-        <span>{{ date('Y') }}</span>
+        <div class="wrap">
+            <div class="swk-footer-grid">
+                <div>
+                    <div class="swk-logo" style="margin-bottom:14px;">
+                        <span class="swk-logo-mark">SW</span>
+                        SMARTS Work
+                    </div>
+                    <p style="font-size:14px; line-height:1.6; max-width:260px;">Satu tempat untuk jurnal, keuangan, tempat kerja, dan kolaborasi kerja sehari-hari.</p>
+                </div>
+                <div>
+                    <h4>Produk</h4>
+                    <a href="#fitur">Fitur</a>
+                    <a href="#kolaborasi">Kolaborasi</a>
+                </div>
+                <div>
+                    <h4>Akun</h4>
+                    <a href="{{ route('login') }}">Masuk</a>
+                    @if (Route::has('register'))<a href="{{ route('register') }}">Daftar</a>@endif
+                </div>
+                <div>
+                    <h4>Lainnya</h4>
+                    <a href="#tentang">Tentang</a>
+                </div>
+            </div>
+            <div class="swk-footer-bottom">
+                <span>SMARTS Work</span>
+                <span>© {{ date('Y') }}</span>
+            </div>
+        </div>
     </footer>
+
 </body>
 </html>
