@@ -13,6 +13,7 @@ use App\Http\Controllers\FriendDataController;
 use App\Http\Controllers\ProjectCollaboratorController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\DemoLoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -109,6 +110,11 @@ Route::middleware(['auth', 'restrict.demo'])->group(function () {
     Route::get('/galeri/tambah', [GalleryController::class, 'create'])->name('gallery.create');
     Route::post('/galeri', [GalleryController::class, 'store'])->name('gallery.store');
     Route::delete('/galeri/{photo}', [GalleryController::class, 'destroy'])->name('gallery.destroy');
+
+    // Calendar
+    Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
+    Route::post('/calendar', [CalendarController::class, 'store'])->name('calendar.store');
+    Route::delete('/calendar/{event}', [CalendarController::class, 'destroy'])->name('calendar.destroy');
 });
 
 require __DIR__.'/auth.php';

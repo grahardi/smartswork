@@ -8,6 +8,7 @@
             'Tools' => [
                 ['route' => 'daily-actions.create', 'label' => 'Catat Aksi', 'color' => '#2563EB', 'icon' => 'pencil'],
                 ['route' => 'daily-actions.index', 'label' => 'Aksi Harian', 'color' => '#DBA83B', 'icon' => 'list'],
+                ['route' => 'calendar.index', 'label' => 'Calendar', 'color' => '#DC2626', 'icon' => 'calendar'],
                 ['route' => 'finance.transactions.index', 'label' => 'Keuangan', 'color' => '#3E9B93', 'icon' => 'wallet'],
                 ['route' => 'notes.index', 'label' => 'Coretan', 'color' => '#DBA83B', 'icon' => 'note'],
                 ['route' => 'gallery.index', 'label' => 'Galeri', 'color' => '#D6549E', 'icon' => 'gallery'],
@@ -73,6 +74,9 @@
                                     @break
                                 @case('home')
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+                                    @break
+                                @case('calendar')
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
                                     @break
                                 @case('wallet')
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3"/><path d="M17 12h4v3h-4a1.5 1.5 0 0 1 0-3Z"/></svg>
