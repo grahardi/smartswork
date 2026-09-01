@@ -32,8 +32,12 @@
             </p>
             <div class="relative flex items-center justify-between mb-4">
                 <p class="text-lg font-semibold swk-heading leading-tight">Hi!,<br>{{ explode(' ', $user->name)[0] }}</p>
-                <div class="w-11 h-11 rounded-full bg-[#FFC9E9] flex items-center justify-center text-[#262135] font-semibold">
-                    {{ strtoupper(substr($user->name, 0, 1)) }}
+                <div class="w-11 h-11 rounded-full bg-[#FFC9E9] flex items-center justify-center text-[#262135] font-semibold overflow-hidden flex-shrink-0">
+                    @if ($user->profile?->foto_profil)
+                        <img src="{{ Storage::url($user->profile->foto_profil) }}" alt="" class="w-full h-full object-cover">
+                    @else
+                        {{ strtoupper(substr($user->name, 0, 1)) }}
+                    @endif
                 </div>
             </div>
             <div class="relative flex items-center justify-between">

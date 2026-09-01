@@ -104,7 +104,7 @@ class User extends Authenticatable
         $sentIds = $this->sentFriendRequests()->where('status', 'accepted')->pluck('addressee_id');
         $receivedIds = $this->receivedFriendRequests()->where('status', 'accepted')->pluck('requester_id');
 
-        return User::whereIn('id', $sentIds->merge($receivedIds))->get();
+        return User::with('profile')->whereIn('id', $sentIds->merge($receivedIds))->get();
     }
 
     public function isFriendsWith(User $other): bool

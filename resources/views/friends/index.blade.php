@@ -61,11 +61,20 @@
                 @forelse ($friends as $friend)
                     <div class="bg-white border border-[#E7E9F5] rounded-xl px-4 py-3">
                         <div class="flex items-center justify-between">
-                            <div>
-                                <span class="text-sm font-medium text-[#262135] swk-heading">{{ $friend->name }}</span>
-                                @if (!empty($labels[$friend->id]))
-                                    <span class="text-[10px] bg-[#EFF6FF] text-[#2563EB] px-2 py-0.5 rounded-full ml-1">{{ $labels[$friend->id] }}</span>
-                                @endif
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-9 h-9 rounded-full bg-[#EFF6FF] flex items-center justify-center text-[#2563EB] font-semibold text-xs overflow-hidden flex-shrink-0">
+                                    @if ($friend->profile?->foto_profil)
+                                        <img src="{{ Storage::url($friend->profile->foto_profil) }}" alt="" class="w-full h-full object-cover">
+                                    @else
+                                        {{ strtoupper(substr($friend->name, 0, 1)) }}
+                                    @endif
+                                </div>
+                                <div>
+                                    <span class="text-sm font-medium text-[#262135] swk-heading">{{ $friend->name }}</span>
+                                    @if (!empty($labels[$friend->id]))
+                                        <span class="text-[10px] bg-[#EFF6FF] text-[#2563EB] px-2 py-0.5 rounded-full ml-1">{{ $labels[$friend->id] }}</span>
+                                    @endif
+                                </div>
                             </div>
                             <form method="POST" action="{{ route('friends.destroy', $friend) }}" onsubmit="return confirm('Akhiri pertemanan dengan {{ $friend->name }}?')">
                                 @csrf @method('DELETE')
