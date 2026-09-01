@@ -16,6 +16,7 @@ use App\Http\Controllers\NoteController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\MemberController as AdminMemberController;
 use App\Http\Controllers\Admin\SettingController as AdminSettingController;
@@ -28,6 +29,9 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/demo', DemoLoginController::class)->name('demo.login');
+
+Route::get('/auth/google', [GoogleAuthController::class, 'redirect'])->name('auth.google');
+Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('auth.google.callback');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
