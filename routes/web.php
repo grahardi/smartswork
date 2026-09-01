@@ -15,6 +15,7 @@ use App\Http\Controllers\ProjectCollaboratorController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\DemoLoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -91,6 +92,11 @@ Route::middleware(['auth', 'restrict.demo'])->group(function () {
     Route::post('/teman/{friendship}/terima', [FriendController::class, 'accept'])->name('friends.accept');
     Route::post('/teman/{friendship}/tolak', [FriendController::class, 'decline'])->name('friends.decline');
     Route::delete('/teman/{friend}', [FriendController::class, 'destroy'])->name('friends.destroy');
+    Route::patch('/teman/{friend}/label', [FriendController::class, 'updateLabel'])->name('friends.label');
+
+    // Notifikasi
+    Route::get('/notifikasi', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::delete('/notifikasi/{notification}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
 
     // Lihat data teman (read-only, harus berteman dulu)
     Route::get('/teman/{friend}/aksi-harian', [FriendDataController::class, 'dailyActions'])->name('friends.aksi-harian');

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AppNotification;
 use App\Models\Friendship;
+use App\Models\FriendLabel;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,10 +18,12 @@ class FriendController extends Controller
 
         $friends = $user->friends();
 
+        $labels = FriendLabel::where('user_id', $user->id)->pluck('label', 'friend_user_id');
+
         $incoming = $user->receivedFriendRequests()->where('status', 'pending')->with('requester')->get();
         $outgoing = $user->sentFriendRequests()->where('status', 'pending')->with('addressee')->get();
 
-        return view('friends.index', compact('friends', 'incoming', 'outgoing'));
+        return view('friends.index', compact('friends', 'incoming', 'outgoing', 'labels'));
     }
 
     /**
@@ -61,6 +65,13 @@ class FriendController extends Controller
             'status' => 'pending',
         ]);
 
+        AppNotification::kirim(
+            $addresseeId,
+            'friend_request',
+            $user->name.' mengirim permintaan pertemanan.',
+            route('friends.index')
+        );
+
         return redirect()->route('friends.index')->with('status', 'Permintaan pertemanan terkirim.');
     }
 
@@ -69,6 +80,13 @@ class FriendController extends Controller
         abort_unless($friendship->addressee_id === $request->user()->id, 403);
 
         $friendship->update(['status' => 'accepted']);
+
+        AppNotification::kirim(
+            $friendship->requester_id,
+            'friend_accepted',
+            $request->user()->name.' menerima permintaan pertemanan kamu.',
+            route('friends.index')
+        );
 
         return redirect()->route('friends.index')->with('status', 'Pertemanan diterima.');
     }
@@ -94,5 +112,23 @@ class FriendController extends Controller
             ->delete();
 
         return redirect()->route('friends.index')->with('status', 'Pertemanan diakhiri.');
+    }
+
+    /**
+     * Set label hubungan (Suami/Istri, Anak, Rekan Kerja, dst) - perspektif milik user sendiri,
+     * tidak memengaruhi label yang dilihat teman untuk dirinya.
+     */
+    public function updateLabel(Request $request, User $friend): RedirectResponse
+    {
+        $validated = $request->validate([
+            'label' => ['nullable', 'string', 'max:50'],
+        ]);
+
+        FriendLabel::updateOrCreate(
+            ['user_id' => $request->user()->id, 'friend_user_id' => $friend->id],
+            ['label' => $validated['label'] ?: null]
+        );
+
+        return redirect()->route('friends.index');
     }
 }

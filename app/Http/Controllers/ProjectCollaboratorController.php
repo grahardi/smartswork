@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AppNotification;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -35,6 +36,13 @@ class ProjectCollaboratorController extends Controller
         $project->collaborators()->syncWithoutDetaching([
             $friend->id => ['role' => 'kolaborator'],
         ]);
+
+        AppNotification::kirim(
+            $friend->id,
+            'project_invite',
+            $request->user()->name.' mengundangmu jadi kolaborator project "'.$project->nama.'".',
+            route('workplaces.projects.index', $project->workplace_id)
+        );
 
         return redirect()->route('projects.collaborators.index', $project)
             ->with('status', $friend->name.' berhasil diundang jadi kolaborator project ini.');

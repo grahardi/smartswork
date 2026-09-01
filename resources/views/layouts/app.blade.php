@@ -49,12 +49,23 @@
             </div>
 
             @auth
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="text-[#7B7F99]" aria-label="Keluar" title="Keluar">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
-                    </button>
-                </form>
+                <div class="flex items-center gap-4">
+                    <a href="{{ route('notifications.index') }}" class="relative text-[#7B7F99]" aria-label="Notifikasi">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                        @php $swkUnread = auth()->user()->appNotifications()->where('is_read', false)->count(); @endphp
+                        @if ($swkUnread > 0)
+                            <span class="absolute -top-1.5 -right-1.5 bg-[#DC2626] text-white text-[9px] font-semibold rounded-full min-w-[16px] h-4 flex items-center justify-center px-1">
+                                {{ $swkUnread > 9 ? '9+' : $swkUnread }}
+                            </span>
+                        @endif
+                    </a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="text-[#7B7F99]" aria-label="Keluar" title="Keluar">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+                        </button>
+                    </form>
+                </div>
             @endauth
         </div>
     </header>

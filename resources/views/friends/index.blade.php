@@ -61,12 +61,29 @@
                 @forelse ($friends as $friend)
                     <div class="bg-white border border-[#E7E9F5] rounded-xl px-4 py-3">
                         <div class="flex items-center justify-between">
-                            <span class="text-sm font-medium text-[#262135] swk-heading">{{ $friend->name }}</span>
+                            <div>
+                                <span class="text-sm font-medium text-[#262135] swk-heading">{{ $friend->name }}</span>
+                                @if (!empty($labels[$friend->id]))
+                                    <span class="text-[10px] bg-[#EFF6FF] text-[#2563EB] px-2 py-0.5 rounded-full ml-1">{{ $labels[$friend->id] }}</span>
+                                @endif
+                            </div>
                             <form method="POST" action="{{ route('friends.destroy', $friend) }}" onsubmit="return confirm('Akhiri pertemanan dengan {{ $friend->name }}?')">
                                 @csrf @method('DELETE')
                                 <button type="submit" class="text-xs text-[#DC2626]">Hapus</button>
                             </form>
                         </div>
+
+                        <form method="POST" action="{{ route('friends.label', $friend) }}" class="mt-2">
+                            @csrf @method('PATCH')
+                            <select name="label" onchange="this.form.submit()"
+                                class="text-xs rounded-lg border-[#E5E7F5] focus:border-[#2563EB] focus:ring-[#2563EB] py-1">
+                                <option value="">Pilih hubungan...</option>
+                                @foreach (['Suami', 'Istri', 'Anak', 'Orang Tua', 'Saudara', 'Rekan Kerja', 'Teman', 'Tetangga', 'Lainnya'] as $opt)
+                                    <option value="{{ $opt }}" @selected(($labels[$friend->id] ?? '') === $opt)>{{ $opt }}</option>
+                                @endforeach
+                            </select>
+                        </form>
+
                         <div class="flex items-center gap-3 mt-2">
                             <a href="{{ route('friends.aksi-harian', $friend) }}" class="text-xs text-[#2563EB]">Lihat Aksi Harian</a>
                             <a href="{{ route('friends.keuangan', $friend) }}" class="text-xs text-[#2563EB]">Lihat Keuangan</a>

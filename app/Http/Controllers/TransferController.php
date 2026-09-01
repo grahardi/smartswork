@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AppNotification;
 use App\Models\FinanceCategory;
 use App\Models\Transfer;
 use App\Models\User;
@@ -68,6 +69,13 @@ class TransferController extends Controller
                 'jumlah' => $validated['jumlah'],
                 'keterangan' => 'Transfer dari '.$sender->name.($keterangan ? ': '.$keterangan : ''),
             ]);
+
+            AppNotification::kirim(
+                $receiver->id,
+                'transfer_received',
+                $sender->name.' mentransfer Rp'.number_format($validated['jumlah'], 0, ',', '.').' ke kamu.',
+                route('finance.transactions.index')
+            );
         });
 
         return redirect()->route('finance.transactions.index')
