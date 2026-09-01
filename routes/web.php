@@ -7,6 +7,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\DailyActionController;
 use App\Http\Controllers\FinanceCategoryController;
 use App\Http\Controllers\FinanceTransactionController;
+use App\Http\Controllers\TransferController;
 use App\Http\Controllers\ResidenceController;
 use App\Http\Controllers\FriendController;
 use App\Http\Controllers\FriendDataController;
@@ -78,6 +79,10 @@ Route::middleware(['auth', 'restrict.demo'])->group(function () {
     Route::get('/keuangan/{transaction}/edit', [FinanceTransactionController::class, 'edit'])->name('finance.transactions.edit');
     Route::put('/keuangan/{transaction}', [FinanceTransactionController::class, 'update'])->name('finance.transactions.update');
     Route::delete('/keuangan/{transaction}', [FinanceTransactionController::class, 'destroy'])->name('finance.transactions.destroy');
+
+    // Transfer saldo ke teman
+    Route::get('/keuangan/transfer', [TransferController::class, 'create'])->name('finance.transfer.create');
+    Route::post('/keuangan/transfer', [TransferController::class, 'store'])->name('finance.transfer.store');
 
     // Teman
     Route::get('/teman', [FriendController::class, 'index'])->name('friends.index');

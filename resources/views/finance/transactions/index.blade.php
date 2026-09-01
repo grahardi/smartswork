@@ -9,6 +9,7 @@
             </form>
             <div class="flex items-center gap-3">
                 <a href="{{ route('finance.categories.index') }}" class="text-xs text-[#262135] font-medium">Kategori</a>
+                <a href="{{ route('finance.transfer.create') }}" class="text-xs text-[#262135] font-medium">Transfer</a>
                 <a href="{{ route('finance.transactions.create') }}" class="text-sm font-medium text-white bg-[#2563EB] px-4 py-2 rounded-full">+ Catat</a>
             </div>
         </div>
