@@ -72,7 +72,8 @@
                                 <div>
                                     <span class="text-sm font-medium text-[#262135] swk-heading">{{ $friend->name }}</span>
                                     @if (!empty($labels[$friend->id]))
-                                        <span class="text-[10px] bg-[#EFF6FF] text-[#2563EB] px-2 py-0.5 rounded-full ml-1">{{ $labels[$friend->id] }}</span>
+                                        <button type="button" onclick="swkToggleLabelEdit({{ $friend->id }})"
+                                            class="text-[10px] bg-[#EFF6FF] text-[#2563EB] px-2 py-0.5 rounded-full ml-1">{{ $labels[$friend->id] }}</button>
                                     @endif
                                 </div>
                             </div>
@@ -82,8 +83,13 @@
                             </form>
                         </div>
 
-                        <form method="POST" action="{{ route('friends.label', $friend) }}" class="mt-2">
+                        <form method="POST" action="{{ route('friends.label', $friend) }}"
+                              id="swk-label-form-{{ $friend->id }}"
+                              class="mt-2 {{ !empty($labels[$friend->id]) ? 'hidden' : '' }}">
                             @csrf @method('PATCH')
+                            @if (!empty($labels[$friend->id]))
+                                <p class="text-[11px] text-[#9CA3AF] mb-1.5">Ubah hubungan menurut kamu — tidak memengaruhi tampilan di akun {{ $friend->name }}.</p>
+                            @endif
                             <select name="label" onchange="this.form.submit()"
                                 class="text-xs rounded-lg border-[#E5E7F5] focus:border-[#2563EB] focus:ring-[#2563EB] py-1">
                                 <option value="">Pilih hubungan...</option>
@@ -105,4 +111,10 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function swkToggleLabelEdit(friendId) {
+            document.getElementById('swk-label-form-' + friendId).classList.toggle('hidden');
+        }
+    </script>
 </x-app-layout>
