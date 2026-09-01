@@ -4,19 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class ProfileSetupController extends Controller
 {
     /**
-     * Tampilkan form Data Diri (dipanggil sekali setelah registrasi,
-     * tapi juga bisa dibuka lagi untuk edit).
+     * Alias lama - sekarang diarahkan ke halaman Akun gabungan
+     * (Data Diri + Info Akun + Password jadi satu halaman).
      */
-    public function create(Request $request): View
+    public function create(): RedirectResponse
     {
-        $profile = $request->user()->profile;
-
-        return view('profile.create', compact('profile'));
+        return redirect()->route('profile.edit');
     }
 
     public function store(Request $request): RedirectResponse
@@ -45,7 +42,7 @@ class ProfileSetupController extends Controller
             ]
         );
 
-        // Lanjut ke dashboard/daftar tempat kerja setelah Data Diri lengkap.
-        return redirect()->route('dashboard')->with('status', 'Data diri berhasil disimpan.');
+        // Lanjut ke halaman akun gabungan (Data Diri + Info Akun + Password).
+        return redirect()->route('profile.edit')->with('status', 'Data diri berhasil disimpan.');
     }
 }

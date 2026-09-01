@@ -16,7 +16,6 @@
             'Data Personal' => [
                 ['route' => 'workplaces.index', 'label' => 'Tempat Kerja', 'color' => '#262135', 'icon' => 'briefcase'],
                 ['route' => 'residences.index', 'label' => 'Tempat Tinggal', 'color' => '#D6549E', 'icon' => 'home'],
-                ['route' => 'profile.create', 'label' => 'Data Diri', 'color' => '#7B7F99', 'icon' => 'user'],
                 ['route' => 'friends.index', 'label' => 'Teman', 'color' => '#3B82F6', 'icon' => 'friends'],
                 ['route' => 'profile.edit', 'label' => 'Akun', 'color' => '#5A556B', 'icon' => 'settings'],
             ],
