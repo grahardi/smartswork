@@ -138,8 +138,8 @@
     <section class="swk-hero">
         <div class="wrap swk-hero-inner">
             <div>
-                <h1>Setiap hari kerjamu, tercatat rapi.</h1>
-                <p class="lede">Jurnal harian, keuangan, tempat kerja, dan kolaborasi dengan teman — semua dalam satu tempat. Dari proyek kantor sampai urusan rumah, tanpa ribet pindah-pindah aplikasi.</p>
+                <h1>{{ \App\Models\Setting::get('landing_headline', 'Setiap hari kerjamu, tercatat rapi.') }}</h1>
+                <p class="lede">{{ \App\Models\Setting::get('landing_subtext', 'Jurnal harian, keuangan, tempat kerja, dan kolaborasi dengan teman — semua dalam satu tempat. Dari proyek kantor sampai urusan rumah, tanpa ribet pindah-pindah aplikasi.') }}</p>
                 @if (Route::has('register'))
                     <a href="{{ route('register') }}" class="swk-btn-blue">Mulai catat hari ini →</a>
                 @endif
@@ -227,8 +227,8 @@
     <section class="swk-section" id="tentang">
         <div class="wrap">
             <div class="swk-cta">
-                <h2>Mulai catat hari kerjamu sekarang</h2>
-                <p>Gratis, tanpa perlu kartu kredit. Data diri lengkap dalam hitungan menit.</p>
+                <h2>{{ \App\Models\Setting::get('landing_cta_headline', 'Mulai catat hari kerjamu sekarang') }}</h2>
+                <p>{{ \App\Models\Setting::get('landing_cta_subtext', 'Gratis, tanpa perlu kartu kredit. Data diri lengkap dalam hitungan menit.') }}</p>
                 @if (Route::has('register'))
                     <a href="{{ route('register') }}" class="swk-btn-blue">Daftar Gratis →</a>
                 @endif

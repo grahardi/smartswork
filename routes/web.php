@@ -16,6 +16,10 @@ use App\Http\Controllers\NoteController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\MemberController as AdminMemberController;
+use App\Http\Controllers\Admin\SettingController as AdminSettingController;
+use App\Http\Controllers\Admin\LandingPageController as AdminLandingPageController;
 use App\Http\Controllers\DemoLoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,9 +31,24 @@ Route::get('/demo', DemoLoginController::class)->name('demo.login');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', 'active'])->name('dashboard');
 
-Route::middleware(['auth', 'restrict.demo'])->group(function () {
+Route::middleware(['auth', 'active', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/member', [AdminMemberController::class, 'index'])->name('members.index');
+    Route::patch('/member/{member}/aktif', [AdminMemberController::class, 'toggleActive'])->name('members.toggle-active');
+    Route::patch('/member/{member}/admin', [AdminMemberController::class, 'toggleAdmin'])->name('members.toggle-admin');
+    Route::delete('/member/{member}', [AdminMemberController::class, 'destroy'])->name('members.destroy');
+
+    Route::get('/pengaturan', [AdminSettingController::class, 'edit'])->name('settings.edit');
+    Route::put('/pengaturan', [AdminSettingController::class, 'update'])->name('settings.update');
+
+    Route::get('/halaman-depan', [AdminLandingPageController::class, 'edit'])->name('landing.edit');
+    Route::put('/halaman-depan', [AdminLandingPageController::class, 'update'])->name('landing.update');
+});
+
+Route::middleware(['auth', 'active', 'restrict.demo'])->group(function () {
     // Profil akun bawaan Breeze
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
