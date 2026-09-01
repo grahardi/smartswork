@@ -99,10 +99,45 @@
                             </select>
                         </form>
 
-                        <div class="flex items-center gap-3 mt-2">
-                            <a href="{{ route('friends.aksi-harian', $friend) }}" class="text-xs text-[#2563EB]">Lihat Aksi Harian</a>
-                            <a href="{{ route('friends.keuangan', $friend) }}" class="text-xs text-[#2563EB]">Lihat Keuangan</a>
-                            <a href="{{ route('friends.tempat-kerja', $friend) }}" class="text-xs text-[#2563EB]">Lihat Tempat Kerja</a>
+                        <div class="flex items-center gap-3 mt-2 flex-wrap">
+                            @php $izinDiterima = $grantedToMe[$friend->id] ?? null; @endphp
+                            @if ($izinDiterima?->can_view_aksi_harian)
+                                <a href="{{ route('friends.aksi-harian', $friend) }}" class="text-xs text-[#2563EB]">Lihat Aksi Harian</a>
+                            @endif
+                            @if ($izinDiterima?->can_view_keuangan)
+                                <a href="{{ route('friends.keuangan', $friend) }}" class="text-xs text-[#2563EB]">Lihat Keuangan</a>
+                            @endif
+                            @if ($izinDiterima?->can_view_tempat_kerja)
+                                <a href="{{ route('friends.tempat-kerja', $friend) }}" class="text-xs text-[#2563EB]">Lihat Tempat Kerja</a>
+                            @endif
+                            @unless ($izinDiterima?->can_view_aksi_harian || $izinDiterima?->can_view_keuangan || $izinDiterima?->can_view_tempat_kerja)
+                                <span class="text-[11px] text-[#9CA3AF]">{{ $friend->name }} belum mengizinkanmu melihat apa pun.</span>
+                            @endunless
+                        </div>
+
+                        <div class="mt-3 pt-3 border-t border-[#F0EBDF]">
+                            <button type="button" onclick="swkToggleAccess({{ $friend->id }})" class="text-xs text-[#7B7F99] font-medium">
+                                🔒 Atur Akses untuk {{ $friend->name }}
+                            </button>
+
+                            @php $izinSaya = $grantedByMe[$friend->id] ?? null; @endphp
+                            <form method="POST" action="{{ route('friends.permissions', $friend) }}" id="swk-access-{{ $friend->id }}" class="hidden mt-2 space-y-1.5">
+                                @csrf @method('PATCH')
+                                <p class="text-[11px] text-[#9CA3AF] mb-1">Apa saja dari data kamu yang boleh dilihat {{ $friend->name }}? (default semua tersembunyi)</p>
+                                <label class="flex items-center gap-2 text-xs text-[#262135]">
+                                    <input type="checkbox" name="can_view_aksi_harian" value="1" @checked($izinSaya?->can_view_aksi_harian)>
+                                    Aksi Harian
+                                </label>
+                                <label class="flex items-center gap-2 text-xs text-[#262135]">
+                                    <input type="checkbox" name="can_view_keuangan" value="1" @checked($izinSaya?->can_view_keuangan)>
+                                    Keuangan
+                                </label>
+                                <label class="flex items-center gap-2 text-xs text-[#262135]">
+                                    <input type="checkbox" name="can_view_tempat_kerja" value="1" @checked($izinSaya?->can_view_tempat_kerja)>
+                                    Tempat Kerja
+                                </label>
+                                <button type="submit" class="mt-1 text-xs font-medium text-white bg-[#2563EB] px-3 py-1.5 rounded-lg">Simpan Akses</button>
+                            </form>
                         </div>
                     </div>
                 @empty
@@ -115,6 +150,9 @@
     <script>
         function swkToggleLabelEdit(friendId) {
             document.getElementById('swk-label-form-' + friendId).classList.toggle('hidden');
+        }
+        function swkToggleAccess(friendId) {
+            document.getElementById('swk-access-' + friendId).classList.toggle('hidden');
         }
     </script>
 </x-app-layout>

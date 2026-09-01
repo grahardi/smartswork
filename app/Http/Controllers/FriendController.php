@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AppNotification;
 use App\Models\Friendship;
 use App\Models\FriendLabel;
+use App\Models\FriendPermission;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -17,13 +18,26 @@ class FriendController extends Controller
         $user = $request->user();
 
         $friends = $user->friends();
+        $friendIds = $friends->pluck('id');
 
         $labels = FriendLabel::where('user_id', $user->id)->pluck('label', 'friend_user_id');
+
+        // Izin yang SAYA berikan ke tiap teman (untuk ditampilkan/diedit di panel kontrol saya).
+        $grantedByMe = FriendPermission::where('user_id', $user->id)
+            ->whereIn('friend_user_id', $friendIds)
+            ->get()
+            ->keyBy('friend_user_id');
+
+        // Izin yang tiap teman berikan ke SAYA (untuk tahu link "Lihat X" mana yang boleh dipakai).
+        $grantedToMe = FriendPermission::where('friend_user_id', $user->id)
+            ->whereIn('user_id', $friendIds)
+            ->get()
+            ->keyBy('user_id');
 
         $incoming = $user->receivedFriendRequests()->where('status', 'pending')->with('requester')->get();
         $outgoing = $user->sentFriendRequests()->where('status', 'pending')->with('addressee')->get();
 
-        return view('friends.index', compact('friends', 'incoming', 'outgoing', 'labels'));
+        return view('friends.index', compact('friends', 'incoming', 'outgoing', 'labels', 'grantedByMe', 'grantedToMe'));
     }
 
     /**
@@ -130,5 +144,23 @@ class FriendController extends Controller
         );
 
         return redirect()->route('friends.index');
+    }
+
+    /**
+     * Atur apa saja yang boleh dilihat teman ini dari data SAYA.
+     * Default semua tersembunyi (false) sampai dicentang manual.
+     */
+    public function updatePermissions(Request $request, User $friend): RedirectResponse
+    {
+        FriendPermission::updateOrCreate(
+            ['user_id' => $request->user()->id, 'friend_user_id' => $friend->id],
+            [
+                'can_view_aksi_harian' => $request->boolean('can_view_aksi_harian'),
+                'can_view_keuangan' => $request->boolean('can_view_keuangan'),
+                'can_view_tempat_kerja' => $request->boolean('can_view_tempat_kerja'),
+            ]
+        );
+
+        return redirect()->route('friends.index')->with('status', 'Pengaturan akses untuk '.$friend->name.' disimpan.');
     }
 }

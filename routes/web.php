@@ -92,6 +92,7 @@ Route::middleware(['auth', 'restrict.demo'])->group(function () {
     Route::post('/teman/{friendship}/tolak', [FriendController::class, 'decline'])->name('friends.decline');
     Route::delete('/teman/{friend}', [FriendController::class, 'destroy'])->name('friends.destroy');
     Route::patch('/teman/{friend}/label', [FriendController::class, 'updateLabel'])->name('friends.label');
+    Route::patch('/teman/{friend}/akses', [FriendController::class, 'updatePermissions'])->name('friends.permissions');
 
     // Notifikasi
     Route::get('/notifikasi', [NotificationController::class, 'index'])->name('notifications.index');
