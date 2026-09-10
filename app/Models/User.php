@@ -17,6 +17,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'password_set',
         'is_demo',
         'google_id',
     ];

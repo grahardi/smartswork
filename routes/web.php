@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfileSetupController;
+use App\Http\Controllers\SetInitialPasswordController;
 use App\Http\Controllers\WorkplaceController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\DailyActionController;
@@ -56,6 +57,7 @@ Route::middleware(['auth', 'active', 'restrict.demo'])->group(function () {
     // Profil akun bawaan Breeze
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/buat-password', [SetInitialPasswordController::class, 'store'])->name('password.set-initial');
 
     // Data Diri (step setelah registrasi)
     Route::get('/data-diri', [ProfileSetupController::class, 'create'])->name('profile.create');
