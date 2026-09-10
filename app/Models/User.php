@@ -83,6 +83,11 @@ class User extends Authenticatable
         return $this->hasMany(AppNotification::class, 'user_id')->orderByDesc('created_at');
     }
 
+    public function businesses(): BelongsToMany
+    {
+        return $this->belongsToMany(Business::class, 'business_user')->withPivot('role')->withTimestamps();
+    }
+
     public function photos(): HasMany
     {
         return $this->hasMany(Photo::class);

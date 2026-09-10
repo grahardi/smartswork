@@ -120,6 +120,19 @@
             </div>
         @endforeach
 
+        <div class="mt-6 bg-[#262135] rounded-xl p-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-xs text-white/50">Punya usaha?</p>
+                    <p class="text-sm font-medium text-white swk-heading">SMARTS Business</p>
+                    <p class="text-[11px] text-white/50 mt-1">Akuntansi: Jurnal, Neraca, Laba Rugi</p>
+                </div>
+                <a href="{{ route('business.index') }}" class="bg-[#2563EB] text-white text-xs font-semibold px-4 py-2 rounded-full flex-shrink-0">
+                    Buka →
+                </a>
+            </div>
+        </div>
+
         <div class="bg-white border border-[#E7E9F5] rounded-xl p-4 mt-5">
             <div class="flex items-center justify-between mb-3">
                 <h3 class="font-semibold text-sm">Aksi terakhir</h3>

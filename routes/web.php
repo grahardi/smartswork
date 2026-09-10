@@ -22,6 +22,11 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\MemberController as AdminMemberController;
 use App\Http\Controllers\Admin\SettingController as AdminSettingController;
 use App\Http\Controllers\Admin\LandingPageController as AdminLandingPageController;
+use App\Http\Controllers\Business\BusinessController;
+use App\Http\Controllers\Business\BusinessDashboardController;
+use App\Http\Controllers\Business\ChartOfAccountController;
+use App\Http\Controllers\Business\JournalEntryController;
+use App\Http\Controllers\Business\ReportController as BusinessReportController;
 use App\Http\Controllers\DemoLoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -51,6 +56,35 @@ Route::middleware(['auth', 'active', 'admin'])->prefix('admin')->name('admin.')-
 
     Route::get('/halaman-depan', [AdminLandingPageController::class, 'edit'])->name('landing.edit');
     Route::put('/halaman-depan', [AdminLandingPageController::class, 'update'])->name('landing.update');
+});
+
+// SMARTS Business - harus login (personal) dulu sebelum bisa daftar/akses business.
+Route::middleware(['auth', 'active'])->prefix('business')->name('business.')->group(function () {
+    Route::get('/', [BusinessController::class, 'index'])->name('index');
+    Route::get('/daftar', [BusinessController::class, 'create'])->name('create');
+    Route::post('/', [BusinessController::class, 'store'])->name('store');
+    Route::post('/{business}/pilih', [BusinessController::class, 'switchTo'])->name('switch');
+
+    Route::middleware('business.member')->group(function () {
+        Route::get('/{business}', [BusinessDashboardController::class, 'index'])->name('dashboard');
+
+        Route::get('/{business}/coa', [ChartOfAccountController::class, 'index'])->name('coa.index');
+        Route::get('/{business}/coa/tambah', [ChartOfAccountController::class, 'create'])->name('coa.create');
+        Route::post('/{business}/coa', [ChartOfAccountController::class, 'store'])->name('coa.store');
+        Route::get('/{business}/coa/{account}/edit', [ChartOfAccountController::class, 'edit'])->name('coa.edit');
+        Route::put('/{business}/coa/{account}', [ChartOfAccountController::class, 'update'])->name('coa.update');
+        Route::delete('/{business}/coa/{account}', [ChartOfAccountController::class, 'destroy'])->name('coa.destroy');
+
+        Route::get('/{business}/jurnal', [JournalEntryController::class, 'index'])->name('journal.index');
+        Route::get('/{business}/jurnal/catat', [JournalEntryController::class, 'create'])->name('journal.create');
+        Route::post('/{business}/jurnal', [JournalEntryController::class, 'store'])->name('journal.store');
+        Route::delete('/{business}/jurnal/{entry}', [JournalEntryController::class, 'destroy'])->name('journal.destroy');
+
+        Route::get('/{business}/laporan/neraca-saldo', [BusinessReportController::class, 'neracaSaldo'])->name('reports.neraca-saldo');
+        Route::get('/{business}/laporan/buku-besar/{account}', [BusinessReportController::class, 'bukuBesar'])->name('reports.buku-besar');
+        Route::get('/{business}/laporan/neraca', [BusinessReportController::class, 'neraca'])->name('reports.neraca');
+        Route::get('/{business}/laporan/laba-rugi', [BusinessReportController::class, 'labaRugi'])->name('reports.laba-rugi');
+    });
 });
 
 Route::middleware(['auth', 'active', 'restrict.demo'])->group(function () {
