@@ -9,8 +9,10 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules;
+use Illuminate\Validation\ValidationException;
 
 class RegisteredUserController extends Controller
 {
@@ -26,6 +28,8 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+
+        $this->verifyTurnstile($request);
 
         $user = User::create([
             'name' => $validated['name'],
@@ -43,5 +47,39 @@ class RegisteredUserController extends Controller
 
         // Arahkan ke step "Data Diri" dulu sebelum masuk dashboard.
         return redirect()->route('profile.create');
+    }
+
+    /**
+     * Verifikasi Cloudflare Turnstile - khusus dipanggil saat registrasi
+     * supaya bot/spam sulit bikin akun massal.
+     */
+    protected function verifyTurnstile(Request $request): void
+    {
+        $secretKey = config('services.turnstile.secret_key');
+
+        // Kalau belum di-setup (secret key kosong), lewati saja - tidak memblokir registrasi.
+        if (! $secretKey) {
+            return;
+        }
+
+        $token = $request->input('cf-turnstile-response');
+
+        if (! $token) {
+            throw ValidationException::withMessages([
+                'name' => 'Verifikasi keamanan gagal, silakan coba lagi.',
+            ]);
+        }
+
+        $response = Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
+            'secret' => $secretKey,
+            'response' => $token,
+            'remoteip' => $request->ip(),
+        ]);
+
+        if (! $response->json('success')) {
+            throw ValidationException::withMessages([
+                'name' => 'Verifikasi keamanan gagal, silakan coba lagi.',
+            ]);
+        }
     }
 }
