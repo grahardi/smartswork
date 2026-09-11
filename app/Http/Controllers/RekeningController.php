@@ -73,71 +73,60 @@ class RekeningController extends Controller
     }
 
     /**
-     * Setor Tunai (cash -> rekening) atau Tarik Tunai (rekening -> cash).
-     * Membuat 2 baris transaksi otomatis, dikelompokkan lewat kategori
-     * "Setor/Tarik Tunai" yang dibuat otomatis kalau belum ada.
+     * Pindah Saldo - generalisasi dari Cash/Bank/E-wallet manapun ke
+     * Cash/Bank/E-wallet manapun. Total kekayaan tidak berubah, cuma
+     * pindah "kantong". 2 baris transaksi otomatis dibuat, dikelompokkan
+     * lewat kategori "Pindah Saldo" yang dibuat otomatis kalau belum ada.
      */
     public function pindahStore(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'bank_account_id' => ['required', 'exists:bank_accounts,id'],
-            'arah' => ['required', 'in:setor,tarik'],
+            'dari' => ['required', 'string'], // 'cash' atau id rekening
+            'ke' => ['required', 'string', 'different:dari'],
             'jumlah' => ['required', 'numeric', 'min:1'],
             'keterangan' => ['nullable', 'string', 'max:255'],
         ]);
 
         $user = $request->user();
-        $rekening = $user->bankAccounts()->findOrFail($validated['bank_account_id']);
 
-        DB::transaction(function () use ($user, $rekening, $validated) {
+        $ambilRekening = function ($val) use ($user) {
+            return $val === 'cash' ? null : $user->bankAccounts()->findOrFail($val);
+        };
+
+        $dariRekening = $ambilRekening($validated['dari']);
+        $keRekening = $ambilRekening($validated['ke']);
+
+        DB::transaction(function () use ($user, $dariRekening, $keRekening, $validated) {
             $kategoriKeluar = FinanceCategory::firstOrCreate(
-                ['user_id' => $user->id, 'nama' => 'Setor/Tarik Tunai', 'type' => 'pengeluaran'],
+                ['user_id' => $user->id, 'nama' => 'Pindah Saldo', 'type' => 'pengeluaran'],
                 ['warna' => '#667085']
             );
             $kategoriMasuk = FinanceCategory::firstOrCreate(
-                ['user_id' => $user->id, 'nama' => 'Setor/Tarik Tunai', 'type' => 'pemasukan'],
+                ['user_id' => $user->id, 'nama' => 'Pindah Saldo', 'type' => 'pemasukan'],
                 ['warna' => '#667085']
             );
 
             $ket = $validated['keterangan'] ?? null;
-            $labelRekening = $rekening->nama_bank.($rekening->no_rekening ? ' ('.$rekening->no_rekening.')' : '');
+            $labelDari = $dariRekening ? $dariRekening->nama_bank : 'Cash';
+            $labelKe = $keRekening ? $keRekening->nama_bank : 'Cash';
 
-            if ($validated['arah'] === 'setor') {
-                // Cash berkurang, rekening bertambah.
-                $user->financeTransactions()->create([
-                    'finance_category_id' => $kategoriKeluar->id,
-                    'bank_account_id' => null,
-                    'tanggal' => now()->toDateString(),
-                    'jumlah' => $validated['jumlah'],
-                    'keterangan' => 'Setor tunai ke '.$labelRekening.($ket ? ': '.$ket : ''),
-                ]);
-                $user->financeTransactions()->create([
-                    'finance_category_id' => $kategoriMasuk->id,
-                    'bank_account_id' => $rekening->id,
-                    'tanggal' => now()->toDateString(),
-                    'jumlah' => $validated['jumlah'],
-                    'keterangan' => 'Setor tunai dari cash'.($ket ? ': '.$ket : ''),
-                ]);
-            } else {
-                // Rekening berkurang, cash bertambah.
-                $user->financeTransactions()->create([
-                    'finance_category_id' => $kategoriKeluar->id,
-                    'bank_account_id' => $rekening->id,
-                    'tanggal' => now()->toDateString(),
-                    'jumlah' => $validated['jumlah'],
-                    'keterangan' => 'Tarik tunai dari '.$labelRekening.($ket ? ': '.$ket : ''),
-                ]);
-                $user->financeTransactions()->create([
-                    'finance_category_id' => $kategoriMasuk->id,
-                    'bank_account_id' => null,
-                    'tanggal' => now()->toDateString(),
-                    'jumlah' => $validated['jumlah'],
-                    'keterangan' => 'Tarik tunai ke cash'.($ket ? ': '.$ket : ''),
-                ]);
-            }
+            $user->financeTransactions()->create([
+                'finance_category_id' => $kategoriKeluar->id,
+                'bank_account_id' => $dariRekening?->id,
+                'tanggal' => now()->toDateString(),
+                'jumlah' => $validated['jumlah'],
+                'keterangan' => 'Pindah ke '.$labelKe.($ket ? ': '.$ket : ''),
+            ]);
+            $user->financeTransactions()->create([
+                'finance_category_id' => $kategoriMasuk->id,
+                'bank_account_id' => $keRekening?->id,
+                'tanggal' => now()->toDateString(),
+                'jumlah' => $validated['jumlah'],
+                'keterangan' => 'Pindah dari '.$labelDari.($ket ? ': '.$ket : ''),
+            ]);
         });
 
-        return redirect()->route('rekening.index')->with('status', 'Berhasil dicatat.');
+        return redirect()->route('rekening.index')->with('status', 'Saldo berhasil dipindah - total kekayaan tidak berubah.');
     }
 
     /**
@@ -161,6 +150,8 @@ class RekeningController extends Controller
     protected function validated(Request $request): array
     {
         return $request->validate([
+            'jenis' => ['required', 'in:bank,ewallet'],
+            'provider' => ['nullable', 'required_if:jenis,ewallet', 'in:ovo,gopay,dana,shopeepay,linkaja,lainnya'],
             'nama_bank' => ['required', 'string', 'max:255'],
             'no_rekening' => ['nullable', 'string', 'max:50'],
             'saldo_awal' => ['required', 'numeric'],

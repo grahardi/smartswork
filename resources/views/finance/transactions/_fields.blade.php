@@ -53,7 +53,7 @@
         <select name="bank_account_id" class="block w-full rounded-lg border-[#E5E7F5] focus:border-[#2563EB] focus:ring-[#2563EB] text-sm">
             <option value="">Pilih rekening</option>
             @foreach ($rekenings ?? [] as $r)
-                <option value="{{ $r->id }}" @selected(old('bank_account_id', $transaction->bank_account_id ?? '') == $r->id)>{{ $r->nama_bank }} {{ $r->no_rekening ? '('.$r->no_rekening.')' : '' }}</option>
+                <option value="{{ $r->id }}" @selected(old('bank_account_id', $transaction->bank_account_id ?? '') == $r->id)>{{ $r->jenis === 'ewallet' ? '📱' : '🏦' }} {{ $r->nama_bank }} {{ $r->no_rekening ? '('.$r->no_rekening.')' : '' }}</option>
             @endforeach
         </select>
         @if (($rekenings ?? collect())->isEmpty())

@@ -10,6 +10,8 @@ class BankAccount extends Model
 {
     protected $fillable = [
         'user_id',
+        'jenis',
+        'provider',
         'nama_bank',
         'no_rekening',
         'saldo_awal',
@@ -18,6 +20,22 @@ class BankAccount extends Model
     protected $casts = [
         'saldo_awal' => 'decimal:2',
     ];
+
+    /**
+     * Warna & label badge untuk e-wallet yang dikenal. Pakai badge warna
+     * polos (bukan logo asli) biar aman dari hak cipta merek.
+     */
+    public static function providerBadge(?string $provider): array
+    {
+        return match ($provider) {
+            'ovo' => ['warna' => '#4C2A86', 'label' => 'OVO'],
+            'gopay' => ['warna' => '#00AED6', 'label' => 'GoPay'],
+            'dana' => ['warna' => '#118EEA', 'label' => 'DANA'],
+            'shopeepay' => ['warna' => '#EE4D2D', 'label' => 'ShopeePay'],
+            'linkaja' => ['warna' => '#E9252B', 'label' => 'LinkAja'],
+            default => ['warna' => '#667085', 'label' => 'E-Wallet'],
+        };
+    }
 
     public function user(): BelongsTo
     {
