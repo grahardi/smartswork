@@ -8,6 +8,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\DailyActionController;
 use App\Http\Controllers\FinanceCategoryController;
 use App\Http\Controllers\FinanceTransactionController;
+use App\Http\Controllers\FinanceAiAssistantController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\ResidenceController;
 use App\Http\Controllers\FriendController;
@@ -150,6 +151,7 @@ Route::middleware(['auth', 'active', 'restrict.demo'])->group(function () {
     // Keuangan - Transaksi
     Route::get('/keuangan', [FinanceTransactionController::class, 'index'])->name('finance.transactions.index');
     Route::get('/keuangan/catat', [FinanceTransactionController::class, 'create'])->name('finance.transactions.create');
+    Route::post('/keuangan/ai-parse', [FinanceAiAssistantController::class, 'parse'])->name('finance.ai-parse');
     Route::post('/keuangan', [FinanceTransactionController::class, 'store'])->name('finance.transactions.store');
     Route::get('/keuangan/{transaction}/edit', [FinanceTransactionController::class, 'edit'])->name('finance.transactions.edit');
     Route::put('/keuangan/{transaction}', [FinanceTransactionController::class, 'update'])->name('finance.transactions.update');
