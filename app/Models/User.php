@@ -78,6 +78,11 @@ class User extends Authenticatable
         return $this->hasMany(CalendarEvent::class);
     }
 
+    public function bankAccounts(): HasMany
+    {
+        return $this->hasMany(BankAccount::class);
+    }
+
     public function appNotifications(): HasMany
     {
         return $this->hasMany(AppNotification::class, 'user_id')->orderByDesc('created_at');

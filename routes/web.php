@@ -8,6 +8,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\DailyActionController;
 use App\Http\Controllers\FinanceCategoryController;
 use App\Http\Controllers\FinanceTransactionController;
+use App\Http\Controllers\RekeningController;
 use App\Http\Controllers\FinanceAiAssistantController;
 use App\Http\Controllers\PersonalBotController;
 use App\Http\Controllers\TransferController;
@@ -165,6 +166,16 @@ Route::middleware(['auth', 'active', 'restrict.demo'])->group(function () {
     // Transfer saldo ke teman
     Route::get('/keuangan/transfer', [TransferController::class, 'create'])->name('finance.transfer.create');
     Route::post('/keuangan/transfer', [TransferController::class, 'store'])->name('finance.transfer.store');
+
+    // Rekening
+    Route::get('/rekening', [RekeningController::class, 'index'])->name('rekening.index');
+    Route::get('/rekening/tambah', [RekeningController::class, 'create'])->name('rekening.create');
+    Route::post('/rekening', [RekeningController::class, 'store'])->name('rekening.store');
+    Route::get('/rekening/{rekening}/edit', [RekeningController::class, 'edit'])->name('rekening.edit');
+    Route::put('/rekening/{rekening}', [RekeningController::class, 'update'])->name('rekening.update');
+    Route::delete('/rekening/{rekening}', [RekeningController::class, 'destroy'])->name('rekening.destroy');
+    Route::get('/rekening/pindah/form', [RekeningController::class, 'pindahForm'])->name('rekening.pindah');
+    Route::post('/rekening/pindah', [RekeningController::class, 'pindahStore'])->name('rekening.pindah.store');
 
     // Teman
     Route::get('/teman', [FriendController::class, 'index'])->name('friends.index');

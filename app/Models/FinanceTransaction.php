@@ -12,6 +12,7 @@ class FinanceTransaction extends Model
         'finance_category_id',
         'workplace_id',
         'transfer_id',
+        'bank_account_id',
         'tanggal',
         'jumlah',
         'keterangan',
@@ -21,6 +22,11 @@ class FinanceTransaction extends Model
         'tanggal' => 'date',
         'jumlah' => 'decimal:2',
     ];
+
+    public function bankAccount(): BelongsTo
+    {
+        return $this->belongsTo(BankAccount::class);
+    }
 
     public function transfer(): BelongsTo
     {

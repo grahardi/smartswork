@@ -18,6 +18,27 @@
             <div class="mb-4 text-sm text-[#2563EB] bg-[#EFF6FF] border border-[#BFDBFE] rounded-lg px-4 py-3">{{ session('status') }}</div>
         @endif
 
+        {{-- Ringkasan Cash + Rekening (saldo riil saat ini) --}}
+        <div class="bg-[#262135] rounded-2xl p-4 mb-4 text-white">
+            <div class="flex items-center justify-between mb-2">
+                <p class="text-xs text-white/50 swk-heading">Saldo Saat Ini</p>
+                <a href="{{ route('rekening.index') }}" class="text-[11px] text-[#818CF8]">Kelola rekening →</a>
+            </div>
+            <p class="text-xl font-semibold swk-heading">Rp{{ number_format($cashFisik + $totalRekening, 0, ',', '.') }}</p>
+            <div class="flex flex-wrap gap-4 mt-3 pt-3 border-t border-white/10">
+                <div>
+                    <p class="text-[10px] text-white/50">💵 Cash Fisik</p>
+                    <p class="text-sm font-medium">Rp{{ number_format($cashFisik, 0, ',', '.') }}</p>
+                </div>
+                @foreach ($rekenings as $r)
+                    <div>
+                        <p class="text-[10px] text-white/50">🏦 {{ $r->nama_bank }}</p>
+                        <p class="text-sm font-medium">Rp{{ number_format($r->saldoSekarang(), 0, ',', '.') }}</p>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
         {{-- Kartu ringkasan biru ala Statistics Figma --}}
         <div class="bg-[#2563EB] rounded-2xl p-5 mb-4 text-white relative overflow-hidden">
             <p class="text-xs text-white/70 swk-heading">Saldo Bulan Ini</p>

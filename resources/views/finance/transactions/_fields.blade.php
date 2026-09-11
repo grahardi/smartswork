@@ -38,6 +38,31 @@
 </div>
 
 <div>
+    <x-input-label value="Sumber Dana" />
+    <div class="mt-2 flex gap-4">
+        <label class="flex items-center gap-2 text-sm text-[#262135]">
+            <input type="radio" name="sumber_dana" value="cash" onchange="document.getElementById('rekening-wrap').classList.add('hidden')" {{ !old('bank_account_id', $transaction->bank_account_id ?? null) ? 'checked' : '' }}>
+            💵 Cash
+        </label>
+        <label class="flex items-center gap-2 text-sm text-[#262135]">
+            <input type="radio" name="sumber_dana" value="rekening" onchange="document.getElementById('rekening-wrap').classList.remove('hidden')" {{ old('bank_account_id', $transaction->bank_account_id ?? null) ? 'checked' : '' }}>
+            🏦 Rekening
+        </label>
+    </div>
+    <div id="rekening-wrap" class="mt-2 {{ old('bank_account_id', $transaction->bank_account_id ?? null) ? '' : 'hidden' }}">
+        <select name="bank_account_id" class="block w-full rounded-lg border-[#E5E7F5] focus:border-[#2563EB] focus:ring-[#2563EB] text-sm">
+            <option value="">Pilih rekening</option>
+            @foreach ($rekenings ?? [] as $r)
+                <option value="{{ $r->id }}" @selected(old('bank_account_id', $transaction->bank_account_id ?? '') == $r->id)>{{ $r->nama_bank }} {{ $r->no_rekening ? '('.$r->no_rekening.')' : '' }}</option>
+            @endforeach
+        </select>
+        @if (($rekenings ?? collect())->isEmpty())
+            <p class="text-xs text-[#9CA3AF] mt-1">Belum ada rekening. <a href="{{ route('rekening.create') }}" class="text-[#2563EB] underline">Tambah dulu</a>.</p>
+        @endif
+    </div>
+</div>
+
+<div>
     <x-input-label for="workplace_id" value="Tempat Kerja (opsional)" />
     <select id="workplace_id" name="workplace_id" class="mt-1 block w-full rounded-lg border-[#E5E7F5] focus:border-[#2563EB] focus:ring-[#2563EB] text-sm">
         <option value="">—</option>
