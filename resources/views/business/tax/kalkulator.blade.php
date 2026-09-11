@@ -7,11 +7,10 @@
 
     <div class="bg-white border border-[#E4E7EC] rounded-xl p-5 max-w-xl mb-5">
         <p class="text-xs text-[#667085] mb-4">
-            Skema pajak yang dipakai: <strong>{{ $business->skema_pajak === 'umkm_final' ? 'UMKM Final (0,5% x Omzet)' : 'Badan Normal (22% x Laba)' }}</strong>
-            — bisa diganti di halaman <a href="{{ route('business.tax.index', $business) }}" class="text-[#465FFF] underline">Perhitungan Pajak</a>.
+            Pilih skema pajak khusus untuk simulasi ini (independen dari setting utama di halaman <a href="{{ route('business.tax.index', $business) }}" class="text-[#465FFF] underline">Perhitungan Pajak</a>).
         </p>
 
-        <form method="GET" class="space-y-4">
+        <form method="GET" class="space-y-4" id="kalkulator-form">
             <div>
                 <x-input-label value="Periode Input" />
                 <div class="mt-2 flex gap-4">
@@ -34,6 +33,23 @@
             <div>
                 <x-input-label for="pengeluaran" value="Pengeluaran" />
                 <x-text-input id="pengeluaran" name="pengeluaran" type="number" step="0.01" min="0" class="mt-1 block w-full" value="{{ request('pengeluaran') }}" placeholder="Contoh: 4000000" required />
+            </div>
+
+            <div>
+                <x-input-label value="Skema Pajak untuk Simulasi Ini" />
+                <select name="skema_pajak" id="skema-kalkulator" onchange="document.getElementById('custom-kalkulator-fields').classList.toggle('hidden', this.value !== 'custom')" class="mt-1 block w-full rounded-lg border-[#D0D5DD] focus:border-[#465FFF] focus:ring-[#465FFF] text-sm">
+                    <option value="umkm_final" @selected(request('skema_pajak', $business->skema_pajak) === 'umkm_final')>UMKM Final (0,5% x Omzet)</option>
+                    <option value="badan_normal" @selected(request('skema_pajak', $business->skema_pajak) === 'badan_normal')>Badan Normal (22%, Pasal 31E)</option>
+                    <option value="custom" @selected(request('skema_pajak', $business->skema_pajak) === 'custom')>Persentase Sendiri</option>
+                </select>
+                <div id="custom-kalkulator-fields" class="flex items-center gap-2 mt-2 {{ request('skema_pajak', $business->skema_pajak) !== 'custom' ? 'hidden' : '' }}">
+                    <input type="number" name="pajak_custom_persen" step="0.01" min="0" max="100" value="{{ request('pajak_custom_persen', $business->pajak_custom_persen) }}" placeholder="Persen" class="w-24 rounded-lg border-[#D0D5DD] focus:border-[#465FFF] focus:ring-[#465FFF] text-sm">
+                    <span class="text-sm text-[#667085]">%</span>
+                    <select name="pajak_custom_basis" class="rounded-lg border-[#D0D5DD] focus:border-[#465FFF] focus:ring-[#465FFF] text-sm">
+                        <option value="omzet" @selected(request('pajak_custom_basis', $business->pajak_custom_basis) === 'omzet')>dari Omzet</option>
+                        <option value="laba" @selected(request('pajak_custom_basis', $business->pajak_custom_basis) === 'laba')>dari Laba</option>
+                    </select>
+                </div>
             </div>
 
             <x-primary-button>Hitung</x-primary-button>
@@ -61,6 +77,9 @@
 
             <div class="mt-4 bg-[#ECF3FF] rounded-lg p-4">
                 <p class="text-xs text-[#465FFF]">{{ $hasil['label'] }}</p>
+                @if ($hasil['detail'])
+                    <p class="text-[11px] text-[#667085] mt-0.5">{{ $hasil['detail'] }}</p>
+                @endif
                 <p class="text-2xl font-bold text-[#101828] mt-1">Rp{{ number_format($hasil['pajak_setahun'], 0, ',', '.') }} <span class="text-sm font-normal text-[#667085]">/ tahun</span></p>
                 <p class="text-xs text-[#667085] mt-1">≈ Rp{{ number_format($hasil['pajak_per_bulan'], 0, ',', '.') }} / bulan kalau mau disisihkan rutin</p>
             </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Business;
 
 use App\Http\Controllers\Controller;
 use App\Models\Business;
+use App\Support\PphCalculator;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -17,6 +18,9 @@ class TaxCalculatorController extends Controller
             $periode = $request->input('periode', 'bulanan'); // bulanan | tahunan
             $pemasukan = (float) $request->input('pemasukan', 0);
             $pengeluaran = (float) $request->input('pengeluaran', 0);
+            $skema = $request->input('skema_pajak', $business->skema_pajak);
+            $customPersen = $request->input('pajak_custom_persen');
+            $customBasis = $request->input('pajak_custom_basis');
 
             if ($periode === 'bulanan') {
                 $omzetTahunan = $pemasukan * 12;
@@ -28,25 +32,24 @@ class TaxCalculatorController extends Controller
 
             $labaTahunan = $omzetTahunan - $pengeluaranTahunan;
 
-            if ($business->skema_pajak === 'umkm_final') {
-                $pajakSetahun = $omzetTahunan * 0.005;
-                $label = 'PPh Final UMKM (0,5% x Omzet Setahun)';
-            } else {
-                $labaKenaPajak = max($labaTahunan, 0);
-                $pajakSetahun = $labaKenaPajak * 0.22;
-                $label = 'PPh Badan (22% x Laba Kena Pajak Setahun)';
-            }
+            $hasilPph = PphCalculator::hitung(
+                $skema,
+                $omzetTahunan,
+                $labaTahunan,
+                $customPersen !== null ? (float) $customPersen : null,
+                $customBasis
+            );
 
             $hasil = [
                 'periode' => $periode,
-                'pemasukan_input' => $pemasukan,
-                'pengeluaran_input' => $pengeluaran,
+                'skema' => $skema,
                 'omzet_tahunan' => $omzetTahunan,
                 'pengeluaran_tahunan' => $pengeluaranTahunan,
                 'laba_tahunan' => $labaTahunan,
-                'pajak_setahun' => $pajakSetahun,
-                'pajak_per_bulan' => $pajakSetahun / 12,
-                'label' => $label,
+                'pajak_setahun' => $hasilPph['pajak'],
+                'pajak_per_bulan' => $hasilPph['pajak'] / 12,
+                'label' => $hasilPph['label'],
+                'detail' => $hasilPph['detail'],
             ];
         }
 

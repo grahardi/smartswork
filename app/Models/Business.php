@@ -17,6 +17,8 @@ class Business extends Model
         'alamat',
         'mata_uang',
         'skema_pajak',
+        'pajak_custom_persen',
+        'pajak_custom_basis',
     ];
 
     public function owner(): BelongsTo
