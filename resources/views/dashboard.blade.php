@@ -6,6 +6,7 @@
         $todayCount = $user->dailyActions()->whereDate('tanggal', now()->toDateString())->count();
         $menuGroups = [
             'Tools' => [
+                ['route' => 'bot.index', 'label' => 'Bot AI', 'color' => '#2563EB', 'icon' => 'bot'],
                 ['route' => 'daily-actions.create', 'label' => 'Catat Aksi', 'color' => '#2563EB', 'icon' => 'pencil'],
                 ['route' => 'daily-actions.index', 'label' => 'Aksi Harian', 'color' => '#DBA83B', 'icon' => 'list'],
                 ['route' => 'calendar.index', 'label' => 'Calendar', 'color' => '#DC2626', 'icon' => 'calendar'],
@@ -79,6 +80,9 @@
                     <a href="{{ route($item['route']) }}" class="flex flex-col items-center gap-2 py-4 bg-white border border-[#E7E9F5] rounded-xl">
                         <span class="w-11 h-11 rounded-full flex items-center justify-center" style="background: {{ $item['color'] }}1A; color: {{ $item['color'] }};">
                             @switch($item['icon'])
+                                @case('bot')
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M12 8V4M9 4h6"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/></svg>
+                                    @break
                                 @case('pencil')
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
                                     @break

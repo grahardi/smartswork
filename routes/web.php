@@ -9,6 +9,7 @@ use App\Http\Controllers\DailyActionController;
 use App\Http\Controllers\FinanceCategoryController;
 use App\Http\Controllers\FinanceTransactionController;
 use App\Http\Controllers\FinanceAiAssistantController;
+use App\Http\Controllers\PersonalBotController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\ResidenceController;
 use App\Http\Controllers\FriendController;
@@ -152,6 +153,10 @@ Route::middleware(['auth', 'active', 'restrict.demo'])->group(function () {
     Route::get('/keuangan', [FinanceTransactionController::class, 'index'])->name('finance.transactions.index');
     Route::get('/keuangan/catat', [FinanceTransactionController::class, 'create'])->name('finance.transactions.create');
     Route::post('/keuangan/ai-parse', [FinanceAiAssistantController::class, 'parse'])->name('finance.ai-parse');
+
+    // Bot AI (deteksi otomatis Keuangan atau Aksi Harian)
+    Route::get('/bot', [PersonalBotController::class, 'index'])->name('bot.index');
+    Route::post('/bot/ai-parse', [PersonalBotController::class, 'parse'])->name('bot.parse');
     Route::post('/keuangan', [FinanceTransactionController::class, 'store'])->name('finance.transactions.store');
     Route::get('/keuangan/{transaction}/edit', [FinanceTransactionController::class, 'edit'])->name('finance.transactions.edit');
     Route::put('/keuangan/{transaction}', [FinanceTransactionController::class, 'update'])->name('finance.transactions.update');
