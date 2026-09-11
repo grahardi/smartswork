@@ -2,7 +2,7 @@
     <x-slot name="header">Daftarkan Business</x-slot>
 
     <div class="px-4 py-5">
-        <p class="text-xs text-[#7B7F99] mb-4">
+        <p class="text-xs text-[#667085] mb-4">
             Setelah dibuat, Chart of Account standar (Aset, Kewajiban, Ekuitas, Pendapatan, Beban) otomatis disiapkan supaya bisa langsung mulai jurnal.
         </p>
 

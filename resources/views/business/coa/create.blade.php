@@ -8,7 +8,7 @@
 
             <div class="flex items-center gap-4 pt-2">
                 <x-primary-button>Simpan</x-primary-button>
-                <a href="{{ route('business.coa.index', $business) }}" class="text-sm text-[#7B7F99]">Batal</a>
+                <a href="{{ route('business.coa.index', $business) }}" class="text-sm text-[#667085]">Batal</a>
             </div>
         </form>
     </div>

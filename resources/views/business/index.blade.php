@@ -12,13 +12,13 @@
 
         <div class="space-y-3">
             @forelse ($businesses as $business)
-                <a href="{{ route('business.dashboard', $business) }}" class="block bg-white border border-[#E7E9F5] rounded-xl p-4">
-                    <p class="text-sm font-semibold text-[#262135] swk-heading">{{ $business->nama_usaha }}</p>
-                    <p class="text-xs text-[#7B7F99] mt-1">{{ $business->jenis_usaha ?? '—' }} · {{ $business->pivot->role }}</p>
+                <a href="{{ route('business.dashboard', $business) }}" class="block bg-white border border-[#E4E7EC] rounded-xl p-4">
+                    <p class="text-sm font-semibold text-[#101828] swk-heading">{{ $business->nama_usaha }}</p>
+                    <p class="text-xs text-[#667085] mt-1">{{ $business->jenis_usaha ?? '—' }} · {{ $business->pivot->role }}</p>
                 </a>
             @empty
                 <div class="text-center py-10">
-                    <p class="text-sm text-[#7B7F99] mb-2">Belum ada business. Daftarkan yang pertama untuk mulai kelola akuntansi (Neraca, Jurnal, Laba Rugi) yang bisa jadi acuan laporan pajak.</p>
+                    <p class="text-sm text-[#667085] mb-2">Belum ada business. Daftarkan yang pertama untuk mulai kelola akuntansi (Neraca, Jurnal, Laba Rugi) yang bisa jadi acuan laporan pajak.</p>
                 </div>
             @endforelse
         </div>

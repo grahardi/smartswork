@@ -29,14 +29,14 @@
                 <button type="button" onclick="swkAddLine()" class="mt-2 text-xs text-[#2563EB] font-medium">+ Tambah Baris</button>
             </div>
 
-            <div class="flex items-center justify-between text-sm font-medium bg-[#F5F6FD] rounded-lg px-3 py-2">
+            <div class="flex items-center justify-between text-sm font-medium bg-[#F9FAFB] rounded-lg px-3 py-2">
                 <span>Total Debit: <span id="total-debit">Rp0</span></span>
                 <span>Total Kredit: <span id="total-kredit">Rp0</span></span>
             </div>
 
             <div class="flex items-center gap-4 pt-2">
                 <x-primary-button>Simpan Jurnal</x-primary-button>
-                <a href="{{ route('business.journal.index', $business) }}" class="text-sm text-[#7B7F99]">Batal</a>
+                <a href="{{ route('business.journal.index', $business) }}" class="text-sm text-[#667085]">Batal</a>
             </div>
         </form>
     </div>
@@ -49,7 +49,7 @@
             const wrap = document.getElementById('lines-wrap');
             const i = lineIndex++;
             const div = document.createElement('div');
-            div.className = 'bg-white border border-[#E7E9F5] rounded-lg p-3 space-y-2';
+            div.className = 'bg-white border border-[#E4E7EC] rounded-lg p-3 space-y-2';
             div.innerHTML = `
                 <select name="lines[${i}][chart_of_account_id]" required class="block w-full rounded-lg border-[#E5E7F5] focus:border-[#2563EB] focus:ring-[#2563EB] text-sm">
                     <option value="">Pilih akun</option>
@@ -60,7 +60,7 @@
                     <input type="number" step="0.01" min="0" name="lines[${i}][kredit]" placeholder="Kredit" onchange="swkRecalc()" class="rounded-lg border-[#E5E7F5] focus:border-[#2563EB] focus:ring-[#2563EB] text-sm">
                 </div>
                 <input type="text" name="lines[${i}][keterangan]" placeholder="Keterangan baris (opsional)" class="block w-full rounded-lg border-[#E5E7F5] focus:border-[#2563EB] focus:ring-[#2563EB] text-sm">
-                <button type="button" onclick="this.closest('div.bg-white').remove(); swkRecalc();" class="text-[11px] text-[#DC2626]">Hapus baris</button>
+                <button type="button" onclick="this.closest('div.bg-white').remove(); swkRecalc();" class="text-[11px] text-[#D92D20]">Hapus baris</button>
             `;
             wrap.appendChild(div);
         }

@@ -25,21 +25,21 @@
 <div>
     <x-input-label value="Saldo Normal" />
     <div class="mt-2 flex gap-4">
-        <label class="flex items-center gap-2 text-sm text-[#262135]">
+        <label class="flex items-center gap-2 text-sm text-[#101828]">
             <input type="radio" name="saldo_normal" value="debit" @checked(old('saldo_normal', $account->saldo_normal ?? 'debit') === 'debit')>
             Debit
         </label>
-        <label class="flex items-center gap-2 text-sm text-[#262135]">
+        <label class="flex items-center gap-2 text-sm text-[#101828]">
             <input type="radio" name="saldo_normal" value="kredit" @checked(old('saldo_normal', $account->saldo_normal ?? '') === 'kredit')>
             Kredit
         </label>
     </div>
-    <p class="text-[11px] text-[#9CA3AF] mt-1">Aset & Beban normalnya Debit. Kewajiban, Ekuitas & Pendapatan normalnya Kredit.</p>
+    <p class="text-[11px] text-[#98A2B3] mt-1">Aset & Beban normalnya Debit. Kewajiban, Ekuitas & Pendapatan normalnya Kredit.</p>
     <x-input-error :messages="$errors->get('saldo_normal')" class="mt-2" />
 </div>
 
 @if ($account)
-    <label class="flex items-center gap-2 text-sm text-[#262135]">
+    <label class="flex items-center gap-2 text-sm text-[#101828]">
         <input type="checkbox" name="is_active" value="1" @checked(old('is_active', $account->is_active))>
         Akun aktif
     </label>

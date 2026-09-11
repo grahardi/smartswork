@@ -6,7 +6,7 @@
             <div class="mb-4 text-sm text-[#2563EB] bg-[#EFF6FF] border border-[#BFDBFE] rounded-lg px-4 py-3">{{ session('status') }}</div>
         @endif
 
-        <div class="bg-[#262135] text-white rounded-2xl p-5 mb-5">
+        <div class="bg-[#101828] text-white rounded-2xl p-5 mb-5">
             <p class="text-xs text-white/50">Business</p>
             <p class="text-lg font-semibold swk-heading">{{ $business->nama_usaha }}</p>
             <div class="flex gap-6 mt-3">
@@ -34,7 +34,7 @@
 
         <div class="grid grid-cols-3 gap-3">
             @foreach ($menu as $item)
-                <a href="{{ route($item['route'], $business) }}" class="flex flex-col items-center gap-2 py-4 bg-white border border-[#E7E9F5] rounded-xl text-center">
+                <a href="{{ route($item['route'], $business) }}" class="flex flex-col items-center gap-2 py-4 bg-white border border-[#E4E7EC] rounded-xl text-center">
                     <span class="w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold" style="background: {{ $item['color'] }}1A; color: {{ $item['color'] }};">
                         {{ substr($item['label'], 0, 1) }}
                     </span>
@@ -43,6 +43,6 @@
             @endforeach
         </div>
 
-        <a href="{{ route('business.index') }}" class="text-xs text-[#7B7F99] mt-5 inline-block">← Ganti Business</a>
+        <a href="{{ route('business.index') }}" class="text-xs text-[#667085] mt-5 inline-block">← Ganti Business</a>
     </div>
 </x-business-layout>

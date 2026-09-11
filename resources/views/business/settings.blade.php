@@ -2,10 +2,10 @@
     <x-slot name="header">Pengaturan Bisnis</x-slot>
 
     @if (session('status'))
-        <div class="mb-4 text-sm text-[#4F46E5] bg-[#EEF2FF] border border-[#C7D2FE] rounded-lg px-4 py-3">{{ session('status') }}</div>
+        <div class="mb-4 text-sm text-[#465FFF] bg-[#ECF3FF] border border-[#C2D6FF] rounded-lg px-4 py-3">{{ session('status') }}</div>
     @endif
 
-    <div class="bg-white border border-[#E5E7EB] rounded-xl p-6 max-w-xl">
+    <div class="bg-white border border-[#E4E7EC] rounded-xl p-6 max-w-xl">
         <form method="POST" action="{{ route('business.settings.update', $business) }}" class="space-y-5">
             @csrf
             @method('PUT')
@@ -31,13 +31,13 @@
             <div>
                 <x-input-label for="alamat" value="Alamat" />
                 <textarea id="alamat" name="alamat" rows="3"
-                    class="mt-1 block w-full rounded-lg border-[#D1D5DB] focus:border-[#4F46E5] focus:ring-[#4F46E5] text-sm">{{ old('alamat', $business->alamat) }}</textarea>
+                    class="mt-1 block w-full rounded-lg border-[#D0D5DD] focus:border-[#465FFF] focus:ring-[#465FFF] text-sm">{{ old('alamat', $business->alamat) }}</textarea>
                 <x-input-error :messages="$errors->get('alamat')" class="mt-2" />
             </div>
 
             <div>
                 <x-input-label for="mata_uang" value="Mata Uang" />
-                <select id="mata_uang" name="mata_uang" class="mt-1 block w-full rounded-lg border-[#D1D5DB] focus:border-[#4F46E5] focus:ring-[#4F46E5] text-sm">
+                <select id="mata_uang" name="mata_uang" class="mt-1 block w-full rounded-lg border-[#D0D5DD] focus:border-[#465FFF] focus:ring-[#465FFF] text-sm">
                     @foreach (['IDR' => 'IDR - Rupiah', 'USD' => 'USD - US Dollar'] as $val => $lbl)
                         <option value="{{ $val }}" @selected(old('mata_uang', $business->mata_uang) === $val)>{{ $lbl }}</option>
                     @endforeach
@@ -49,14 +49,14 @@
         </form>
     </div>
 
-    <div class="mt-6 bg-white border border-[#FECACA] rounded-xl p-6 max-w-xl">
-        <h3 class="text-sm font-semibold text-[#DC2626] mb-1">Anggota Business</h3>
-        <p class="text-xs text-[#6B7280] mb-3">Owner: {{ $business->owner->name }}</p>
+    <div class="mt-6 bg-white border border-[#FEE4E2] rounded-xl p-6 max-w-xl">
+        <h3 class="text-sm font-semibold text-[#D92D20] mb-1">Anggota Business</h3>
+        <p class="text-xs text-[#667085] mb-3">Owner: {{ $business->owner->name }}</p>
         <div class="space-y-1.5">
             @foreach ($business->users as $u)
                 <div class="flex items-center justify-between text-sm">
-                    <span class="text-[#111827]">{{ $u->name }}</span>
-                    <span class="text-xs text-[#6B7280]">{{ $u->pivot->role }}</span>
+                    <span class="text-[#101828]">{{ $u->name }}</span>
+                    <span class="text-xs text-[#667085]">{{ $u->pivot->role }}</span>
                 </div>
             @endforeach
         </div>
