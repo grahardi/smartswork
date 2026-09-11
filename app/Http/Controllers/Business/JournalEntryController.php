@@ -31,6 +31,13 @@ class JournalEntryController extends Controller
         return view('business.journal.create', compact('business', 'accounts'));
     }
 
+    public function botPage(Business $business): View
+    {
+        $accounts = $business->accounts()->where('is_active', true)->orderBy('kode')->get();
+
+        return view('business.bot', compact('business', 'accounts'));
+    }
+
     public function store(Request $request, Business $business): RedirectResponse
     {
         $validated = $request->validate([

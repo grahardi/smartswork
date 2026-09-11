@@ -23,12 +23,15 @@
 
         @php
             $menu = [
-                ['route' => 'business.journal.create', 'label' => 'Catat Jurnal', 'color' => '#2563EB'],
+                ['route' => 'business.bot', 'label' => 'Bot AI', 'color' => '#465FFF'],
+                ['route' => 'business.journal.create', 'label' => 'Catat Jurnal', 'color' => '#465FFF'],
                 ['route' => 'business.journal.index', 'label' => 'Jurnal Umum', 'color' => '#DBA83B'],
                 ['route' => 'business.coa.index', 'label' => 'Chart of Account', 'color' => '#3E9B93'],
                 ['route' => 'business.reports.neraca-saldo', 'label' => 'Neraca Saldo', 'color' => '#3F5C7A'],
                 ['route' => 'business.reports.neraca', 'label' => 'Neraca', 'color' => '#D6549E'],
                 ['route' => 'business.reports.laba-rugi', 'label' => 'Laba Rugi', 'color' => '#10B981'],
+                ['route' => 'business.tax.index', 'label' => 'Perhitungan Pajak', 'color' => '#B54708'],
+                ['route' => 'business.tax.kalkulator', 'label' => 'Kalkulator Pajak', 'color' => '#B54708'],
             ];
         @endphp
 

@@ -38,6 +38,10 @@
                 </div>
 
                 <nav class="flex-1 px-3 py-4 space-y-0.5 text-sm">
+                    <a href="{{ route('business.bot', $business) }}" class="sbz-link flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('business.bot') ? 'active' : '' }}">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M12 8V4M9 4h6"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/></svg>
+                        Bot AI
+                    </a>
                     <a href="{{ route('business.dashboard', $business) }}" class="sbz-link flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('business.dashboard') ? 'active' : '' }}">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
                         Dashboard
@@ -64,9 +68,13 @@
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l5-5 4 4 8-8"/></svg>
                         Laba Rugi
                     </a>
-                    <a href="{{ route('business.tax.index', $business) }}" class="sbz-link flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('business.tax.*') ? 'active' : '' }}">
+                    <a href="{{ route('business.tax.index', $business) }}" class="sbz-link flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('business.tax.index') ? 'active' : '' }}">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12h6m-6 4h6M9 8h6M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/></svg>
                         Perhitungan Pajak
+                    </a>
+                    <a href="{{ route('business.tax.kalkulator', $business) }}" class="sbz-link flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('business.tax.kalkulator') ? 'active' : '' }}">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h2M12 10h2M16 10h2M8 14h2M12 14h2M16 14h2M8 18h2M12 18h2M16 18h2"/></svg>
+                        Kalkulator Pajak
                     </a>
 
                     <p class="text-[10px] text-[#98A2B3] uppercase tracking-wide px-3 pt-4 pb-1">Lainnya</p>

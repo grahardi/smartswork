@@ -28,6 +28,7 @@ use App\Http\Controllers\Business\ChartOfAccountController;
 use App\Http\Controllers\Business\JournalEntryController;
 use App\Http\Controllers\Business\ReportController as BusinessReportController;
 use App\Http\Controllers\Business\TaxController;
+use App\Http\Controllers\Business\TaxCalculatorController;
 use App\Http\Controllers\Business\AiAssistantController;
 use App\Http\Controllers\DemoLoginController;
 use Illuminate\Support\Facades\Route;
@@ -95,7 +96,9 @@ Route::middleware(['auth', 'active'])->prefix('business')->name('business.')->gr
 
         Route::get('/{business}/pajak', [TaxController::class, 'index'])->name('tax.index');
         Route::put('/{business}/pajak/skema', [TaxController::class, 'updateSkema'])->name('tax.update-skema');
+        Route::get('/{business}/pajak/kalkulator', [TaxCalculatorController::class, 'index'])->name('tax.kalkulator');
 
+        Route::get('/{business}/bot', [JournalEntryController::class, 'botPage'])->name('bot');
         Route::post('/{business}/jurnal/ai-parse', [AiAssistantController::class, 'parse'])->name('journal.ai-parse');
     });
 });
