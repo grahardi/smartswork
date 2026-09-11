@@ -66,7 +66,7 @@ PROMPT;
 
         $parts[] = ['text' => $instruksi];
 
-        $model = config('services.gemini.model', 'gemini-2.0-flash');
+        $model = config('services.gemini.model', 'gemini-3.6-flash');
 
         $response = Http::timeout(30)->post(
             "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent?key={$apiKey}",
