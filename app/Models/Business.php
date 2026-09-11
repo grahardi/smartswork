@@ -16,6 +16,7 @@ class Business extends Model
         'jenis_usaha',
         'alamat',
         'mata_uang',
+        'skema_pajak',
     ];
 
     public function owner(): BelongsTo

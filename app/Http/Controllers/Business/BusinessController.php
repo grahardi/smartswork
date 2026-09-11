@@ -161,6 +161,9 @@ class BusinessController extends Controller
             ['2-1000', 'Utang Usaha', 'kewajiban', 'kredit'],
             ['2-1100', 'Utang Bank', 'kewajiban', 'kredit'],
             ['2-1200', 'Utang Pajak', 'kewajiban', 'kredit'],
+            ['2-1300', 'PPN Keluaran', 'kewajiban', 'kredit'],
+            // Aset (lanjutan - PPN Masukan)
+            ['1-1500', 'PPN Masukan', 'aset', 'debit'],
             // Ekuitas
             ['3-1000', 'Modal Pemilik', 'ekuitas', 'kredit'],
             ['3-2000', 'Prive/Penarikan Pemilik', 'ekuitas', 'debit'],

@@ -104,6 +104,15 @@ class ReportController extends Controller
         return view('business.reports.laba-rugi', array_merge(compact('business', 'dari', 'sampai'), $hasil));
     }
 
+    /**
+     * Wrapper public supaya bisa dipakai controller lain (TaxController)
+     * tanpa mengubah visibility method aslinya.
+     */
+    public function hitungLabaRugiPublic(Business $business, ?string $dari, string $sampai): array
+    {
+        return $this->hitungLabaRugi($business, $dari, $sampai);
+    }
+
     protected function hitungLabaRugi(Business $business, ?string $dari, string $sampai): array
     {
         $pendapatanAccounts = $business->accounts()->where('tipe', 'pendapatan')->orderBy('kode')->get();

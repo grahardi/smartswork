@@ -2,6 +2,20 @@
     <x-slot name="header">Catat Jurnal</x-slot>
 
     <div class="px-4 py-5">
+        {{-- AI Assistant --}}
+        <div class="bg-[#ECF3FF] border border-[#C2D6FF] rounded-xl p-4 mb-5">
+            <div class="flex items-center gap-2 mb-2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#465FFF" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                <h3 class="text-sm font-semibold text-[#101828]">Catat dengan AI</h3>
+            </div>
+            <p class="text-xs text-[#475467] mb-2">Tulis transaksinya pakai kalimat biasa, AI akan usulkan baris jurnalnya (tetap perlu kamu cek sebelum simpan).</p>
+            <div class="flex gap-2">
+                <input type="text" id="ai-input" placeholder="Contoh: beli meja 400rb" class="flex-1 rounded-lg border-[#C2D6FF] focus:border-[#465FFF] focus:ring-[#465FFF] text-sm">
+                <button type="button" onclick="swkAiParse()" id="ai-btn" class="text-sm font-medium text-white bg-[#465FFF] px-4 py-2 rounded-lg whitespace-nowrap">Proses</button>
+            </div>
+            <p id="ai-status" class="text-xs text-[#D92D20] mt-2"></p>
+        </div>
+
         <form method="POST" action="{{ route('business.journal.store', $business) }}" class="space-y-5" id="journal-form">
             @csrf
 
@@ -45,7 +59,7 @@
         const accounts = @json($accounts->map(fn($a) => ['id' => $a->id, 'label' => $a->kode . ' - ' . $a->nama]));
         let lineIndex = 0;
 
-        function swkAddLine() {
+        function swkAddLine(prefill = null) {
             const wrap = document.getElementById('lines-wrap');
             const i = lineIndex++;
             const div = document.createElement('div');
@@ -53,16 +67,59 @@
             div.innerHTML = `
                 <select name="lines[${i}][chart_of_account_id]" required class="block w-full rounded-lg border-[#E5E7F5] focus:border-[#2563EB] focus:ring-[#2563EB] text-sm">
                     <option value="">Pilih akun</option>
-                    ${accounts.map(a => `<option value="${a.id}">${a.label}</option>`).join('')}
+                    ${accounts.map(a => `<option value="${a.id}" ${prefill && prefill.chart_of_account_id == a.id ? 'selected' : ''}>${a.label}</option>`).join('')}
                 </select>
                 <div class="grid grid-cols-2 gap-2">
-                    <input type="number" step="0.01" min="0" name="lines[${i}][debit]" placeholder="Debit" onchange="swkRecalc()" class="rounded-lg border-[#E5E7F5] focus:border-[#2563EB] focus:ring-[#2563EB] text-sm">
-                    <input type="number" step="0.01" min="0" name="lines[${i}][kredit]" placeholder="Kredit" onchange="swkRecalc()" class="rounded-lg border-[#E5E7F5] focus:border-[#2563EB] focus:ring-[#2563EB] text-sm">
+                    <input type="number" step="0.01" min="0" name="lines[${i}][debit]" placeholder="Debit" onchange="swkRecalc()" value="${prefill && prefill.debit > 0 ? prefill.debit : ''}" class="rounded-lg border-[#E5E7F5] focus:border-[#2563EB] focus:ring-[#2563EB] text-sm">
+                    <input type="number" step="0.01" min="0" name="lines[${i}][kredit]" placeholder="Kredit" onchange="swkRecalc()" value="${prefill && prefill.kredit > 0 ? prefill.kredit : ''}" class="rounded-lg border-[#E5E7F5] focus:border-[#2563EB] focus:ring-[#2563EB] text-sm">
                 </div>
                 <input type="text" name="lines[${i}][keterangan]" placeholder="Keterangan baris (opsional)" class="block w-full rounded-lg border-[#E5E7F5] focus:border-[#2563EB] focus:ring-[#2563EB] text-sm">
                 <button type="button" onclick="this.closest('div.bg-white').remove(); swkRecalc();" class="text-[11px] text-[#D92D20]">Hapus baris</button>
             `;
             wrap.appendChild(div);
+        }
+
+        async function swkAiParse() {
+            const teks = document.getElementById('ai-input').value.trim();
+            const status = document.getElementById('ai-status');
+            const btn = document.getElementById('ai-btn');
+            if (!teks) return;
+
+            status.textContent = '';
+            btn.disabled = true;
+            btn.textContent = 'Memproses...';
+
+            try {
+                const res = await fetch('{{ route("business.journal.ai-parse", $business) }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    },
+                    body: JSON.stringify({ teks, tanggal_hari_ini: document.getElementById('tanggal').value }),
+                });
+                const data = await res.json();
+
+                if (!res.ok) {
+                    status.textContent = data.error || 'Gagal memproses.';
+                    return;
+                }
+
+                // Bersihkan baris kosong lama, isi dengan usulan AI.
+                document.getElementById('lines-wrap').innerHTML = '';
+                document.getElementById('tanggal').value = data.tanggal;
+                document.getElementById('keterangan').value = data.keterangan;
+                data.lines.forEach(line => swkAddLine(line));
+                swkRecalc();
+                status.classList.remove('text-[#D92D20]');
+                status.classList.add('text-[#079455]');
+                status.textContent = 'Berhasil diusulkan AI - cek lagi sebelum simpan ya.';
+            } catch (e) {
+                status.textContent = 'Gagal menghubungi server.';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Proses';
+            }
         }
 
         function swkRecalc() {
