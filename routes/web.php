@@ -70,6 +70,9 @@ Route::middleware(['auth', 'active'])->prefix('business')->name('business.')->gr
 
         Route::get('/{business}/pengaturan', [BusinessController::class, 'editSettings'])->name('settings.edit');
         Route::put('/{business}/pengaturan', [BusinessController::class, 'updateSettings'])->name('settings.update');
+        Route::get('/{business}/pengaturan/cari', [BusinessController::class, 'searchMember'])->name('settings.search-member');
+        Route::post('/{business}/pengaturan/anggota', [BusinessController::class, 'addMember'])->name('settings.add-member');
+        Route::delete('/{business}/pengaturan/anggota/{member}', [BusinessController::class, 'removeMember'])->name('settings.remove-member');
 
         Route::get('/{business}/coa', [ChartOfAccountController::class, 'index'])->name('coa.index');
         Route::get('/{business}/coa/tambah', [ChartOfAccountController::class, 'create'])->name('coa.create');

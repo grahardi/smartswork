@@ -63,7 +63,12 @@ class BusinessController extends Controller
 
     public function editSettings(Business $business): View
     {
-        return view('business.settings', compact('business'));
+        return view('business.settings', [
+            'business' => $business,
+            'searchResult' => null,
+            'searchQuery' => null,
+            'sudahAnggota' => false,
+        ]);
     }
 
     public function updateSettings(Request $request, Business $business): RedirectResponse
@@ -79,6 +84,62 @@ class BusinessController extends Controller
         $business->update($validated);
 
         return redirect()->route('business.settings.edit', $business)->with('status', 'Pengaturan business berhasil disimpan.');
+    }
+
+    /**
+     * Cari user terdaftar via email persis (bukan pencarian bebas, demi privasi)
+     * untuk ditambahkan sebagai pengelola business.
+     */
+    public function searchMember(Request $request, Business $business): View
+    {
+        $request->validate(['email' => ['required', 'email']]);
+
+        $found = \App\Models\User::where('email', $request->email)->first();
+
+        $sudahAnggota = $found && $business->users->contains($found->id);
+
+        return view('business.settings', [
+            'business' => $business,
+            'searchResult' => $found,
+            'searchQuery' => $request->email,
+            'sudahAnggota' => $sudahAnggota,
+        ]);
+    }
+
+    public function addMember(Request $request, Business $business): RedirectResponse
+    {
+        $validated = $request->validate([
+            'user_id' => ['required', 'exists:users,id'],
+            'role' => ['required', 'in:staff,akuntan'],
+        ]);
+
+        if ($business->users->contains($validated['user_id'])) {
+            return back()->with('error', 'User ini sudah jadi anggota business.');
+        }
+
+        $business->users()->attach($validated['user_id'], ['role' => $validated['role']]);
+
+        $member = \App\Models\User::find($validated['user_id']);
+
+        \App\Models\AppNotification::kirim(
+            $member->id,
+            'business_added',
+            $request->user()->name.' menambahkanmu sebagai '.$validated['role'].' di business "'.$business->nama_usaha.'".',
+            route('business.dashboard', $business)
+        );
+
+        return redirect()->route('business.settings.edit', $business)
+            ->with('status', $member->name.' berhasil ditambahkan sebagai '.$validated['role'].'.');
+    }
+
+    public function removeMember(Request $request, Business $business, \App\Models\User $member): RedirectResponse
+    {
+        abort_if($member->id === $business->owner_id, 422, 'Tidak bisa mengeluarkan owner dari business.');
+
+        $business->users()->detach($member->id);
+
+        return redirect()->route('business.settings.edit', $business)
+            ->with('status', $member->name.' dikeluarkan dari business.');
     }
 
     /**
