@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-business-layout :business="$business">
     <x-slot name="header">Buku Besar</x-slot>
 
     <div class="px-4 py-5">
@@ -32,4 +32,4 @@
             </table>
         </div>
     </div>
-</x-app-layout>
+</x-business-layout>

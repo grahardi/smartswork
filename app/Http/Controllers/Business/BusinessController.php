@@ -61,6 +61,26 @@ class BusinessController extends Controller
         return redirect()->route('business.dashboard', $business);
     }
 
+    public function editSettings(Business $business): View
+    {
+        return view('business.settings', compact('business'));
+    }
+
+    public function updateSettings(Request $request, Business $business): RedirectResponse
+    {
+        $validated = $request->validate([
+            'nama_usaha' => ['required', 'string', 'max:255'],
+            'npwp' => ['nullable', 'string', 'max:30'],
+            'jenis_usaha' => ['nullable', 'string', 'max:100'],
+            'alamat' => ['nullable', 'string'],
+            'mata_uang' => ['required', 'string', 'size:3'],
+        ]);
+
+        $business->update($validated);
+
+        return redirect()->route('business.settings.edit', $business)->with('status', 'Pengaturan business berhasil disimpan.');
+    }
+
     /**
      * Chart of Account standar Indonesia supaya business baru tidak mulai
      * dari kosong sama sekali.

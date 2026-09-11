@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-business-layout>
     <x-slot name="header">SMARTS Business</x-slot>
 
     <div class="px-4 py-5">
@@ -23,4 +23,4 @@
             @endforelse
         </div>
     </div>
-</x-app-layout>
+</x-business-layout>

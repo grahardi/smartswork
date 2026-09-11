@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-business-layout :business="$business">
     <x-slot name="header">Neraca Saldo</x-slot>
 
     <div class="px-4 py-5">
@@ -40,4 +40,4 @@
             <p class="text-xs text-[#DC2626] mt-2">⚠️ Total debit dan kredit tidak seimbang — ada kemungkinan data jurnal bermasalah.</p>
         @endif
     </div>
-</x-app-layout>
+</x-business-layout>

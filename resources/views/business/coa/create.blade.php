@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-business-layout :business="$business">
     <x-slot name="header">Tambah Akun</x-slot>
 
     <div class="px-4 py-5">
@@ -12,4 +12,4 @@
             </div>
         </form>
     </div>
-</x-app-layout>
+</x-business-layout>

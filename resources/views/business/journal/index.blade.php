@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-business-layout :business="$business">
     <x-slot name="header">Jurnal Umum</x-slot>
 
     <div class="px-4 py-5">
@@ -45,4 +45,4 @@
 
         <div class="mt-4">{{ $entries->links() }}</div>
     </div>
-</x-app-layout>
+</x-business-layout>

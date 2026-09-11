@@ -68,6 +68,9 @@ Route::middleware(['auth', 'active'])->prefix('business')->name('business.')->gr
     Route::middleware('business.member')->group(function () {
         Route::get('/{business}', [BusinessDashboardController::class, 'index'])->name('dashboard');
 
+        Route::get('/{business}/pengaturan', [BusinessController::class, 'editSettings'])->name('settings.edit');
+        Route::put('/{business}/pengaturan', [BusinessController::class, 'updateSettings'])->name('settings.update');
+
         Route::get('/{business}/coa', [ChartOfAccountController::class, 'index'])->name('coa.index');
         Route::get('/{business}/coa/tambah', [ChartOfAccountController::class, 'create'])->name('coa.create');
         Route::post('/{business}/coa', [ChartOfAccountController::class, 'store'])->name('coa.store');

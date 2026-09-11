@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-business-layout :business="$business">
     <x-slot name="header">{{ $business->nama_usaha }}</x-slot>
 
     <div class="px-4 py-5">
@@ -45,4 +45,4 @@
 
         <a href="{{ route('business.index') }}" class="text-xs text-[#7B7F99] mt-5 inline-block">← Ganti Business</a>
     </div>
-</x-app-layout>
+</x-business-layout>

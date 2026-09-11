@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-business-layout :business="$business">
     <x-slot name="header">Catat Jurnal</x-slot>
 
     <div class="px-4 py-5">
@@ -77,4 +77,4 @@
         swkAddLine();
         swkAddLine();
     </script>
-</x-app-layout>
+</x-business-layout>

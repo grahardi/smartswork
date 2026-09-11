@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-business-layout>
     <x-slot name="header">Daftarkan Business</x-slot>
 
     <div class="px-4 py-5">
@@ -37,4 +37,4 @@
             <x-primary-button>Daftarkan Business</x-primary-button>
         </form>
     </div>
-</x-app-layout>
+</x-business-layout>

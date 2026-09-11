@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-business-layout :business="$business">
     <x-slot name="header">Laba Rugi</x-slot>
 
     <div class="px-4 py-5">
@@ -51,4 +51,4 @@
             💡 Angka di laporan ini bisa jadi acuan saat mengisi laporan pajak/Coretax — tapi ini bukan integrasi resmi, pastikan cek ulang dengan konsultan/aplikasi pajak resmi sebelum submit.
         </p>
     </div>
-</x-app-layout>
+</x-business-layout>

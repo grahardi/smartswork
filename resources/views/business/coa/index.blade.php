@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-business-layout :business="$business">
     <x-slot name="header">Chart of Account</x-slot>
 
     <div class="px-4 py-5">
@@ -32,4 +32,4 @@
             </div>
         @endforeach
     </div>
-</x-app-layout>
+</x-business-layout>

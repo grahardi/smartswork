@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-business-layout :business="$business">
     <x-slot name="header">Edit Akun</x-slot>
 
     <div class="px-4 py-5">
@@ -18,4 +18,4 @@
             <button type="submit" class="text-xs text-[#DC2626]">Hapus Akun</button>
         </form>
     </div>
-</x-app-layout>
+</x-business-layout>
