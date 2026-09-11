@@ -23,6 +23,32 @@
                 </div>
 
                 <div>
+                    <x-input-label value="Sumber Dana" />
+                    <div class="mt-2 flex gap-4">
+                        <label class="flex items-center gap-2 text-sm text-[#262135]">
+                            <input type="radio" name="sumber_dana" value="cash" onchange="document.getElementById('rekening-wrap').classList.add('hidden')" checked>
+                            💵 Cash
+                        </label>
+                        <label class="flex items-center gap-2 text-sm text-[#262135]">
+                            <input type="radio" name="sumber_dana" value="noncash" onchange="document.getElementById('rekening-wrap').classList.remove('hidden')">
+                            Non-Cash (Rekening/E-Wallet)
+                        </label>
+                    </div>
+                    <div id="rekening-wrap" class="mt-2 hidden">
+                        <select name="bank_account_id" class="block w-full rounded-lg border-[#E5E7F5] focus:border-[#2563EB] focus:ring-[#2563EB] text-sm">
+                            <option value="">Pilih rekening/e-wallet</option>
+                            @foreach ($rekenings as $r)
+                                <option value="{{ $r->id }}" @selected(old('bank_account_id') == $r->id)>{{ $r->jenis === 'ewallet' ? '📱' : '🏦' }} {{ $r->nama_bank }} — Rp{{ number_format($r->saldoSekarang(), 0, ',', '.') }}</option>
+                            @endforeach
+                        </select>
+                        @if ($rekenings->isEmpty())
+                            <p class="text-xs text-[#9CA3AF] mt-1">Belum ada rekening/e-wallet. <a href="{{ route('rekening.create') }}" class="text-[#2563EB] underline">Tambah dulu</a>.</p>
+                        @endif
+                        <x-input-error :messages="$errors->get('bank_account_id')" class="mt-2" />
+                    </div>
+                </div>
+
+                <div>
                     <x-input-label for="jumlah" value="Jumlah (Rp)" />
                     <x-text-input id="jumlah" name="jumlah" type="number" step="0.01" min="1" class="mt-1 block w-full"
                         value="{{ old('jumlah') }}" required />
@@ -37,7 +63,7 @@
                 </div>
 
                 <p class="text-[11px] text-[#9CA3AF]">
-                    Jumlah ini akan tercatat sebagai pengeluaran di akunmu dan pemasukan di akun teman yang dipilih.
+                    Jumlah ini akan tercatat sebagai pengeluaran dari sumber dana yang dipilih di akunmu, dan pemasukan (cash) di akun teman yang dipilih.
                 </p>
 
                 <div class="flex items-center gap-4 pt-2">

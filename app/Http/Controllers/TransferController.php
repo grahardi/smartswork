@@ -16,8 +16,9 @@ class TransferController extends Controller
     public function create(Request $request): View
     {
         $friends = $request->user()->friends();
+        $rekenings = $request->user()->bankAccounts()->get();
 
-        return view('finance.transfer', compact('friends'));
+        return view('finance.transfer', compact('friends', 'rekenings'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -26,6 +27,7 @@ class TransferController extends Controller
             'to_user_id' => ['required', 'exists:users,id'],
             'jumlah' => ['required', 'numeric', 'min:1'],
             'keterangan' => ['nullable', 'string', 'max:255'],
+            'bank_account_id' => ['nullable', 'exists:bank_accounts,id,user_id,'.$request->user()->id],
         ]);
 
         $sender = $request->user();
@@ -34,7 +36,9 @@ class TransferController extends Controller
         abort_if($receiver->id === $sender->id, 422, 'Tidak bisa transfer ke diri sendiri.');
         abort_unless($sender->isFriendsWith($receiver), 403, 'Hanya bisa transfer ke teman.');
 
-        DB::transaction(function () use ($sender, $receiver, $validated) {
+        $bankAccountId = $request->input('sumber_dana') === 'noncash' ? $validated['bank_account_id'] : null;
+
+        DB::transaction(function () use ($sender, $receiver, $validated, $bankAccountId) {
             $transfer = Transfer::create([
                 'from_user_id' => $sender->id,
                 'to_user_id' => $receiver->id,
@@ -57,6 +61,7 @@ class TransferController extends Controller
             $sender->financeTransactions()->create([
                 'finance_category_id' => $kategoriKeluar->id,
                 'transfer_id' => $transfer->id,
+                'bank_account_id' => $bankAccountId,
                 'tanggal' => now()->toDateString(),
                 'jumlah' => $validated['jumlah'],
                 'keterangan' => 'Transfer ke '.$receiver->name.($keterangan ? ': '.$keterangan : ''),
