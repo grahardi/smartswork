@@ -46,10 +46,24 @@ class BusinessController extends Controller
 
         $this->seedDefaultAccounts($business);
 
+        // Otomatis muncul juga di Tempat Kerja (Personal) - jembatan untuk
+        // integrasi keuangan/jurnal Business ke Personal di masa depan.
+        $workplace = \App\Models\Workplace::create([
+            'business_id' => $business->id,
+            'nama' => $business->nama_usaha,
+            'alamat' => $business->alamat,
+            'keterangan' => 'Terhubung otomatis dengan SMARTS Business',
+            'type' => 'formal',
+            'is_default' => false,
+        ]);
+        $request->user()->workplaces()->syncWithoutDetaching([
+            $workplace->id => ['jabatan' => 'Owner', 'tanggal_gabung' => now()],
+        ]);
+
         $request->session()->put('current_business_id', $business->id);
 
         return redirect()->route('business.dashboard', $business)
-            ->with('status', 'Business "'.$business->nama_usaha.'" berhasil dibuat, lengkap dengan Chart of Account standar.');
+            ->with('status', 'Business "'.$business->nama_usaha.'" berhasil dibuat, lengkap dengan Chart of Account standar dan otomatis muncul di Tempat Kerja.');
     }
 
     public function switchTo(Request $request, Business $business): RedirectResponse

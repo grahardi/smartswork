@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Workplace extends Model
 {
     protected $fillable = [
+        'business_id',
         'nama',
         'alamat',
         'latitude',
@@ -27,6 +28,11 @@ class Workplace extends Model
     public function hasCoordinates(): bool
     {
         return ! is_null($this->latitude) && ! is_null($this->longitude);
+    }
+
+    public function business(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Business::class);
     }
 
     /**

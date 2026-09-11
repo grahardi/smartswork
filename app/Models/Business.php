@@ -40,4 +40,9 @@ class Business extends Model
     {
         return $this->hasMany(JournalEntry::class);
     }
+
+    public function workplace(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Workplace::class);
+    }
 }

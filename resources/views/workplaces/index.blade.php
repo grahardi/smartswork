@@ -20,6 +20,9 @@
                             @if ($workplace->is_default)
                                 <span class="text-[10px] bg-[#FEF3C7] text-[#92400E] px-2 py-0.5 rounded-full">Default</span>
                             @endif
+                            @if ($workplace->business_id)
+                                <span class="text-[10px] bg-[#ECF3FF] text-[#465FFF] px-2 py-0.5 rounded-full">🏢 Business</span>
+                            @endif
                         </div>
                         <p class="text-xs text-[#7B7F99] mt-1">
                             {{ $workplace->pivot->jabatan ?? '—' }}
@@ -28,8 +31,11 @@
                         </p>
                         <p class="text-xs text-[#2563EB] mt-2">{{ $workplace->projects_count }} project →</p>
                     </a>
-                    <div class="px-4 py-2 border-t border-[#F0EBDF]">
+                    <div class="px-4 py-2 border-t border-[#F0EBDF] flex items-center gap-3">
                         <a href="{{ route('workplaces.edit', $workplace) }}" class="text-xs text-[#2563EB] font-medium">Edit</a>
+                        @if ($workplace->business_id)
+                            <a href="{{ route('business.dashboard', $workplace->business_id) }}" class="text-xs text-[#465FFF] font-medium">Buka di SMARTS Business →</a>
+                        @endif
                     </div>
                 </div>
             @empty
